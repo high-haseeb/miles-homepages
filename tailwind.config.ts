@@ -60,6 +60,9 @@ const config = {
 					500: "#ff8c2f",
 					600: "#e87f2b",
 				},
+				pearl: {
+					400: "#FAF9F4",
+				},
 				dark: "#2C323A",
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
