@@ -64,6 +64,7 @@ const config = {
 					400: "#FAF9F4",
 				},
 				dark: "#2C323A",
+				dark_2: "#333333",
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
