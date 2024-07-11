@@ -65,6 +65,7 @@ const config = {
 				},
 				dark: "#2C323A",
 				dark_2: "#333333",
+				dark_green: "#273F2B",
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
