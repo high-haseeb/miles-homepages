@@ -140,3 +140,12 @@ export const useCases = [
 		link: "#collaborate",
 	},
 ];
+
+export const minLengthRegex = /^.{8,}$/;
+export const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+
+export const IS_DEV_MODE = process.env.NODE_ENV === "development";
+
+export const API_URL = IS_DEV_MODE
+	? `${process.env.NEXT_PUBLIC_STAGING_API_URL}/v1`
+	: `${process.env.NEXT_PUBLIC_PRD_API_URL}/v1`;

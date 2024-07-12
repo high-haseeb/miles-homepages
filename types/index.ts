@@ -19,6 +19,19 @@ export interface CustomFormFieldProps {
 	renderSkeleton?: (field: any) => React.ReactNode;
 }
 
+export interface LoginPayload {
+	email: string;
+	password: string;
+}
+
+export interface SignupPayload {
+	email: string;
+	password: string;
+	firstname: string;
+	lastname: string;
+	bio: string;
+}
+
 export enum FormFieldType {
 	INPUT = "input",
 	EMAIL = "email",

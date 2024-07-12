@@ -1,16 +1,22 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
 
 import AuthLayout from "@/components/Layouts/AuthLayout";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
 import { passwordSchema } from "@/constants/schemas";
+import { login } from "@/services/auth.api";
+import { useAppContext } from "@/context/AppContext";
 
 const loginFormSchema = z.object({
 	email: z.string().email("Invalid email").min(5, {
@@ -20,6 +26,18 @@ const loginFormSchema = z.object({
 });
 
 export default function LoginPage() {
+	const queryClient = useQueryClient();
+	const router = useRouter();
+	const { toast } = useToast();
+	const { setToken, setUserData } = useAppContext();
+
+	const mutation = useMutation({
+		mutationFn: login,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["auth"] });
+		},
+	});
+
 	const form = useForm<z.infer<typeof loginFormSchema>>({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
@@ -28,9 +46,29 @@ export default function LoginPage() {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof loginFormSchema>) {
+	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
 		console.log(values);
+		try {
+			const res = await mutation.mutateAsync(values);
+			toast({
+				variant: "success",
+				title: "Success",
+				description: "Log in successful!",
+			});
+			setToken(res?.data?.accessToken);
+			setUserData(res?.data?.userData);
+			router.push("/listing");
+		} catch (err: any) {
+			console.log(err);
+			console.log(mutation.error);
+			toast({
+				variant: "destructive",
+				title: "Uh oh! Something went wrong.",
+				description: err?.response?.data?.message,
+			});
+		}
 	}
+
 	return (
 		<AuthLayout>
 			<Form {...form}>
@@ -91,6 +129,7 @@ export default function LoginPage() {
 					</div>
 					<Button
 						type="submit"
+						disabled={mutation.isPending}
 						className="mb-[25px] disabled:bg-green-200 text-teal-50 font-medium bg-green-500 py-3 px-4 rounded-[38px]"
 					>
 						Proceed

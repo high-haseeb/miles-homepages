@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,6 +19,8 @@ const signupFormSchema = z.object({
 });
 
 export default function SignupPage() {
+	const router = useRouter();
+
 	const form = useForm<z.infer<typeof signupFormSchema>>({
 		resolver: zodResolver(signupFormSchema),
 		defaultValues: {
@@ -27,6 +30,8 @@ export default function SignupPage() {
 
 	function onSubmit(values: z.infer<typeof signupFormSchema>) {
 		console.log(values);
+		localStorage.setItem("signupEmail", values.email);
+		router.push("/onboarding");
 	}
 	return (
 		<AuthLayout>

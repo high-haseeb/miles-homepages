@@ -1,16 +1,24 @@
 "use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/components/ui/use-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
 
 import Backbtn from "@/components/Backbtn";
 import AuthLayout from "@/components/Layouts/AuthLayout";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
 import { passwordSchema } from "@/constants/schemas";
+import { minLengthRegex, specialCharRegex } from "@/constants";
+import { signup } from "@/services/auth.api";
+import { useAppContext } from "@/context/AppContext";
 
 const onboardingFormSchema = z
 	.object({
@@ -30,9 +38,31 @@ const onboardingFormSchema = z
 	});
 
 export default function OnboardingPage() {
+	const [signupEmail, setSignupEmail] = useState<string | null>("");
+
+	const router = useRouter();
+	const { toast } = useToast();
+
+	useEffect(() => {
+		const email = localStorage.getItem("signupEmail");
+		setSignupEmail(email);
+	}, []);
+
+	const { setToken, setUserData } = useAppContext();
+
+	const queryClient = useQueryClient();
+
+	const mutation = useMutation({
+		mutationFn: signup,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["auth"] });
+		},
+	});
+
 	const form = useForm<z.infer<typeof onboardingFormSchema>>({
 		resolver: zodResolver(onboardingFormSchema),
 		defaultValues: {
+			email: signupEmail || "",
 			firstName: "",
 			lastName: "",
 			password: "",
@@ -40,9 +70,44 @@ export default function OnboardingPage() {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof onboardingFormSchema>) {
+	useEffect(() => {
+		if (signupEmail) {
+			form.setValue("email", signupEmail);
+		}
+	}, [signupEmail, form]);
+
+	const passwordWatch = form.watch("password");
+
+	async function onSubmit(values: z.infer<typeof onboardingFormSchema>) {
 		console.log(values);
+		try {
+			const res: any = await mutation.mutateAsync({
+				email: signupEmail!,
+				password: values.password,
+				firstname: values.firstName,
+				lastname: values.lastName,
+				bio: "I am a good boy",
+			});
+			toast({
+				variant: "success",
+				title: "Success",
+				description: "You've successfully signed up!",
+			});
+			setToken(res?.data?.accessToken);
+			setUserData(res?.data);
+			localStorage.removeItem("signupEmail");
+			router.push("/listing")
+		} catch (err) {
+			toast({
+				variant: "destructive",
+				title: "Uh oh! Something went wrong.",
+				description: isAxiosError(err)
+					? err?.response?.data?.message
+					: "An unknown error occured",
+			});
+		}
 	}
+
 	return (
 		<AuthLayout>
 			<Form {...form}>
@@ -91,6 +156,7 @@ export default function OnboardingPage() {
 								<Checkbox
 									id="min-8-characters"
 									disabled
+									checked={minLengthRegex.test(passwordWatch)}
 									className="rounded-full data-[state=checked]:bg-green-500 disabled:opacity-100 border-green-500 h-4 w-4"
 								/>
 								<label
@@ -104,6 +170,7 @@ export default function OnboardingPage() {
 								<Checkbox
 									id="special-char"
 									disabled
+									checked={specialCharRegex.test(passwordWatch)}
 									className="rounded-full data-[state=checked]:bg-green-500 disabled:opacity-100 border-green-500 h-4 w-4"
 								/>
 								<label
@@ -142,6 +209,7 @@ export default function OnboardingPage() {
 					</div>
 					<Button
 						type="submit"
+						disabled={mutation.isPending}
 						className="mb-[25px] disabled:bg-green-200 text-teal-50 font-medium bg-green-500 py-3 px-4 rounded-[38px]"
 					>
 						Join Miles
