@@ -5,7 +5,7 @@ import MenuIcon from "@/components/vectors/MenuIcon";
 
 export default function Navbar() {
 	return (
-		<nav className="md:fixed md:left-1/2 md:top-5 md:-translate-x-1/2 max-w-[802px] mx-auto w-full bg-transparent md:bg-white max-md:mb-[29px] border-none md:border-[0.5px] md:border-gray-2 flex items-center justify-between md:rounded-[50px] md:py-2.5 md:px-[15px]">
+		<nav className="md:fixed md:left-1/2 md:top-5 md:-translate-x-1/2 max-w-[802px] mx-auto w-full bg-transparent md:bg-white max-md:mb-[29px] border-none md:border-[0.5px] md:border-gray-2 flex items-center justify-between md:rounded-[50px] md:py-2.5 md:px-[15px] z-20">
 			<Image
 				src="/images/logo.svg"
 				width={95}

@@ -8,6 +8,7 @@ import LongRightArrow from "@/components/vectors/LongRightArrow";
 import ShortRightArrow from "@/components/vectors/ShortRightArrow";
 import ListStyle from "@/components/vectors/ListStyle";
 import Footer from "@/components/Footer";
+import HomepageAnimation from "@/components/HomepageAnimation";
 
 export default function Home() {
 	return (
@@ -33,6 +34,31 @@ export default function Home() {
 						Get started <PlayIcon />
 					</Link>
 				</div>
+				<div className="md:hidden absolute bottom-14 left-0 flex justify-between w-full px-[25px]">
+					<Image
+						src="/images/laptop.png"
+						width={79.08}
+						height={96.05}
+						alt="laptop"
+						className="object-contain rotate-[225deg]"
+					/>
+					<Image
+						src="/images/Camera.png"
+						width={99.59}
+						height={104.05}
+						alt="Camera"
+						className="object-contain rotate-[130deg]"
+					/>
+
+					<Image
+						src="/images/projector.png"
+						width={101.4}
+						height={67.11}
+						alt="projector"
+						className="object-contain -rotate-45"
+					/>
+				</div>
+				<HomepageAnimation />
 			</header>
 			<main className="flex flex-col">
 				<section className="bg-white flex flex-col max-md:gap-y-[50px] py-10 px-[25px] md:pt-14 mb:pb-[88px] mb:px-[105px]">
@@ -97,7 +123,7 @@ export default function Home() {
 					<div className="flex flex-col gap-y-[53px] md:gap-y-[120px]">
 						<div className="flex flex-col md:flex-row md:items-center gap-x-5 md:mx-[68px]">
 							<Image
-								src="/images/nikon-camera.png"
+								src="/images/nikon-camera.jpg"
 								width={510}
 								height={463}
 								alt="nikon-camera"
@@ -124,7 +150,7 @@ export default function Home() {
 						</div>
 						<div className="flex flex-col md:flex-row-reverse md:items-center gap-x-5 md:mx-[68px]">
 							<Image
-								src="/images/handshake.png"
+								src="/images/handshake.jpg"
 								width={510}
 								height={463}
 								alt="handshake"
@@ -151,7 +177,7 @@ export default function Home() {
 						</div>
 						<div className="flex flex-col md:flex-row md:items-center gap-x-5 md:mx-[68px]">
 							<Image
-								src="/images/money-display.png"
+								src="/images/money-display.jpg"
 								width={510}
 								height={463}
 								alt="money-display"
@@ -177,8 +203,8 @@ export default function Home() {
 										href="#"
 										className="max-md:self-center flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 p-4 pl-6 w-fit"
 									>
-										Get started
-										<ShortRightArrow />
+										Get started <PlayIcon className="md:hidden" />
+										<ShortRightArrow className="hidden md:block" />
 									</Link>
 								</div>
 							</div>
@@ -237,7 +263,7 @@ export default function Home() {
 								</p>
 							</div>
 						</div>
-						<div className="flex max-md:self-center flex-col items-center gap-y-[7px] md:gap-y-2.5 text-center max-w-[294px]">
+						<div className="flex self-center flex-col items-center gap-y-[7px] md:gap-y-2.5 text-center max-w-[294px]">
 							<p className="md:text-2xl text-slate-900 font-medium">
 								Instant Payments
 							</p>
@@ -275,11 +301,12 @@ export default function Home() {
 							className="flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 p-4 pl-6 w-fit"
 						>
 							Explore now
-							<ShortRightArrow />
+							<PlayIcon className="md:hidden" />
+							<ShortRightArrow className="hidden md:block" />
 						</Link>
 					</div>
 					<div className="flex items-center gap-x-2 md:gap-5 mb-[20.83px] md:mb-[55px]">
-						<div className="md:pb-[30px] pb-2.5 md:px-6 px-[7.75px] flex items-end justify-center w-[100px] h-[121px] md:w-[312px] md:h-[375px] rounded-[8.28px] md:rounded-[21.31px] bg-[url('/images/film.png')] bg-center bg-cover bg-no-repeat">
+						<div className="md:pb-[30px] pb-2.5 md:px-6 px-[7.75px] flex items-end justify-center w-[100px] h-[121px] md:w-[312px] md:h-[375px] rounded-[8.28px] md:rounded-[21.31px] bg-[url('/images/film.jpg')] bg-center bg-cover bg-no-repeat">
 							<div className="rounded-[5.82px] md:rounded-[18px] bg-white max-w-[264px] w-full max-md:py-[5.3px] md:h-[71px] flex items-center justify-center">
 								<p className="font-normal md:font-medium text-black text-[10px] md:text-base">
 									Film
@@ -293,7 +320,7 @@ export default function Home() {
 								</p>
 							</div>
 						</div>
-						<div className="md:pb-[30px] pb-2.5 md:px-6 px-[7.75px] flex items-end justify-center w-[100px] h-[121px] md:w-[312px] md:h-[375px] rounded-[8.28px] md:rounded-[21.31px] bg-[url('/images/photography.png')] bg-center bg-cover bg-no-repeat">
+						<div className="md:pb-[30px] pb-2.5 md:px-6 px-[7.75px] flex items-end justify-center w-[100px] h-[121px] md:w-[312px] md:h-[375px] rounded-[8.28px] md:rounded-[21.31px] bg-[url('/images/photography.jpg')] bg-center bg-cover bg-no-repeat">
 							<div className="rounded-[5.82px] md:rounded-[18px] bg-white max-w-[264px] w-full max-md:py-[5.3px] md:h-[71px] flex items-center justify-center">
 								<p className="font-normal md:font-medium text-black text-[10px] md:text-base">
 									Photography

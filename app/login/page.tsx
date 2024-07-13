@@ -47,7 +47,6 @@ export default function LoginPage() {
 	});
 
 	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-		console.log(values);
 		try {
 			const res = await mutation.mutateAsync(values);
 			toast({

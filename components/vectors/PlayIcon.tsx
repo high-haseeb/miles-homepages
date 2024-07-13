@@ -1,4 +1,4 @@
-export default function PlayIcon() {
+export default function PlayIcon({ className }: { className?: string }) {
 	return (
 		<svg
 			width="25"
@@ -6,6 +6,7 @@ export default function PlayIcon() {
 			viewBox="0 0 25 24"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			className={className}
 		>
 			<path
 				d="M6.5 9.32919V14.6692C6.5 17.9892 8.85 19.3392 11.72 17.6892L13 16.9492C13.31 16.7692 13.5 16.4392 13.5 16.0792V7.91919C13.5 7.55919 13.31 7.22919 13 7.04919L11.72 6.30919C8.85 4.65919 6.5 6.00919 6.5 9.32919Z"

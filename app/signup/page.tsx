@@ -29,7 +29,6 @@ export default function SignupPage() {
 	});
 
 	function onSubmit(values: z.infer<typeof signupFormSchema>) {
-		console.log(values);
 		localStorage.setItem("signupEmail", values.email);
 		router.push("/onboarding");
 	}

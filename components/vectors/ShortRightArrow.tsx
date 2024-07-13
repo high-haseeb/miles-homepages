@@ -1,4 +1,10 @@
-export default function ShortRightArrow({ size }: { size?: string }) {
+export default function ShortRightArrow({
+	size,
+	className,
+}: {
+	size?: string;
+	className?: string;
+}) {
 	return (
 		<svg
 			width={size || "24"}
@@ -6,6 +12,7 @@ export default function ShortRightArrow({ size }: { size?: string }) {
 			viewBox="0 0 24 24"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			className={className}
 		>
 			<path
 				d="M14.4299 5.92969L20.4999 11.9997L14.4299 18.0697"

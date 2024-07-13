@@ -79,7 +79,6 @@ export default function OnboardingPage() {
 	const passwordWatch = form.watch("password");
 
 	async function onSubmit(values: z.infer<typeof onboardingFormSchema>) {
-		console.log(values);
 		try {
 			const res: any = await mutation.mutateAsync({
 				email: signupEmail!,
