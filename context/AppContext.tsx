@@ -1,6 +1,7 @@
 "use client";
-
 import { createContext, useContext, useState, useEffect } from "react";
+
+//remember to add isUserVerified context
 
 interface UserDataType {
 	accessToken?: string;

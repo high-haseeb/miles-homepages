@@ -15,7 +15,7 @@ export default function Home() {
 		<section className="min-h-screen flex flex-col overflow-x-hidden max-w-[100vw] w-full">
 			<header className="min-h-screen bg-pearl-400 pt-[15px] px-[25px] md:p-5 flex flex-col md:items-center md:justify-center relative">
 				<Navbar />
-				<div className="flex flex-col items-center text-center max-w-[578px]">
+				<div className="flex flex-col items-center text-center max-w-[578px] z-10">
 					<div className="bg-white rounded-[100px] mb-[30px] md:mb-3.5 border border-gray-2 px-2 py-1 flex items-center gap-x-1 text-xs md:text-sm text-dark">
 						<Dot />
 						Free, fast, secure and easy to navigate
@@ -28,7 +28,7 @@ export default function Home() {
 						out the things you already own just as simple and rewarding?.
 					</p>
 					<Link
-						href="/list-items"
+						href="/listing"
 						className="flex items-center gap-x-3 px-[30px] py-3 rounded-[38px] bg-green-500 text-sm md:text-base text-white"
 					>
 						Get started <PlayIcon />
