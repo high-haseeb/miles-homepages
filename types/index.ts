@@ -42,3 +42,11 @@ export enum FormFieldType {
 	SELECT = "select",
 	SKELETON = "skeleton",
 }
+
+export interface StatsCardProps {
+	src: string;
+	title: string;
+	stat: string;
+	iconStart?: React.ReactNode;
+	iconEnd?: React.ReactNode;
+}

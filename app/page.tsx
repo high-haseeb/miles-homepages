@@ -28,7 +28,7 @@ export default function Home() {
 						out the things you already own just as simple and rewarding?.
 					</p>
 					<Link
-						href="/listing"
+						href="/listings"
 						className="flex items-center gap-x-3 px-[30px] py-3 rounded-[38px] bg-green-500 text-sm md:text-base text-white"
 					>
 						Get started <PlayIcon />

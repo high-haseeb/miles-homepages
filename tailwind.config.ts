@@ -22,6 +22,7 @@ const config = {
 				gray: {
 					1: "#999CA0",
 					2: "#EBEBEB",
+					3: "#EAECF0",
 				},
 				green: {
 					50: "#e6f7ed",
