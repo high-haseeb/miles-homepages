@@ -6,7 +6,7 @@ import { teams, contact, useCases, products, resources } from "@/constants";
 export default function Footer() {
 	return (
 		<footer className="bg-teal-500 rounded-t-lg px-[25px] lg:px-[123px] pb-[49.68px] md:pb-[94px] pt-[50px] md:pt-[301px] flex flex-col">
-			<div className="flex flex-col md:items-center md:justify-between mb-10 md:mb-[100px]">
+			<div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10 md:mb-[100px]">
 				<Image
 					src="/images/logo.svg"
 					width={95}
@@ -19,7 +19,7 @@ export default function Footer() {
 					width={45}
 					height={12.32}
 					alt="logo"
-					className="object-contain max-md:hidden mb-5"
+					className="object-contain md:hidden mb-5"
 				/>
 				<div className="rounded-[40px] bg-white bg-opacity-[8%] flex items-center max-md:justify-between md:gap-6 p-2 md:p-6">
 					<Image

@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import Chip from "@/components/Chip";
 
-export default function All() {
+export default function Progress() {
 	const router = useRouter();
 	return (
 		<Table className="w-full py-[27px] px-[30px] rounded-[25px]">
@@ -30,7 +30,7 @@ export default function All() {
 						className={`border-none py-[25px] px-[22px] cursor-pointer ${
 							(index + 1) % 2 === 0 ? "bg-transparent" : "bg-white"
 						}`}
-						onClick={() => router.push("/bookings/1a2b3c")}
+						onClick={() => router.push("/renting/1a2b3c")}
 					>
 						<TableCell className="flex items-center gap-x-4.5">
 							<Avatar className="w-[50px] h-[50px]">
@@ -51,10 +51,7 @@ export default function All() {
 							{detail.duration}
 						</TableCell>
 						<TableCell className="text-slate-600 text-sm">
-							<Chip
-								text={detail.status}
-								className="bg-green-50 text-green-800"
-							/>
+						<Chip text={detail.status} className="bg-green-500 text-white" />
 						</TableCell>
 					</TableRow>
 				))}
@@ -69,20 +66,20 @@ const details = [
 		customer: "Lolu B.",
 		item: "Polaroid SB-6A",
 		duration: "Jan 1, 2020 - Mar 15, 2020",
-		status: "Completed",
+		status: "Currently Rented",
 	},
 	{
 		avatar: "",
 		customer: "Abolaji B.",
 		item: "Cannon XB-FG",
 		duration: "Feb 5, 2020 ",
-		status: "Completed",
+		status: "Currently Rented",
 	},
 	{
 		avatar: "",
 		customer: "Gifty Ogechukwu",
 		item: "HoverAir X1",
 		duration: "Nov 18, 2020",
-		status: "Completed",
+		status: "Currently Rented",
 	},
 ];

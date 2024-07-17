@@ -25,7 +25,7 @@ export default function Navbar() {
 			</button>
 			<div className="hidden md:flex items-center gap-10 gap-x-6">
 				<Link
-					href="/list-item"
+					href="/listings/list-item"
 					className="font-medium text-slate-900 py-3 px-2"
 				>
 					List an item

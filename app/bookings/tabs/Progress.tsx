@@ -1,3 +1,5 @@
+"use client";
+import { useRouter } from "next/navigation";
 import {
 	Table,
 	TableBody,
@@ -11,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Chip from "@/components/Chip";
 
 export default function Progress() {
+	const router = useRouter();
 	return (
 		<Table className="w-full py-[27px] px-[30px] rounded-[25px]">
 			<TableHeader>
@@ -24,9 +27,10 @@ export default function Progress() {
 				{details.map((detail, index) => (
 					<TableRow
 						key={detail.customer}
-						className={`border-none py-[25px] px-[22px] ${
+						className={`border-none py-[25px] px-[22px] cursor-pointer ${
 							(index + 1) % 2 === 0 ? "bg-transparent" : "bg-white"
 						}`}
+						onClick={() => router.push("/bookings/1a2b3c")}
 					>
 						<TableCell className="flex items-center gap-x-4.5">
 							<Avatar className="w-[50px] h-[50px]">

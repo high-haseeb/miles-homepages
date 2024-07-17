@@ -23,6 +23,7 @@ const config = {
 					1: "#999CA0",
 					2: "#EBEBEB",
 					3: "#EAECF0",
+					4: "#C4C4C4",
 				},
 				green: {
 					50: "#e6f7ed",

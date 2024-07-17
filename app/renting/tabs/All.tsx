@@ -30,7 +30,7 @@ export default function All() {
 						className={`border-none py-[25px] px-[22px] cursor-pointer ${
 							(index + 1) % 2 === 0 ? "bg-transparent" : "bg-white"
 						}`}
-						onClick={() => router.push("/bookings/1a2b3c")}
+						onClick={() => router.push("/renting/1a2b3c")}
 					>
 						<TableCell className="flex items-center gap-x-4.5">
 							<Avatar className="w-[50px] h-[50px]">
