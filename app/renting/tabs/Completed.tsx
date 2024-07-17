@@ -30,7 +30,7 @@ export default function Completed() {
 						className={`border-none py-[25px] px-[22px] cursor-pointer ${
 							(index + 1) % 2 === 0 ? "bg-transparent" : "bg-white"
 						}`}
-						onClick={() => router.push("/renting/1a2b3c")}
+						onClick={() => router.push(`/renting/${detail.itemId}`)}
 					>
 						<TableCell className="flex items-center gap-x-4.5">
 							<Avatar className="w-[50px] h-[50px]">
@@ -70,6 +70,7 @@ const details = [
 		item: "Polaroid SB-6A",
 		duration: "Jan 1, 2020 - Mar 15, 2020",
 		status: "Completed",
+		itemId: "1a2b3c",
 	},
 	{
 		avatar: "",
@@ -77,6 +78,7 @@ const details = [
 		item: "Cannon XB-FG",
 		duration: "Feb 5, 2020 ",
 		status: "Completed",
+		itemId: "4d5e6f",
 	},
 	{
 		avatar: "",
@@ -84,5 +86,6 @@ const details = [
 		item: "HoverAir X1",
 		duration: "Nov 18, 2020",
 		status: "Completed",
+		itemId: "7g8h9i",
 	},
 ];

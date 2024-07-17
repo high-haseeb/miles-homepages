@@ -30,7 +30,7 @@ export default function Progress() {
 						className={`border-none py-[25px] px-[22px] cursor-pointer ${
 							(index + 1) % 2 === 0 ? "bg-transparent" : "bg-white"
 						}`}
-						onClick={() => router.push("/bookings/1a2b3c")}
+						onClick={() => router.push(`/bookings/${detail.itemId}`)}
 					>
 						<TableCell className="flex items-center gap-x-4.5">
 							<Avatar className="w-[50px] h-[50px]">
@@ -67,6 +67,7 @@ const details = [
 		item: "Polaroid SB-6A",
 		duration: "Jan 1, 2020 - Mar 15, 2020",
 		status: "Currently Rented",
+		itemId: "1a2b3c",
 	},
 	{
 		avatar: "",
@@ -74,6 +75,7 @@ const details = [
 		item: "Cannon XB-FG",
 		duration: "Feb 5, 2020 ",
 		status: "Currently Rented",
+		itemId: "4d5e6f",
 	},
 	{
 		avatar: "",
@@ -81,5 +83,6 @@ const details = [
 		item: "HoverAir X1",
 		duration: "Nov 18, 2020",
 		status: "Currently Rented",
+		itemId: "7g8h9i",
 	},
 ];

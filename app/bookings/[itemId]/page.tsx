@@ -5,6 +5,10 @@ import DashboardLayout from "@/components/Layouts/DashboardLayout";
 import Chat from "@/components/Chat";
 import RentalDetailsCard from "@/components/RentalDetailsCard";
 
+export function generateStaticParams() {
+	return [{ itemId: "1a2b3c" }, { itemId: "4d5e6f" }, { itemId: "7g8h9i" }];
+}
+
 export default function Item() {
 	return (
 		<DashboardLayout>

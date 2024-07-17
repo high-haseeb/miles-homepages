@@ -55,7 +55,7 @@ export default function DashboardLayout({
 							<Link
 								href="/dashboard"
 								className={`flex ${
-									pathname === "/dashboard"
+									pathname.includes("/dashboard")
 										? "bg-orange-50 text-orange-500"
 										: "text-slate-400"
 								} items-center gap-2 rounded-lg px-4 py-2 text-sm transition-all hover:text-orange-500`}
@@ -66,7 +66,7 @@ export default function DashboardLayout({
 							<Link
 								href="/bookings"
 								className={`flex ${
-									pathname === "/bookings"
+									pathname.includes("/bookings")
 										? "bg-orange-50 text-orange-500"
 										: "text-slate-400"
 								} items-center gap-2 rounded-lg px-4 py-2 text-sm transition-all hover:text-orange-500`}
@@ -77,7 +77,7 @@ export default function DashboardLayout({
 							<Link
 								href="/listings"
 								className={`flex ${
-									pathname === "/listings"
+									pathname.includes("/listings")
 										? "bg-orange-50 text-orange-500"
 										: "text-slate-400"
 								} items-center gap-2 rounded-lg px-4 py-2 text-sm transition-all hover:text-orange-500`}
