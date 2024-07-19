@@ -29,9 +29,6 @@ export default function ListItem() {
 			product_name: "",
 			item_location: "",
 			description: "",
-			quantity_available: "",
-			estimated_value: "",
-			price_per_day: "",
 			image: "",
 		},
 	});
