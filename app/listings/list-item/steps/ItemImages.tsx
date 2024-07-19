@@ -64,7 +64,8 @@ export default function ItemImages({ control }: { control: Control<any> }) {
 												URL.createObjectURL(file)
 											);
 											setImageURLs(urls);
-											field.value = fileArray;
+											// field.value = fileArray;
+											field.value = urls[0];
 										}}
 									/>
 								</div>

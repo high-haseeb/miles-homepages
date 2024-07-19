@@ -95,7 +95,7 @@ export default function OnboardingPage() {
 			setToken(res?.data?.accessToken);
 			setUserData(res?.data);
 			localStorage.removeItem("signupEmail");
-			router.push("/listing");
+			router.push("/dashboard");
 		} catch (err) {
 			toast({
 				variant: "destructive",

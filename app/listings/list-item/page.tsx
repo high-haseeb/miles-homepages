@@ -53,6 +53,13 @@ export default function ListItem() {
 		}
 	};
 
+	console.log(
+		form.formState.isDirty,
+		form.formState.dirtyFields,
+		form.formState.errors,
+		form.formState.isValid
+	);
+
 	return (
 		<DashboardLayout>
 			<>

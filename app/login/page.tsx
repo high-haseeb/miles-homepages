@@ -56,7 +56,7 @@ export default function LoginPage() {
 			});
 			setToken(res?.data?.accessToken);
 			setUserData(res?.data?.userData);
-			router.push("/listing");
+			router.push("/dashboard");
 		} catch (err: any) {
 			console.log(err);
 			console.log(mutation.error);
