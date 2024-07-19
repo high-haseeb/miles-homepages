@@ -13,3 +13,32 @@ export const passwordSchema = z
 	.regex(/[^a-zA-Z0-9]/, {
 		message: "Password must contain at least one special character.",
 	});
+
+const scheduleSchema = z.object({
+	single_date: z
+		.object({
+			start_date: z.string(),
+			end_date: z.string(),
+		})
+		.optional(),
+	multiple_date_ranges: z.array(z.string()).optional(),
+	recurring_days_of_week: z.array(z.string()).optional(),
+	recurring_start_date: z.string().optional(),
+	recurring_end_date: z.string().optional(),
+	schedule_type: z.string(),
+});
+
+export const listItemFormSchema = z.object({
+	product_name: z.string().min(1, "Product name is required"),
+	category_id: z.number().int().min(1, "Category is required"),
+	sub_category_id: z.number().int().optional(),
+	item_location: z.string().min(1, "Item location is required"),
+	description: z.string().min(1, "Description is required"),
+	quantity_available: z.string().min(1, "Quantity available is required"),
+	estimated_value: z.string().min(1, "Estimated value is required"),
+	price_per_day: z.string().min(1, "Price per day is required"),
+	schedule: scheduleSchema,
+	image: z.string().url().optional(),
+	latitude: z.number().optional(),
+	longitude: z.number().optional(),
+});

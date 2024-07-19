@@ -65,6 +65,9 @@ const config = {
 				pearl: {
 					400: "#FAF9F4",
 				},
+				mist: {
+					500: "#C7DDDC",
+				},
 				dark: "#2C323A",
 				dark_2: "#333333",
 				dark_green: "#273F2B",
@@ -116,10 +119,20 @@ const config = {
 					from: { height: "var(--radix-accordion-content-height)" },
 					to: { height: "0" },
 				},
+				"collapsible-down": {
+					from: { height: "0" },
+					to: { height: "var(--radix-collapsible-content-height)" },
+				},
+				"collapsible-up": {
+					from: { height: "var(--radix-collapsible-content-height)" },
+					to: { height: "0" },
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
+				"collapsible-down": "collapsible-down 0.2s ease-out",
+				"collapsible-up": "collapsible-up 0.2s ease-out",
 			},
 			boxShadow: {
 				standard: "0 12px 12px -6px rgba(0, 0, 0, 0.07)",

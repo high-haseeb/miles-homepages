@@ -95,7 +95,7 @@ export default function OnboardingPage() {
 			setToken(res?.data?.accessToken);
 			setUserData(res?.data);
 			localStorage.removeItem("signupEmail");
-			router.push("/listing")
+			router.push("/listing");
 		} catch (err) {
 			toast({
 				variant: "destructive",
@@ -129,14 +129,14 @@ export default function OnboardingPage() {
 							name="firstName"
 							fieldType={FormFieldType.INPUT}
 							placeholder="First name"
-							className="p-4 rounded-t-xl rounded-b-none outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="p-4 rounded-t-xl rounded-b-none"
 						/>
 						<CustomFormField
 							control={form.control}
 							name="lastName"
 							fieldType={FormFieldType.INPUT}
 							placeholder="Last name"
-							className="p-4 rounded-b-xl rounded-t-none outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="p-4 rounded-b-xl rounded-t-none"
 						/>
 						<p className="text-slate-200 text-xs mt-2">
 							Your names matches the name on your government issued ID
@@ -148,7 +148,7 @@ export default function OnboardingPage() {
 							name="password"
 							fieldType={FormFieldType.PASSWORD}
 							placeholder="Password"
-							className="p-4 rounded-xl outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="p-4 rounded-xl "
 						/>
 						<div className="flex items-center gap-x-3">
 							<div className="flex items-center gap-x-0.5 md:gap-x-3 p-0.5">
@@ -186,7 +186,7 @@ export default function OnboardingPage() {
 						name="confirmPassword"
 						fieldType={FormFieldType.PASSWORD}
 						placeholder="Confirm password"
-						className="p-4 rounded-xl outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+						className="p-4 rounded-xl "
 					/>
 					<div className="flex gap-x-2 p-0.5">
 						<Checkbox

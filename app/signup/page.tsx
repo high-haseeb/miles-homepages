@@ -80,7 +80,7 @@ export default function SignupPage() {
 							name="email"
 							fieldType={FormFieldType.INPUT}
 							placeholder="E-mail address"
-							className="p-4 rounded-xl outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="p-4 rounded-xl"
 						/>
 						<p className="text-slate-200 text-xs">
 							We will ask you to verify your email address.

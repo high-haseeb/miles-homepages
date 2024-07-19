@@ -116,14 +116,14 @@ export default function LoginPage() {
 							name="email"
 							fieldType={FormFieldType.INPUT}
 							placeholder="E-mail address"
-							className="p-4 rounded-xl outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="p-4 rounded-xl"
 						/>
 						<CustomFormField
 							control={form.control}
 							name="password"
 							fieldType={FormFieldType.PASSWORD}
 							placeholder="Password"
-							className="p-4 rounded-xl outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="p-4 rounded-xl"
 						/>
 					</div>
 					<Button
