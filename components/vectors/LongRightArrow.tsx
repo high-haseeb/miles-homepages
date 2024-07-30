@@ -11,7 +11,7 @@ export default function LongRightArrow() {
 			<path
 				d="M0 9H45M45 9C43 8 39 4.9 39 0.5M45 9C42.5 10.3333 37.8 13.6 39 16"
 				stroke="#FF8C2F"
-				stroke-width="2"
+				strokeWidth="2"
 			/>
 		</svg>
 	);

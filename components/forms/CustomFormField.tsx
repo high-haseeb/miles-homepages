@@ -59,6 +59,7 @@ const RenderField = ({
 							type="number"
 							placeholder={placeholder}
 							{...field}
+							onChange={(e) => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))}
 							className={`${className} outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
 						/>
 					</FormControl>

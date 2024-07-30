@@ -144,6 +144,8 @@ export const useCases = [
 export const minLengthRegex = /^.{8,}$/;
 export const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
+export const GOOGLE_PLACES_API_KEY = "AIzaSyDRFQ7Y5BN-dFMWugSvUQ6W_7Onx9UIi_0";
+
 export const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
 export const API_URL = IS_DEV_MODE

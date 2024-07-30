@@ -12,9 +12,9 @@ export default function ListStyle({ color }: { color?: string }) {
 				<path
 					d="M5.01221 8.12109L6.10596 9.21484L9.38721 5.77734"
 					stroke="white"
-					stroke-width="1.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"
+					strokeWidth="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
 				/>
 			</g>
 			<defs>
