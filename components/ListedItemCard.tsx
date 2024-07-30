@@ -155,3 +155,53 @@ const images = [
     src: "/images/speaker.png",
   },
 ];
+
+export function CarouselCard() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+  return (
+    <Carousel setApi={setApi} className="w-full max-w-[510px]">
+      <CarouselContent>
+        {images.map((image, index) => (
+          <CarouselItem key={index} className="relative basis-[100%] pl-1">
+            <div className="max-w-[258px] w-full h-[258px] p-1 rounded-lg">
+              <Image
+                src={image.src}
+                fill
+                className="object-cover rounded-lg border border-gray-2"
+                alt="card"
+                layout="fill"
+              />
+            </div>
+            <CarouselPrevious className="left-8" />
+            <CarouselNext className="right-4.5" />
+            <div className="text-center flex items-center gap-x-3 absolute bottom-[22px] left-1/2 -translate-x-1/2">
+              {images.map((_, index) => (
+                <span
+                  key={index}
+                  className={`block h-2 w-2 rounded-full ${
+                    current === index + 1 ? "bg-green-500" : "bg-slate-100"
+                  } `}
+                />
+              ))}
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
+  );
+}

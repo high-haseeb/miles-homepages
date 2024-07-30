@@ -27,29 +27,34 @@ import { StepProps, FormFieldType, ListItemPayload } from "@/types";
 import { listItemFormSchema } from "@/constants/schemas";
 import Preview from "./steps/Preview";
 import { useAppContext } from "@/context/AppContext";
+import { InitialValuesProps } from "@/types";
 
 export default function ListItem() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [initialValues, setInitialValues] = useState<InitialValuesProps | null>(
+    null
+  );
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
   const { isLoggedIn } = useAppContext();
 
-  const initialValues = JSON.parse(
-    localStorage.getItem("listItemForm") || "{}"
-  );
+  useEffect(() => {
+    setInitialValues(JSON.parse(localStorage.getItem("listItemForm") || "{}"));
+  }, []);
+
   const form = useForm<z.infer<typeof listItemFormSchema>>({
     resolver: zodResolver(listItemFormSchema),
     defaultValues: {
-      product_name: initialValues.product_name || "",
-      item_location: initialValues.item_location || "",
-      description: initialValues.description || "",
-      image: initialValues.image || [],
-      category_id: initialValues.category_id || "",
-      quantity_available: initialValues.quantity_available || null,
-      estimated_value: initialValues.estimated_value || null,
-      price_per_day: initialValues.price_per_day || null,
-      multiple_date_ranges: initialValues.multiple_date_ranges || null,
+      product_name: initialValues!.product_name || "",
+      item_location: initialValues!.item_location || "",
+      description: initialValues!.description || "",
+      image: initialValues!.image || [],
+      category_id: initialValues!.category_id || "",
+      quantity_available: initialValues!.quantity_available || 0,
+      estimated_value: initialValues!.estimated_value || 0,
+      price_per_day: initialValues!.price_per_day || 0,
+      multiple_date_ranges: initialValues!.multiple_date_ranges || null,
     },
   });
 
@@ -115,7 +120,7 @@ export default function ListItem() {
               </p>
               <div className="flex items-center gap-x-6">
                 <Button
-                  onClick={() => router.push("/listings")}
+                  onClick={() => router.push("/manage-listings")}
                   className="text-slate-400 rounded-lg hover:bg-transparent py-2 px-3 border-none bg-transparent w-fit"
                 >
                   Close

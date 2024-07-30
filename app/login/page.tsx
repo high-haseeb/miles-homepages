@@ -47,6 +47,8 @@ export default function LoginPage() {
     },
   });
 
+  const redirectUrl = searchParams.get("redirect");
+
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
     try {
       const res = await mutation.mutateAsync(values);
@@ -57,8 +59,8 @@ export default function LoginPage() {
       });
       setToken(res?.data?.accessToken);
       setUserData(res?.data?.userData);
-      const redirect = searchParams.get("redirect")
-        ? decodeURIComponent(searchParams.get("redirect") as string)
+      const redirect = redirectUrl
+        ? decodeURIComponent(redirectUrl as string)
         : "/dashboard";
       router.push(redirect);
     } catch (err: any) {

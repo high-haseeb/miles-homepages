@@ -105,4 +105,17 @@ export interface ItemProps {
   location: string;
   lat: number;
   lng: number;
+  itemId: string;
+}
+
+export interface InitialValuesProps {
+  product_name: string;
+  item_location: string;
+  description: string;
+  image: File;
+  category_id: string;
+  quantity_available: number;
+  estimated_value: number;
+  price_per_day: number;
+  multiple_date_ranges: DateRange;
 }

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import { APIProvider, Map, InfoWindow } from "@vis.gl/react-google-maps";
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { ListedItemCard2 } from "@/components/ListedItemCard";
@@ -15,6 +16,7 @@ const items: ItemProps[] = [
     location: "Lagos 16 km away",
     lat: 6.5244,
     lng: 3.3792,
+    itemId: "1a2b3c",
   },
   {
     id: 2,
@@ -23,6 +25,7 @@ const items: ItemProps[] = [
     location: "Lagos 1.5 km away",
     lat: 6.465422,
     lng: 3.406448,
+    itemId: "4d5e6f",
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ const items: ItemProps[] = [
     location: "Lagos 1.5 km away",
     lat: 6.785422,
     lng: 5.406448,
+    itemId: "7g8h9i",
   },
   {
     id: 4,
@@ -39,6 +43,7 @@ const items: ItemProps[] = [
     location: "Lagos 1.5 km away",
     lat: 16.465422,
     lng: 11.406448,
+    itemId: "10j11k12l",
   },
   {
     id: 5,
@@ -47,6 +52,7 @@ const items: ItemProps[] = [
     location: "Lagos 1.5 km away",
     lat: 8.465422,
     lng: 12.406448,
+    itemId: "13m14n15o",
   },
   {
     id: 6,
@@ -55,6 +61,7 @@ const items: ItemProps[] = [
     location: "Lagos 1.5 km away",
     lat: 2.465422,
     lng: 5.406448,
+    itemId: "16p17q18r",
   },
   // Add more items here
 ];
@@ -77,7 +84,9 @@ export default function Listings() {
       <div className="flex flex-col md:flex-row gap-[30px] h-full max-h-screen overflow-hidden md:-mx-[30px]">
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-[30px] overflow-y-auto md:pl-[30px] md:py-[25px]">
           {items.map((item) => (
-            <ListedItemCard2 key={item.id} />
+            <Link href={`/listings/${item.itemId}`} key={item.id}>
+              <ListedItemCard2 />
+            </Link>
           ))}
         </div>
         <div className="flex-1">
