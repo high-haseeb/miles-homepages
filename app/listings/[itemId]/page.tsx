@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -54,9 +54,8 @@ const items: ItemProps[] = [
   // Add more items here
 ];
 
-export default function ListedItem() {
+export default function ListedItem({ params }: { params: { itemId: string } }) {
   const router = useRouter();
-  const params = useParams();
   const { itemId } = params;
   const route = useRouter();
   return (

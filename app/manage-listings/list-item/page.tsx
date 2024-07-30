@@ -42,11 +42,11 @@ export default function ListItem() {
   const form = useForm<z.infer<typeof listItemFormSchema>>({
     resolver: zodResolver(listItemFormSchema),
     defaultValues: {
-      product_name: initialValues?.product_name || "",
-      item_location: initialValues?.item_location || "",
-      description: initialValues?.description || "",
+      product_name: initialValues?.product_name || undefined,
+      item_location: initialValues?.item_location || undefined,
+      description: initialValues?.description || undefined,
       image: [],
-      category_id: initialValues?.category_id || "",
+      category_id: initialValues?.category_id || undefined,
       quantity_available: initialValues?.quantity_available || undefined,
       estimated_value: initialValues?.estimated_value || undefined,
       price_per_day: initialValues?.price_per_day || undefined,

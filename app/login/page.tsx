@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -25,10 +25,13 @@ const loginFormSchema = z.object({
   password: passwordSchema,
 });
 
-export default function LoginPage() {
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { toast } = useToast();
   const { setToken, setUserData } = useAppContext();
 
@@ -47,7 +50,7 @@ export default function LoginPage() {
     },
   });
 
-  const redirectUrl = searchParams.get("redirect");
+  const redirectUrl = searchParams.redirect;
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
     try {
