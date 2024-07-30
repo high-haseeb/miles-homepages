@@ -32,6 +32,10 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
 export interface SignupPayload {
   email: string;
   password: string;
@@ -106,6 +110,7 @@ export interface ItemProps {
   lat: number;
   lng: number;
   itemId: string;
+  img?: string;
 }
 
 export interface InitialValuesProps {

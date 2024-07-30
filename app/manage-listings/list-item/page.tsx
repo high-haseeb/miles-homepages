@@ -39,24 +39,31 @@ export default function ListItem() {
   const pathname = usePathname();
   const { isLoggedIn } = useAppContext();
 
-  useEffect(() => {
-    setInitialValues(JSON.parse(localStorage.getItem("listItemForm") || "{}"));
-  }, []);
-
   const form = useForm<z.infer<typeof listItemFormSchema>>({
     resolver: zodResolver(listItemFormSchema),
     defaultValues: {
-      product_name: initialValues!.product_name || "",
-      item_location: initialValues!.item_location || "",
-      description: initialValues!.description || "",
-      image: initialValues!.image || [],
-      category_id: initialValues!.category_id || "",
-      quantity_available: initialValues!.quantity_available || 0,
-      estimated_value: initialValues!.estimated_value || 0,
-      price_per_day: initialValues!.price_per_day || 0,
-      multiple_date_ranges: initialValues!.multiple_date_ranges || null,
+      product_name: initialValues?.product_name || "",
+      item_location: initialValues?.item_location || "",
+      description: initialValues?.description || "",
+      image: [],
+      category_id: initialValues?.category_id || "",
+      quantity_available: initialValues?.quantity_available || undefined,
+      estimated_value: initialValues?.estimated_value || undefined,
+      price_per_day: initialValues?.price_per_day || undefined,
+      // multiple_date_ranges: initialValues?.multiple_date_ranges || undefined,
     },
   });
+
+  useEffect(() => {
+    const formDetails = localStorage.getItem("listItemForm");
+    if (formDetails) {
+      const parsedFormDetails = JSON.parse(formDetails);
+      setInitialValues(parsedFormDetails);
+      form.reset(parsedFormDetails);
+    }
+  }, [form]);
+
+  console.log(initialValues);
 
   const steps: StepProps[] = [
     { 1: <ItemInfo control={form.control} /> },
@@ -68,6 +75,7 @@ export default function ListItem() {
   const onSubmit = async (values: z.infer<typeof listItemFormSchema>) => {
     if (!isLoggedIn) {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      return;
     }
     console.log("Form Submitted");
     console.log(values);
@@ -79,21 +87,12 @@ export default function ListItem() {
     }
   };
 
-  console.log(
-    form.formState.isDirty,
-    form.formState.dirtyFields,
-    form.formState.errors,
-    form.formState.isValid
-  );
-
   useEffect(() => {
     const subscription = form.watch((value) => {
       localStorage.setItem("listItemForm", JSON.stringify(value));
     });
     return () => subscription.unsubscribe();
   }, [form]);
-
-  function handleCloseForm() {}
 
   return (
     <DashboardLayout>
@@ -115,7 +114,7 @@ export default function ListItem() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[350px] py-[43.5px] px-[21.5px] flex flex-col gap-y-[23px] items-center">
               <p className="text-center text-black">
-                Do you want to close the listing form ? your progress has been
+                Do you want to close the listing form? Your progress has been
                 saved.
               </p>
               <div className="flex items-center gap-x-6">

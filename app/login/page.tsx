@@ -131,6 +131,9 @@ export default function LoginPage() {
               placeholder="Password"
               className="p-4 rounded-xl"
             />
+            <Link href="/forgot-password" className="text-xs text-orange-500">
+              Forgot password ?
+            </Link>
           </div>
           <Button
             type="submit"

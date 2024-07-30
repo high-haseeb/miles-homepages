@@ -174,7 +174,10 @@ export function CarouselCard() {
     });
   }, [api]);
   return (
-    <Carousel setApi={setApi} className="w-full max-w-[510px]">
+    <Carousel
+      setApi={setApi}
+      className="w-full max-h-[310px] h-full max-w-[510px]"
+    >
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index} className="relative basis-[100%] pl-1">

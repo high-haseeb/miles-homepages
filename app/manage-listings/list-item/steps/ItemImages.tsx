@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { Control, useFormContext } from "react-hook-form";
 import { FormControl } from "@/components/ui/form";
@@ -9,7 +8,7 @@ import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
 
 export default function ItemImages({ control }: { control: Control<any> }) {
-  const { setValue, watch, getValues } = useFormContext();
+  const { setValue, watch } = useFormContext();
   const [disabled, setDisabled] = useState(false);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
 
@@ -27,9 +26,23 @@ export default function ItemImages({ control }: { control: Control<any> }) {
     setValue("image", fileArray);
   };
 
-  const images = watch("image")
-    ? Array.from(watch("image")).map((file: any) => URL.createObjectURL(file))
-    : [];
+  const image = watch("image");
+
+  const images = useMemo(() => {
+    return image
+      ? Array.from(image)
+          .filter((file: any) => file instanceof File)
+          .map((file: any) => URL.createObjectURL(file))
+      : [];
+  }, [image]);
+
+  // Clean up the object URLs when the component unmounts or the images change
+  useEffect(() => {
+    return () => {
+      imageURLs.forEach((url) => URL.revokeObjectURL(url));
+      images.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [imageURLs, images]);
 
   return (
     <div className="flex flex-col gap-y-[30px]">
