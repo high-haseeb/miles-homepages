@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,11 +37,14 @@ const onboardingFormSchema = z
     path: ["confirmPassword"],
   });
 
-export default function OnboardingPage() {
+export default function OnboardingPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const [signupEmail, setSignupEmail] = useState<string | null>("");
 
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -79,6 +82,8 @@ export default function OnboardingPage() {
 
   const passwordWatch = form.watch("password");
 
+  const redirectUrl = searchParams.redirect;
+
   async function onSubmit(values: z.infer<typeof onboardingFormSchema>) {
     try {
       const res: any = await mutation.mutateAsync({
@@ -96,8 +101,8 @@ export default function OnboardingPage() {
       setToken(res?.data?.accessToken);
       setUserData(res?.data);
       localStorage.removeItem("signupEmail");
-      const redirect = searchParams.get("redirect")
-        ? decodeURIComponent(searchParams.get("redirect") as string)
+      const redirect = redirectUrl
+        ? decodeURIComponent(redirectUrl as string)
         : "/dashboard";
       router.push(redirect);
     } catch (err) {

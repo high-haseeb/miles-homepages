@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, CircleCheck } from "lucide-react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -25,10 +25,13 @@ const forgotPasswordFormSchema = z.object({
   }),
 });
 
-export default function ForgotPassword() {
+export default function ForgotPassword({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { toast } = useToast();
   const { setToken, setUserData } = useAppContext();
 
@@ -48,12 +51,16 @@ export default function ForgotPassword() {
     },
   });
 
-  const redirectUrl = searchParams.get("redirect");
+  const redirectUrl = searchParams.redirect;
 
   async function onSubmit(values: z.infer<typeof forgotPasswordFormSchema>) {
     try {
       const res = await mutation.mutateAsync(values);
-      setSuccess(true);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Log in successful!",
+      });
       setToken(res?.data?.accessToken);
       setUserData(res?.data?.userData);
       const redirect = redirectUrl
