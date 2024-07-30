@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 "use client";
 
 import { useState } from "react";
@@ -124,7 +125,6 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
                             };
                         return (
                           <div
-                            key={i}
                             {...getSuggestionItemProps(suggestion, {
                               className,
                               style,
