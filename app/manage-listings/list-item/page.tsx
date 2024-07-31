@@ -63,8 +63,6 @@ export default function ListItem() {
     }
   }, [form]);
 
-  console.log(initialValues);
-
   const steps: StepProps[] = [
     { 1: <ItemInfo control={form.control} /> },
     { 2: <ItemImages control={form.control} /> },

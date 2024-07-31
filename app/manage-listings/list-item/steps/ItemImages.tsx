@@ -2,17 +2,39 @@
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { Control, useFormContext } from "react-hook-form";
+import imageCompression from "browser-image-compression";
 import { FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
+
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
+const base64ToFile = (base64: string, filename: string): File => {
+  const arr = base64.split(",");
+  const mime = arr[0].match(/:(.*?);/)![1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+};
 
 export default function ItemImages({ control }: { control: Control<any> }) {
   const { setValue, watch } = useFormContext();
   const [disabled, setDisabled] = useState(false);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 5) {
       setDisabled(true);
@@ -20,10 +42,23 @@ export default function ItemImages({ control }: { control: Control<any> }) {
     }
     setDisabled(false);
     const fileArray = Array.from(files!);
-    const urls = fileArray.map((file) => URL.createObjectURL(file));
-    setImageURLs(urls);
 
-    setValue("image", fileArray);
+    const compressedFiles = await Promise.all(
+      fileArray.map((file) =>
+        imageCompression(file, {
+          maxSizeMB: 0.1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        })
+      )
+    );
+
+    const newURLs = compressedFiles.map((file) => URL.createObjectURL(file));
+    setImageURLs((prevURLs) => [...prevURLs, ...newURLs]);
+
+    const base64Files = await Promise.all(compressedFiles.map(fileToBase64));
+    const currentImages = watch("image") || [];
+    setValue("image", [...currentImages, ...base64Files]);
   };
 
   const image = watch("image");
@@ -31,8 +66,10 @@ export default function ItemImages({ control }: { control: Control<any> }) {
   const images = useMemo(() => {
     return image
       ? Array.from(image)
-          .filter((file: any) => file instanceof File)
-          .map((file: any) => URL.createObjectURL(file))
+          .filter((file: any) => typeof file === "string")
+          .map((base64: string, index: number) =>
+            URL.createObjectURL(base64ToFile(base64, `image-${index}`))
+          )
       : [];
   }, [image]);
 
@@ -40,9 +77,12 @@ export default function ItemImages({ control }: { control: Control<any> }) {
   useEffect(() => {
     return () => {
       imageURLs.forEach((url) => URL.revokeObjectURL(url));
-      images.forEach((url) => URL.revokeObjectURL(url));
     };
-  }, [imageURLs, images]);
+  }, [imageURLs]);
+
+  useEffect(() => {
+    setImageURLs(images);
+  }, [images]);
 
   return (
     <div className="flex flex-col gap-y-[30px]">
@@ -88,39 +128,39 @@ export default function ItemImages({ control }: { control: Control<any> }) {
                 </div>
                 <div className="flex items-center justify-between">
                   <Image
-                    src={imageURLs[0] || images[0] || "/images/default-img.png"}
+                    src={imageURLs[0] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-cover"
+                    className="rounded-lg border border-gray-3 object-contain"
                   />
                   <Image
-                    src={imageURLs[1] || images[1] || "/images/default-img.png"}
+                    src={imageURLs[1] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-cover"
+                    className="rounded-lg border border-gray-3 object-contain"
                   />
                   <Image
-                    src={imageURLs[2] || images[2] || "/images/default-img.png"}
+                    src={imageURLs[2] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-cover"
+                    className="rounded-lg border border-gray-3 object-contain"
                   />
                   <Image
-                    src={imageURLs[3] || images[3] || "/images/default-img.png"}
+                    src={imageURLs[3] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-cover"
+                    className="rounded-lg border border-gray-3 object-contain"
                   />
                   <Image
-                    src={imageURLs[4] || images[4] || "/images/default-img.png"}
+                    src={imageURLs[4] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-cover"
+                    className="rounded-lg border border-gray-3 object-contain"
                   />
                 </div>
               </div>
