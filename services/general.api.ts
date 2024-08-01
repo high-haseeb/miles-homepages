@@ -1,7 +1,12 @@
 import { apiService } from ".";
 import { ListItemPayload } from "@/types";
 
-const token = localStorage.getItem("token");
+const getToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+  return null;
+};
 
 export const getCategories = async () => {
   try {
@@ -13,6 +18,7 @@ export const getCategories = async () => {
 };
 
 export const createListing = async (payload: ListItemPayload) => {
+  const token = getToken();
   try {
     const response = await apiService.post("/listings", payload, {
       headers: {
