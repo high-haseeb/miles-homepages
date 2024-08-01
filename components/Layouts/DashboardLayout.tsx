@@ -28,6 +28,7 @@ import ProfileIcon from "../vectors/ProfileIcon";
 import DashboardIcon from "../vectors/DashboardIcon";
 import RentalsIcon from "../vectors/RentalsIcon";
 import LogoutIcon from "../vectors/LogoutIcon";
+import Notifications from "../Notifications";
 
 export default function DashboardLayout({
   children,
@@ -167,13 +168,18 @@ export default function DashboardLayout({
               </div>
             </form>
           </div>
-          <Button
-            size="icon"
-            className="ml-auto text-[#394455] h-8 w-8 hover:bg-transparent bg-transparent mr-11"
-          >
-            <Bell className="h-6 w-6" />
-            <span className="sr-only">Toggle notifications</span>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                size="icon"
+                className="ml-auto text-[#394455] h-8 w-8 hover:bg-transparent bg-transparent mr-11"
+              >
+                <Bell className="h-6 w-6" />
+                <span className="sr-only">Toggle notifications</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <Notifications />
+          </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
