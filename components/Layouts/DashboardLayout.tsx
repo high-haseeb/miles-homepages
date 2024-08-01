@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
   CircleUser,
@@ -18,12 +18,16 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
+import { useAppContext } from "@/context/AppContext";
+import ProfileIcon from "../vectors/ProfileIcon";
+import DashboardIcon from "../vectors/DashboardIcon";
+import RentalsIcon from "../vectors/RentalsIcon";
+import LogoutIcon from "../vectors/LogoutIcon";
 
 export default function DashboardLayout({
   children,
@@ -31,6 +35,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { handleLogout } = useAppContext();
   return (
     <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] h-screen w-screen">
       <div className="hidden border-r bg-white md:block">
@@ -172,13 +178,39 @@ export default function DashboardLayout({
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuContent
+              align="end"
+              className="flex flex-col gap-6 px-2 py-4"
+            >
+              <DropdownMenuItem className="flex items-center gap-x-2 px-4 cursor-pointer">
+                <RentalsIcon /> My Rentals
+              </DropdownMenuItem>
+              <DropdownMenuItem className="px-4 cursor-pointer">
+                <Link href="/dashboard" className="flex items-center gap-x-2">
+                  <DashboardIcon /> Dashboard
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-x-2 px-4 cursor-pointer">
+                <ProfileIcon />
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex items-center gap-x-2 px-4 cursor-pointer"
+                onClick={() => {
+                  handleLogout();
+                  router.push("/");
+                }}
+              >
+                <LogoutIcon /> Logout
+              </DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-transparent">
+                <Link
+                  href="/renting"
+                  className="py-1 px-4 rounded-[38px] bg-green-500 w-fit text-white"
+                >
+                  Switch to Renting
+                </Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
