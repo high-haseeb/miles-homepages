@@ -89,17 +89,19 @@ interface Schedule {
 
 export interface ListItemPayload {
   product_name: string;
-  category_id: number;
-  sub_category_id?: number;
+  category_id: string;
+  sub_category_id: string;
   item_location: string;
   description: string;
   quantity_available: number;
   estimated_value: number;
   price_per_day: number;
-  schedule: Schedule;
-  image?: string;
+  image?: File;
   latitude?: number;
   longitude?: number;
+  multiple_date_ranges?: string;
+  recurring_days_of_week?: string[];
+  recurring_end_date?: Date;
 }
 
 export interface ItemProps {
@@ -123,4 +125,6 @@ export interface InitialValuesProps {
   estimated_value: number;
   price_per_day: number;
   multiple_date_ranges: DateRange;
+  recurring_days_of_week: string[];
+  recurring_end_date: Date;
 }

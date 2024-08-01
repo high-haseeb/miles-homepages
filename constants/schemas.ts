@@ -30,7 +30,6 @@ const scheduleSchema = z.object({
 
 export const listItemFormSchema = z.object({
   product_name: z.string().min(1, "Product name is required"),
-//   category_id: z.number().int().min(1, "Category is required"),
   category_id: z.string().min(1, "Product name is required"),
   sub_category_id: z.number().int().optional(),
   item_location: z.string().min(1, "Item location is required"),
@@ -38,11 +37,10 @@ export const listItemFormSchema = z.object({
   quantity_available: z.number().int().min(1, "Quantity available is required"),
   estimated_value: z.number().min(1, "Estimated value is required"),
   price_per_day: z.number().min(1, "Price per day is required"),
-  multiple_date_ranges: z.object({
-    from: z.date().optional(),
-    to: z.date().optional(),
-  }).optional(),
+  multiple_date_ranges: z.any().optional(),
   image: z.any().optional(),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
+  recurring_days_of_week: z.array(z.string()).optional(),
+  recurring_end_date: z.date().optional(),
 });

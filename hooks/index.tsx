@@ -4,6 +4,11 @@ const useLoadScript = (src: string) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      setLoaded(true);
+      return;
+    }
+
     const script = document.createElement("script");
     script.src = src;
     script.async = true;

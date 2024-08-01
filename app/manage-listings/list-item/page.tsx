@@ -13,6 +13,7 @@ import {
   DialogClose,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { format } from "date-fns";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -28,6 +29,8 @@ import { listItemFormSchema } from "@/constants/schemas";
 import Preview from "./steps/Preview";
 import { useAppContext } from "@/context/AppContext";
 import { InitialValuesProps } from "@/types";
+import { base64ToFile } from "@/utils";
+import { createListing } from "@/services/general.api";
 
 export default function ListItem() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -35,22 +38,31 @@ export default function ListItem() {
     null
   );
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
   const { isLoggedIn } = useAppContext();
+  const mutation = useMutation({
+    mutationFn: createListing,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["listings"] });
+    },
+  });
 
   const form = useForm<z.infer<typeof listItemFormSchema>>({
     resolver: zodResolver(listItemFormSchema),
-    defaultValues: {
-      product_name: initialValues?.product_name || undefined,
-      item_location: initialValues?.item_location || undefined,
-      description: initialValues?.description || undefined,
+    defaultValues: initialValues ?? {
+      product_name: "",
+      item_location: "",
+      description: "",
       image: [],
-      category_id: initialValues?.category_id || undefined,
-      quantity_available: initialValues?.quantity_available || undefined,
-      estimated_value: initialValues?.estimated_value || undefined,
-      price_per_day: initialValues?.price_per_day || undefined,
-      // multiple_date_ranges: initialValues?.multiple_date_ranges || undefined,
+      category_id: "",
+      quantity_available: 0,
+      estimated_value: 0,
+      price_per_day: 0,
+      recurring_days_of_week: [],
+      multiple_date_ranges: { from: new Date(), to: new Date() },
+      recurring_end_date: new Date(),
     },
   });
 
@@ -77,6 +89,47 @@ export default function ListItem() {
     }
     console.log("Form Submitted");
     console.log(values);
+    try {
+      const formData = new FormData();
+      for (const [key, value] of Object.entries(values)) {
+        if (key === "image") {
+          const imageFiles = Array.from(values.image)
+            .filter((file: any) => typeof file === "string")
+            .map((base64: string, index: number) =>
+              base64ToFile(base64, `image-${index}`)
+            );
+
+          formData.append("image", imageFiles);
+        } else if (key === "multiple_date_ranges" && value) {
+          const dateRangeString = `${format(
+            values.multiple_date_ranges!.from!,
+            "M/d/yyyy"
+          )}, ${format(values.multiple_date_ranges!.to!, "M/d/yyyy")}`;
+          formData.append("multiple_date_ranges", dateRangeString);
+        } else if (value !== undefined) {
+          formData.append(key, value as string | Blob);
+        }
+      }
+      const res = await mutation.mutateAsync(formData);
+      console.log(res);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Listing created successfully!",
+      });
+    } catch (err: any) {
+      console.log(err);
+      console.log(mutation.error);
+      const errorMessage =
+        err.response?.data?.message || "An error occurred. Please try again.";
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: errorMessage,
+      });
+    }
+
+    console.log("Form Submitted");
   };
 
   const handleButtonClick = () => {

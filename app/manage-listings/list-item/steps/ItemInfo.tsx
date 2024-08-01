@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Control, useFormContext } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import PlacesAutocomplete, {
@@ -11,19 +11,25 @@ import PlacesAutocomplete, {
 
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
-import { getCategories } from "@/services/listing.api";
-import { useAppContext } from "@/context/AppContext";
+import { getCategories } from "@/services/general.api";
 import useLoadScript from "@/hooks";
 import { GOOGLE_PLACES_API_KEY } from "@/constants";
 
 export default function ItemInfo({ control }: { control: Control<any> }) {
   const { setValue, getValues } = useFormContext();
-  const { token } = useAppContext();
   const { data: categories, isPending } = useQuery({
     queryKey: ["category"],
-    queryFn: () => getCategories(token),
+    queryFn: getCategories,
   });
-  const [location, setLocation] = useState(getValues("item_location") || "");
+  const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    const initialLocation = getValues("item_location");
+    if (initialLocation) {
+      setLocation(initialLocation);
+    }
+  }, [getValues]);
+
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const scriptLoaded = useLoadScript(

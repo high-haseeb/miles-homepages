@@ -7,41 +7,21 @@ import { FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
-
-const fileToBase64 = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
-};
-
-const base64ToFile = (base64: string, filename: string): File => {
-  const arr = base64.split(",");
-  const mime = arr[0].match(/:(.*?);/)![1];
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new File([u8arr], filename, { type: mime });
-};
+import { fileToBase64, base64ToFile } from "@/utils";
 
 export default function ItemImages({ control }: { control: Control<any> }) {
   const { setValue, watch } = useFormContext();
   const [disabled, setDisabled] = useState(false);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 5) {
+  const handleFileChange = async (files: FileList) => {
+    if (imageURLs?.length === 5) {
       setDisabled(true);
       return;
     }
     setDisabled(false);
-    const fileArray = Array.from(files!);
+    const fileArray = Array.from(files);
 
     const compressedFiles = await Promise.all(
       fileArray.map((file) =>
@@ -59,6 +39,39 @@ export default function ItemImages({ control }: { control: Control<any> }) {
     const base64Files = await Promise.all(compressedFiles.map(fileToBase64));
     const currentImages = watch("image") || [];
     setValue("image", [...currentImages, ...base64Files]);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    handleFileChange(files);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      handleFileChange(files);
+    }
+  };
+
+  const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
+    if (disabled) {
+      e.preventDefault();
+    }
   };
 
   const image = watch("image");
@@ -95,8 +108,15 @@ export default function ItemImages({ control }: { control: Control<any> }) {
           className="py-3 px-4 rounded-lg border border-gray-3"
           renderSkeleton={(field) => (
             <FormControl>
-              <div className="flex flex-col gap-y-2.5">
-                <div className="flex flex-col items-center w-full pt-6 pb-11 rounded-lg border border-dashed border-mist-500">
+              <div>
+                <div
+                  className={`flex flex-col items-center w-full pt-6 pb-11 rounded-lg border border-dashed border-mist-500 ${
+                    isDragging ? "bg-gray-200" : ""
+                  }`}
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                >
                   <Image
                     src="/icons/img-upload-icon.svg"
                     alt="upload image icon"
@@ -106,7 +126,10 @@ export default function ItemImages({ control }: { control: Control<any> }) {
                   />
                   <label
                     htmlFor="image"
-                    className="text-center text-black mb-[13px] cursor-pointer"
+                    className={`text-center text-black mb-[13px] cursor-pointer ${
+                      disabled ? "cursor-not-allowed" : ""
+                    }`}
+                    onClick={handleLabelClick}
                   >
                     Drag and drop images or{" "}
                     <span className="text-green-500 font-medium">
@@ -123,7 +146,7 @@ export default function ItemImages({ control }: { control: Control<any> }) {
                     id="image"
                     disabled={disabled}
                     className={`hidden outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
-                    onChange={handleFileChange}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="flex items-center justify-between">
