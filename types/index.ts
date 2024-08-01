@@ -96,7 +96,7 @@ export interface ListItemPayload {
   quantity_available: number;
   estimated_value: number;
   price_per_day: number;
-  image?: File;
+  image?: File[];
   latitude?: number;
   longitude?: number;
   multiple_date_ranges?: string;

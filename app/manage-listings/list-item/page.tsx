@@ -87,31 +87,41 @@ export default function ListItem() {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
+
     console.log("Form Submitted");
     console.log(values);
+
     try {
-      const formData = new FormData();
+      let newListingObject: Partial<ListItemPayload> = {};
+
       for (const [key, value] of Object.entries(values)) {
-        if (key === "image") {
-          const imageFiles = Array.from(values.image)
+        if (key === "image" && value) {
+          const imageFiles = Array.from(value as any[])
             .filter((file: any) => typeof file === "string")
             .map((base64: string, index: number) =>
               base64ToFile(base64, `image-${index}`)
             );
-
-          formData.append("image", imageFiles);
+          newListingObject.image = imageFiles;
         } else if (key === "multiple_date_ranges" && value) {
           const dateRangeString = `${format(
-            values.multiple_date_ranges!.from!,
+            (value as any).from,
             "M/d/yyyy"
-          )}, ${format(values.multiple_date_ranges!.to!, "M/d/yyyy")}`;
-          formData.append("multiple_date_ranges", dateRangeString);
+          )}, ${format((value as any).to, "M/d/yyyy")}`;
+          newListingObject.multiple_date_ranges = dateRangeString;
+        } else if (key === "sub_category_id" && value !== undefined) {
+          newListingObject.sub_category_id = String(value);
+        } else if (Array.isArray(value)) {
+          (newListingObject as any)[key] = value.join(",");
         } else if (value !== undefined) {
-          formData.append(key, value as string | Blob);
+          (newListingObject as any)[key] = value;
         }
       }
-      const res = await mutation.mutateAsync(formData);
+
+      const res = await mutation.mutateAsync(
+        newListingObject as ListItemPayload
+      );
       console.log(res);
+
       toast({
         variant: "success",
         title: "Success",
@@ -120,6 +130,7 @@ export default function ListItem() {
     } catch (err: any) {
       console.log(err);
       console.log(mutation.error);
+
       const errorMessage =
         err.response?.data?.message || "An error occurred. Please try again.";
       toast({
