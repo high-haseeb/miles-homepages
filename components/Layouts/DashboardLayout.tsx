@@ -51,10 +51,6 @@ export default function DashboardLayout({
                 className="object-contain hidden md:block"
               />
             </Link>
-            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
-            </Button>
           </div>
           <div className="">
             <nav className="grid gap-2 items-start px-2 text-sm font-medium lg:px-4">
@@ -166,11 +162,18 @@ export default function DashboardLayout({
                 <Input
                   type="search"
                   placeholder="Search products..."
-                  className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+                  className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 max-w-[346px]"
                 />
               </div>
             </form>
           </div>
+          <Button
+            size="icon"
+            className="ml-auto text-[#394455] h-8 w-8 hover:bg-transparent bg-transparent mr-11"
+          >
+            <Bell className="h-6 w-6" />
+            <span className="sr-only">Toggle notifications</span>
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
