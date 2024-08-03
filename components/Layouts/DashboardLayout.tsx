@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -12,7 +13,6 @@ import {
   ShoppingCart,
   Users,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -29,6 +29,7 @@ import DashboardIcon from "../vectors/DashboardIcon";
 import RentalsIcon from "../vectors/RentalsIcon";
 import LogoutIcon from "../vectors/LogoutIcon";
 import Notifications from "../Notifications";
+import VerificationModal from "../Modals/VerificationModal";
 
 export default function DashboardLayout({
   children,
@@ -38,6 +39,7 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { handleLogout } = useAppContext();
+  const [openVerifModal, setOpenVerifModal] = useState(true);
   return (
     <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] h-screen w-screen">
       <div className="hidden border-r bg-white md:block">
@@ -227,6 +229,10 @@ export default function DashboardLayout({
           {children}
         </main>
       </div>
+      <VerificationModal
+        openModal={openVerifModal}
+        handleOpenModal={setOpenVerifModal}
+      />
     </div>
   );
 }
