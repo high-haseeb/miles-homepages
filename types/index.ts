@@ -128,3 +128,13 @@ export interface InitialValuesProps {
   recurring_days_of_week: string[];
   recurring_end_date: Date;
 }
+
+export interface SMSOTPPayload {
+  phone_number: string;
+  Channel: "sms";
+}
+
+export interface VerifySMSOTPPayload {
+  phone_number: string;
+  otp: string;
+}

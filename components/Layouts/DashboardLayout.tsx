@@ -39,7 +39,7 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { handleLogout, isVerified } = useAppContext();
-  const [openVerifModal, setOpenVerifModal] = useState(false);
+  const [openVerifModal, setOpenVerifModal] = useState(true);
 
   useEffect(() => {
     const showVerifModal = sessionStorage.getItem("showVerifModal");
