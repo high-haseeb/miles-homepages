@@ -31,9 +31,11 @@ import { useAppContext } from "@/context/AppContext";
 import { InitialValuesProps } from "@/types";
 import { base64ToFile } from "@/utils";
 import { createListing } from "@/services/general.api";
+import VerificationModal from "@/components/Modals/VerificationModal";
 
 export default function ListItem() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [openVerifModal, setOpenVerifModal] = useState(false);
   const [initialValues, setInitialValues] = useState<InitialValuesProps | null>(
     null
   );
@@ -41,7 +43,7 @@ export default function ListItem() {
   const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
-  const { isLoggedIn } = useAppContext();
+  const { isLoggedIn, isVerified } = useAppContext();
   const mutation = useMutation({
     mutationFn: createListing,
     onSuccess: () => {
@@ -87,7 +89,10 @@ export default function ListItem() {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
-
+    if (!isVerified) {
+      setOpenVerifModal(true);
+      return;
+    }
     console.log("Form Submitted");
     console.log(values);
 
@@ -228,6 +233,10 @@ export default function ListItem() {
             </form>
           </Form>
         </div>
+        <VerificationModal
+          openModal={openVerifModal}
+          handleOpenModal={setOpenVerifModal}
+        />
       </>
     </DashboardLayout>
   );
