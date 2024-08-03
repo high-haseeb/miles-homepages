@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -38,8 +38,18 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { handleLogout } = useAppContext();
-  const [openVerifModal, setOpenVerifModal] = useState(true);
+  const { handleLogout, isVerified } = useAppContext();
+  const [openVerifModal, setOpenVerifModal] = useState(false);
+
+  useEffect(() => {
+    const showVerifModal = sessionStorage.getItem("showVerifModal");
+    if (!showVerifModal && !isVerified) {
+      setTimeout(() => {
+        setOpenVerifModal(true);
+      }, 5000);
+      sessionStorage.setItem("showVerifModal", "show");
+    }
+  }, [isVerified]);
   return (
     <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] h-screen w-screen">
       <div className="hidden border-r bg-white md:block">

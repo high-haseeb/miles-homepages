@@ -29,7 +29,7 @@ export default function VerificationModal({
   openModal,
   handleOpenModal,
 }: VerificationModalProps) {
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>();
 
   const steps: StepProps[] = [

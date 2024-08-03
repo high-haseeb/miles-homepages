@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -28,6 +29,7 @@ import DashboardIcon from "../vectors/DashboardIcon";
 import RentalsIcon from "../vectors/RentalsIcon";
 import LogoutIcon from "../vectors/LogoutIcon";
 import Notifications from "../Notifications";
+import VerificationModal from "../Modals/VerificationModal";
 
 export default function DashboardLayout2({
   children,
@@ -38,7 +40,20 @@ export default function DashboardLayout2({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { handleLogout } = useAppContext();
+
+  const { handleLogout, isVerified } = useAppContext();
+  const [openVerifModal, setOpenVerifModal] = useState(false);
+
+  useEffect(() => {
+    const showVerifModal = sessionStorage.getItem("showVerifModal");
+    if (!showVerifModal && !isVerified) {
+      setTimeout(() => {
+        setOpenVerifModal(true);
+      }, 5000);
+      sessionStorage.setItem("showVerifModal", "show");
+    }
+  }, [isVerified]);
+
   return (
     <div className="flex flex-col h-screen w-screen">
       <header className="flex h-14 items-center gap-2 border-b bg-white px-4 lg:h-[86px] lg:px-6">
@@ -190,6 +205,10 @@ export default function DashboardLayout2({
       >
         {children}
       </main>
+      <VerificationModal
+        openModal={openVerifModal}
+        handleOpenModal={setOpenVerifModal}
+      />
     </div>
   );
 }
