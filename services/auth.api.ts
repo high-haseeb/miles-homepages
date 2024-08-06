@@ -48,7 +48,7 @@ export const signup = async (payload: SignupPayload) => {
 export const sendSMSOTP = async (payload: SMSOTPPayload) => {
   const token = getToken();
   try {
-    const response = await apiService.post("/auth/send/phone", payload, {
+    const response = await apiService.patch("/auth/send/phone", payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -62,7 +62,7 @@ export const sendSMSOTP = async (payload: SMSOTPPayload) => {
 export const verifySMSOTP = async (payload: VerifySMSOTPPayload) => {
   const token = getToken();
   try {
-    const response = await apiService.post("/auth/phone/verify", payload, {
+    const response = await apiService.patch("/auth/phone/verify", payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

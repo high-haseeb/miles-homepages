@@ -103,7 +103,7 @@ function PhoneNumber({
     try {
       const res = await sendMutation.mutateAsync({
         phone_number: phoneNumber,
-        Channel: "sms",
+        // Channel: "sms",
       });
       console.log(res);
     } catch (err) {

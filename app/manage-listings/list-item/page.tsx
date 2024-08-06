@@ -43,7 +43,7 @@ export default function ListItem() {
   const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
-  const { isLoggedIn, isVerified } = useAppContext();
+  const { isLoggedIn, isVerified, userData } = useAppContext();
   const mutation = useMutation({
     mutationFn: createListing,
     onSuccess: () => {
@@ -113,8 +113,10 @@ export default function ListItem() {
             "M/d/yyyy"
           )}, ${format((value as any).to, "M/d/yyyy")}`;
           newListingObject.multiple_date_ranges = dateRangeString;
+        } else if (key === "category_id") {
+          newListingObject.category_id = Number(value);
         } else if (key === "sub_category_id" && value !== undefined) {
-          newListingObject.sub_category_id = String(value);
+          newListingObject.sub_category_id = Number(value);
         } else if (Array.isArray(value)) {
           (newListingObject as any)[key] = value.join(",");
         } else if (value !== undefined) {

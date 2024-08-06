@@ -30,14 +30,19 @@ import RentalsIcon from "../vectors/RentalsIcon";
 import LogoutIcon from "../vectors/LogoutIcon";
 import Notifications from "../Notifications";
 import VerificationModal from "../Modals/VerificationModal";
+import { DashboardLayoutProps } from "@/types";
+
+interface DashboardLayout2Props extends DashboardLayoutProps {
+  noPaddingY?: boolean;
+}
 
 export default function DashboardLayout2({
   children,
   noPaddingY,
-}: {
-  children: React.ReactNode;
-  noPaddingY?: boolean;
-}) {
+  handleSearchSubmit,
+  handleSearchChange,
+  searchValue,
+}: DashboardLayout2Props) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -121,11 +126,13 @@ export default function DashboardLayout2({
               className="object-contain hidden md:block"
             />
           </Link>
-          <form className="w-full">
+          <form className="w-full" onSubmit={handleSearchSubmit}>
             <div className="relative w-full">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 text-sm" />
               <Input
                 type="search"
+                value={searchValue}
+                onChange={handleSearchChange}
                 placeholder="Search products..."
                 className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 rounded-[39px] max-w-[346px]"
               />

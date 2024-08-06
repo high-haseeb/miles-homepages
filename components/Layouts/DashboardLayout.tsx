@@ -30,12 +30,14 @@ import RentalsIcon from "../vectors/RentalsIcon";
 import LogoutIcon from "../vectors/LogoutIcon";
 import Notifications from "../Notifications";
 import VerificationModal from "../Modals/VerificationModal";
+import { DashboardLayoutProps } from "@/types";
 
 export default function DashboardLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  handleSearchSubmit,
+  handleSearchChange,
+  searchValue,
+}: DashboardLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { handleLogout, isVerified } = useAppContext();
@@ -169,11 +171,13 @@ export default function DashboardLayout({
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
+            <form onSubmit={handleSearchSubmit}>
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 text-sm" />
                 <Input
                   type="search"
+                  value={searchValue}
+                  onChange={handleSearchChange}
                   placeholder="Search products..."
                   className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 max-w-[346px]"
                 />

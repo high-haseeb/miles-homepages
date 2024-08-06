@@ -1,78 +1,57 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { APIProvider, Map, InfoWindow } from "@vis.gl/react-google-maps";
+import { useQuery } from "@tanstack/react-query";
+
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { ListedItemCard2 } from "@/components/ListedItemCard";
 import { GOOGLE_PLACES_API_KEY } from "@/constants";
 import CustomMarker from "@/components/CustomMarker";
 import { ItemProps } from "@/types";
-
-const items: ItemProps[] = [
-  {
-    id: 1,
-    name: "Canon SB-6A",
-    price: 50000,
-    location: "Lagos 16 km away",
-    lat: 6.5244,
-    lng: 3.3792,
-    itemId: "1a2b3c",
-  },
-  {
-    id: 2,
-    name: "Nikon SB-4A",
-    price: 30000,
-    location: "Lagos 1.5 km away",
-    lat: 6.465422,
-    lng: 3.406448,
-    itemId: "4d5e6f",
-  },
-  {
-    id: 3,
-    name: "Nikon SB-4A",
-    price: 30000,
-    location: "Lagos 1.5 km away",
-    lat: 6.785422,
-    lng: 5.406448,
-    itemId: "7g8h9i",
-  },
-  {
-    id: 4,
-    name: "Sikon SB-4A",
-    price: 30000,
-    location: "Lagos 1.5 km away",
-    lat: 16.465422,
-    lng: 11.406448,
-    itemId: "10j11k12l",
-  },
-  {
-    id: 5,
-    name: "Dikon SB-4A",
-    price: 30000,
-    location: "Lagos 1.5 km away",
-    lat: 8.465422,
-    lng: 12.406448,
-    itemId: "13m14n15o",
-  },
-  {
-    id: 6,
-    name: "Zikon SB-4A",
-    price: 30000,
-    location: "Lagos 1.5 km away",
-    lat: 2.465422,
-    lng: 5.406448,
-    itemId: "16p17q18r",
-  },
-  // Add more items here
-];
+import { getListings, searchListings } from "@/services/general.api";
 
 export default function Listings() {
+  const router = useRouter();
   const [selectedItem, setSelectedItem] = useState<ItemProps | null>(null);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
-  const containerStyle = {
-    width: "100%",
-    height: "100%",
+  const updateSearchParams = (keyword: string) => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    if (keyword) {
+      searchParams.set("search", keyword);
+    } else {
+      searchParams.delete("search");
+    }
+    const newPathname = `${
+      window.location.pathname
+    }?${searchParams.toString()}`;
+    router.push(newPathname);
   };
+
+  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchKeyword === "") return;
+    updateSearchParams(searchKeyword);
+  };
+
+  const { data: listings, isPending } = useQuery({
+    queryKey: ["listings"],
+    queryFn: () =>
+      getListings({
+        category: 1,
+        location: "lagos",
+      }),
+  });
+
+  const { data: searchResult, isPending: isSearching } = useQuery({
+    queryKey: ["listings"],
+    queryFn: () => searchListings(searchKeyword),
+  });
+
+  console.log(listings);
 
   const defaultCenter = {
     lat: 6.5244,
@@ -80,13 +59,20 @@ export default function Listings() {
   };
 
   return (
-    <DashboardLayout2 noPaddingY>
+    <DashboardLayout2
+      noPaddingY
+      searchValue={searchKeyword}
+      handleSearchChange={(e) => setSearchKeyword(e.target.value)}
+      handleSearchSubmit={handleSearchSubmit}
+    >
       <div className="flex flex-col md:flex-row gap-[30px] h-full max-h-screen overflow-hidden md:-mx-[30px]">
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-[30px] overflow-y-auto md:pl-[30px] md:py-[25px]">
-          {items.map((item) => (
-            <Link href={`/listings/${item.itemId}`} key={item.id}>
-              <ListedItemCard2 />
-            </Link>
+          {listings?.data?.map((item: ItemProps) => (
+            <ListedItemCard2
+              item={item}
+              link={`/listings/${item.listing_id}`}
+              key={item.listing_id}
+            />
           ))}
         </div>
         <div className="flex-1">
@@ -98,24 +84,27 @@ export default function Listings() {
               gestureHandling="greedy"
               disableDefaultUI
             >
-              {items.map((item) => (
+              {listings?.data.map((item: ItemProps) => (
                 <CustomMarker
-                  key={item.id}
-                  lat={item.lat}
-                  lng={item.lng}
-                  price={item.price}
+                  key={item.listing_id}
+                  lat={Number(item.latitude)}
+                  lng={Number(item.longitude)}
+                  price={item.price_per_day}
                   onClick={() => setSelectedItem(item)}
                 />
               ))}
               {selectedItem && (
                 <InfoWindow
-                  position={{ lat: selectedItem.lat, lng: selectedItem.lng }}
+                  position={{
+                    lat: Number(selectedItem.latitude),
+                    lng: Number(selectedItem.longitude),
+                  }}
                   onCloseClick={() => setSelectedItem(null)}
                 >
                   <div>
-                    <h4>{selectedItem.name}</h4>
-                    <p>NGN {selectedItem.price} per day</p>
-                    <p>{selectedItem.location}</p>
+                    <h4>{selectedItem.product_name}</h4>
+                    <p>NGN {selectedItem.price_per_day} per day</p>
+                    <p>{selectedItem.item_location}</p>
                   </div>
                 </InfoWindow>
               )}

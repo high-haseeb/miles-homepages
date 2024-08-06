@@ -1,8 +1,16 @@
 import { Control } from "react-hook-form";
 import { DateRange } from "react-day-picker";
+import { ChangeEvent, FormEvent } from "react";
 
 export interface AuthLayoutProps {
   children: React.ReactNode;
+}
+
+export interface DashboardLayoutProps {
+  children: React.ReactNode;
+  handleSearchSubmit?: (e: FormEvent<HTMLFormElement>) => void;
+  handleSearchChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  searchValue?: string;
 }
 
 export interface CustomFormFieldProps {
@@ -89,8 +97,8 @@ interface Schedule {
 
 export interface ListItemPayload {
   product_name: string;
-  category_id: string;
-  sub_category_id: string;
+  category_id: number;
+  sub_category_id: number;
   item_location: string;
   description: string;
   quantity_available: number;
@@ -105,14 +113,36 @@ export interface ListItemPayload {
 }
 
 export interface ItemProps {
-  id: number;
-  name: string;
-  price: number;
-  location: string;
-  lat: number;
-  lng: number;
-  itemId: string;
-  img?: string;
+  category_id: number;
+  category_name: string;
+  description: string;
+  end_date: string | null;
+  estimated_value: string;
+  full_name: string;
+  item_images: Array<ItemImagesProps>;
+  item_location: string;
+  latitude: string;
+  listing_created_at: string;
+  listing_id: number;
+  longitude: string;
+  multiple_date_ranges: string;
+  price_per_day: string;
+  product_name: string;
+  quantity_available: string;
+  recurring_days_of_week: string | null;
+  recurring_end_date: string | null;
+  recurring_start_date: string | null;
+  single_date: string | null;
+  start_date: string | null;
+  status: string;
+  sub_category_id: number;
+  sub_category_name: string;
+}
+
+export interface ItemImagesProps {
+  image_id: number;
+  image_url: string;
+  public_id: string;
 }
 
 export interface InitialValuesProps {
@@ -131,10 +161,38 @@ export interface InitialValuesProps {
 
 export interface SMSOTPPayload {
   phone_number: string;
-  Channel: "sms";
+  // Channel: "sms";
 }
 
 export interface VerifySMSOTPPayload {
   phone_number: string;
   otp: string;
+}
+
+export interface GetListingsParamsProps {
+  category?: number;
+  location?: string;
+  date?: Date;
+}
+
+export interface SearchListingsKeywordProps {
+  searchKeyword: string;
+}
+
+export interface ListingsByDateRangeParamsProps {
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface UpdateListingPayload {
+  product_name?: string;
+  category_id?: number;
+  sub_category_id?: number;
+  item_location?: string;
+  description?: string;
+  quantity_available?: number;
+  estimated_value?: number;
+  price_per_day?: number;
+  latitude?: number;
+  longitude?: number;
 }
