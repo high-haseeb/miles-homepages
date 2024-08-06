@@ -23,6 +23,7 @@ import Stepper from "../Stepper";
 import { StepProps } from "@/types";
 import InfoIcon from "../vectors/InfoIcon";
 import { sendSMSOTP, verifySMSOTP } from "@/services/auth.api";
+import { useAppContext } from "@/context/AppContext";
 
 interface VerificationModalProps {
   openModal: boolean;
@@ -83,6 +84,7 @@ function PhoneNumber({
   const [startCountdown, setStartCountdown] = useState(false);
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { setUserData } = useAppContext();
 
   const sendMutation = useMutation({
     mutationFn: sendSMSOTP,
@@ -103,9 +105,13 @@ function PhoneNumber({
     try {
       const res = await sendMutation.mutateAsync({
         phone_number: phoneNumber,
-        // Channel: "sms",
       });
       console.log(res);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: res?.data,
+      });
     } catch (err) {
       toast({
         variant: "destructive",
@@ -124,6 +130,12 @@ function PhoneNumber({
         otp,
       });
       console.log(res);
+      setUserData(res?.data);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Phone number verified.",
+      });
       setCurrentStep((prev) => prev + 1);
     } catch (err) {
       toast({
