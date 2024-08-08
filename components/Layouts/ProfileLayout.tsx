@@ -32,7 +32,7 @@ import Notifications from "../Notifications";
 import VerificationModal from "../Modals/VerificationModal";
 import { DashboardLayoutProps } from "@/types";
 
-export default function DashboardLayout({
+export default function ProfileLayout({
   children,
   handleSearchSubmit,
   handleSearchChange,
@@ -171,18 +171,12 @@ export default function DashboardLayout({
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form onSubmit={handleSearchSubmit}>
-              <Link href="/listings" className="relative block w-full">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 text-sm" />
-                <Input
-                  type="search"
-                  value={searchValue}
-                  onChange={handleSearchChange}
-                  placeholder="Search products..."
-                  className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 max-w-[346px] outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-              </Link>
-            </form>
+            <div className="flex flex-col gap-y-[7px]">
+              <p className="text-xl text-slate-900 font-bold">Account</p>
+              <p className="text-slate-300 text-sm">
+                Manage, edit and view your Account and change settings.
+              </p>
+            </div>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
