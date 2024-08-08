@@ -18,3 +18,13 @@ export const base64ToFile = (base64: string, filename: string): File => {
   }
   return new File([u8arr], filename, { type: mime });
 };
+
+export function createImageURLs(fileList: FileList): string[] {
+  return Array.from(fileList).map((file) => URL.createObjectURL(file));
+}
+
+export function createFileList(filesArray: File[]): FileList {
+  const dataTransfer = new DataTransfer();
+  filesArray.forEach((file) => dataTransfer.items.add(file));
+  return dataTransfer.files;
+}

@@ -29,7 +29,6 @@ import { listItemFormSchema } from "@/constants/schemas";
 import Preview from "./steps/Preview";
 import { useAppContext } from "@/context/AppContext";
 import { InitialValuesProps } from "@/types";
-import { base64ToFile } from "@/utils";
 import { createListing } from "@/services/general.api";
 import VerificationModal from "@/components/Modals/VerificationModal";
 
@@ -100,14 +99,7 @@ export default function ListItem() {
       let newListingObject: Partial<ListItemPayload> = {};
 
       for (const [key, value] of Object.entries(values)) {
-        if (key === "image" && value) {
-          const imageFiles = Array.from(value as any[])
-            .filter((file: any) => typeof file === "string")
-            .map((base64: string, index: number) =>
-              base64ToFile(base64, `image-${index}`)
-            );
-          newListingObject.image = imageFiles;
-        } else if (key === "multiple_date_ranges" && value) {
+        if (key === "multiple_date_ranges" && value) {
           const dateRangeString = `${format(
             (value as any).from,
             "M/d/yyyy"
