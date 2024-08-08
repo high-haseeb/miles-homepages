@@ -22,6 +22,15 @@ export const getCategories = async () => {
   }
 };
 
+export const getSubCategories = async (id: string) => {
+  try {
+    const response = await apiService.get(`/categories/${id}`);
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const createListing = async (payload: ListItemPayload) => {
   const token = getToken();
   try {

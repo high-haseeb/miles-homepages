@@ -55,7 +55,13 @@ export default function AppContextProvider({
     return "";
   });
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!token);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(() => {
+    // Initial value from localStorage
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("userData")!) || {};
+    }
+    return {};
+  });
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
@@ -67,6 +73,14 @@ export default function AppContextProvider({
       setIsLoggedIn(false);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (userData) {
+      localStorage.setItem("userData", JSON.stringify(userData));
+    } else {
+      localStorage.removeItem("userData");
+    }
+  }, [userData]);
 
   const handleLogout = () => {
     setToken("");

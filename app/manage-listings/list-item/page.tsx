@@ -59,9 +59,9 @@ export default function ListItem() {
       description: "",
       image: [],
       category_id: "",
-      quantity_available: 0,
-      estimated_value: 0,
-      price_per_day: 0,
+      quantity_available: undefined,
+      estimated_value: undefined,
+      price_per_day: undefined,
       recurring_days_of_week: [],
       multiple_date_ranges: { from: new Date(), to: new Date() },
       recurring_end_date: new Date(),
@@ -89,10 +89,10 @@ export default function ListItem() {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
-    if (!isVerified) {
-      setOpenVerifModal(true);
-      return;
-    }
+    // if (!isVerified) {
+    //   setOpenVerifModal(true);
+    //   return;
+    // }
     console.log("Form Submitted");
     console.log(values);
 
@@ -123,6 +123,8 @@ export default function ListItem() {
           (newListingObject as any)[key] = value;
         }
       }
+      newListingObject.sub_category_id = 2;
+      console.log(newListingObject);
 
       const res = await mutation.mutateAsync(
         newListingObject as ListItemPayload

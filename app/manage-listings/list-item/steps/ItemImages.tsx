@@ -149,7 +149,7 @@ export default function ItemImages({ control }: { control: Control<any> }) {
                     onChange={handleInputChange}
                   />
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mt-2.5">
                   <Image
                     src={imageURLs[0] || "/images/default-img.png"}
                     alt="default-img"

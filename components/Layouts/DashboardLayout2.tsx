@@ -127,16 +127,16 @@ export default function DashboardLayout2({
             />
           </Link>
           <form className="w-full" onSubmit={handleSearchSubmit}>
-            <div className="relative w-full">
+            <Link href="/listings" className="relative block w-full">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 text-sm" />
               <Input
                 type="search"
                 value={searchValue}
                 onChange={handleSearchChange}
                 placeholder="Search products..."
-                className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 rounded-[39px] max-w-[346px]"
+                className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 max-w-[346px] outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
               />
-            </div>
+            </Link>
           </form>
         </div>
         <div className="flex items-center gap-x-9 mr-[176px]">
@@ -208,7 +208,7 @@ export default function DashboardLayout2({
       <main
         className={`flex flex-1 flex-col gap-2 p-4 lg:gap-[30px] ${
           noPaddingY ? "lg:py-0" : "lg:py-[25px]"
-        } lg:p-[25px] lg:px-[30px] bg-pearl-400 overflow-y-auto overflow-x-hidden`}
+        } lg:px-[30px] bg-pearl-400 overflow-y-auto overflow-x-hidden`}
       >
         {children}
       </main>

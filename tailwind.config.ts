@@ -22,6 +22,7 @@ const config = {
         full2: "calc(100vh - 86px)",
       },
       colors: {
+        "hover-color": "#4E46B4",
         gray: {
           1: "#999CA0",
           2: "#EBEBEB",

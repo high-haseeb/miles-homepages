@@ -1,6 +1,5 @@
 "use client";
-import React, { FormEvent, useState } from "react";
-import Link from "next/link";
+import React, { FormEvent, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { APIProvider, Map, InfoWindow } from "@vis.gl/react-google-maps";
 import { useQuery } from "@tanstack/react-query";
@@ -11,11 +10,13 @@ import { GOOGLE_PLACES_API_KEY } from "@/constants";
 import CustomMarker from "@/components/CustomMarker";
 import { ItemProps } from "@/types";
 import { getListings, searchListings } from "@/services/general.api";
+import { Badge } from "@/components/ui/badge";
 
 export default function Listings() {
   const router = useRouter();
   const [selectedItem, setSelectedItem] = useState<ItemProps | null>(null);
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [currentListings, setCurrentListings] = useState([]);
 
   const updateSearchParams = (keyword: string) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -51,7 +52,15 @@ export default function Listings() {
     queryFn: () => searchListings(searchKeyword),
   });
 
-  console.log(listings);
+  useEffect(() => {
+    if (searchKeyword) {
+      setCurrentListings(searchResult?.data);
+    } else {
+      setCurrentListings(listings?.data);
+    }
+  }, [listings, searchKeyword, searchResult]);
+
+  console.log(currentListings);
 
   const defaultCenter = {
     lat: 6.5244,
@@ -66,14 +75,32 @@ export default function Listings() {
       handleSearchSubmit={handleSearchSubmit}
     >
       <div className="flex flex-col md:flex-row gap-[30px] h-full max-h-screen overflow-hidden md:-mx-[30px]">
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-[30px] overflow-y-auto md:pl-[30px] md:py-[25px]">
-          {listings?.data?.map((item: ItemProps) => (
-            <ListedItemCard2
-              item={item}
-              link={`/listings/${item.listing_id}`}
-              key={item.listing_id}
-            />
-          ))}
+        <div className="flex flex-col flex-1 pb-[25px]">
+          <div className="px-[30px] py-[23px] flex items-center justify-between">
+            <div className="flex items-center gap-x-2.5">
+              <Badge className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                Category
+              </Badge>
+              <Badge className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                Location
+              </Badge>
+              <Badge className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                Dates
+              </Badge>
+            </div>
+            <p className="text-sm text-black">
+              {currentListings?.length} results
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-[30px] overflow-y-auto md:pl-[30px]">
+            {currentListings?.map((item: ItemProps) => (
+              <ListedItemCard2
+                item={item}
+                link={`/listings/${item.listing_id}`}
+                key={item.listing_id}
+              />
+            ))}
+          </div>
         </div>
         <div className="flex-1">
           <APIProvider apiKey={GOOGLE_PLACES_API_KEY}>

@@ -8,14 +8,14 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 
 import AuthLayout from "@/components/Layouts/AuthLayout";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
 import { passwordSchema } from "@/constants/schemas";
-import { login } from "@/services/auth.api";
+import { login, loginWithGoogle } from "@/services/auth.api";
 import { useAppContext } from "@/context/AppContext";
 
 const loginFormSchema = z.object({
@@ -41,6 +41,15 @@ export default function LoginPage({
       queryClient.invalidateQueries({ queryKey: ["auth"] });
     },
   });
+
+  const { data: googleAuth, isPending } = useQuery({
+    queryKey: ["auth", "google-auth"],
+    queryFn: loginWithGoogle,
+  });
+
+  const handleGoogleAuth = () => {
+    console.log(googleAuth);
+  };
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -79,46 +88,51 @@ export default function LoginPage({
 
   return (
     <AuthLayout>
+      <div className="flex flex-col gap-y-6 overflow-x-hidden mb-6">
+        <div className="flex flex-col gap-1 max-md:mb-[50px]">
+          <h3 className="text-slate-900 text-base md:text-[2rem] md:leading-[40px] font-bold">
+            Login into your account
+          </h3>
+          <p className="text-[10px] md:text-sm text-gray-1">
+            Welcome back, select a login method
+          </p>
+        </div>
+        <div className="flex flex-col gap-y-6">
+          <Button
+            className="py-2 px-4 rounded-[38px] text-black text-sm font-bold relative bg-gray-2"
+            onClick={handleGoogleAuth}
+          >
+            <Image
+              src="/icons/google-icon.svg"
+              width={24}
+              height={24}
+              alt="google-icon"
+              className="object-contain md:absolute md:left-4 max-md:mr-2.5"
+            />
+            Continue with Google
+          </Button>
+          <Button className="py-2 px-4 rounded-[38px] text-black text-sm font-bold relative bg-gray-2">
+            <Image
+              src="/icons/facebook-icon.svg"
+              width={24}
+              height={24}
+              alt="facebook-icon"
+              className="object-contain md:absolute md:left-4 max-md:mr-2.5"
+            />
+            Continue with Facebook
+          </Button>
+        </div>
+        <div className="flex items-center gap-x-3">
+          <div className="h-[1px] bg-gray-2 w-full" />
+          <p className="text-slate-200 text-xs">Or</p>
+          <div className="h-[1px] bg-gray-2 w-full" />
+        </div>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-y-6 overflow-x-hidden"
         >
-          <div className="flex flex-col gap-1 max-md:mb-[50px]">
-            <h3 className="text-slate-900 text-base md:text-[2rem] md:leading-[40px] font-bold">
-              Login into your account
-            </h3>
-            <p className="text-[10px] md:text-sm text-gray-1">
-              Welcome back, select a login method
-            </p>
-          </div>
-          <div className="flex flex-col gap-y-6">
-            <Button className="py-2 px-4 rounded-[38px] text-black text-sm font-bold relative bg-gray-2">
-              <Image
-                src="/icons/google-icon.svg"
-                width={24}
-                height={24}
-                alt="google-icon"
-                className="object-contain md:absolute md:left-4 max-md:mr-2.5"
-              />
-              Continue with Google
-            </Button>
-            <Button className="py-2 px-4 rounded-[38px] text-black text-sm font-bold relative bg-gray-2">
-              <Image
-                src="/icons/facebook-icon.svg"
-                width={24}
-                height={24}
-                alt="facebook-icon"
-                className="object-contain md:absolute md:left-4 max-md:mr-2.5"
-              />
-              Continue with Facebook
-            </Button>
-          </div>
-          <div className="flex items-center gap-x-3">
-            <div className="h-[1px] bg-gray-2 w-full" />
-            <p className="text-slate-200 text-xs">Or</p>
-            <div className="h-[1px] bg-gray-2 w-full" />
-          </div>
           <div className="flex flex-col gap-y-3">
             <CustomFormField
               control={form.control}

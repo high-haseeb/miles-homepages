@@ -25,6 +25,15 @@ export const login = async (payload: LoginPayload) => {
   }
 };
 
+export const loginWithGoogle = async () => {
+  try {
+    const response = await apiService.get("/auth/google");
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const forgotPassword = async (payload: ForgotPasswordPayload) => {
   try {
     const response = await apiService.post("/auth/forgot-password", payload);

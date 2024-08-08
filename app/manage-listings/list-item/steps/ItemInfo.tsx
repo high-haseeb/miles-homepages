@@ -11,15 +11,21 @@ import PlacesAutocomplete, {
 
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
-import { getCategories } from "@/services/general.api";
+import { getCategories, getSubCategories } from "@/services/general.api";
 import useLoadScript from "@/hooks";
 import { GOOGLE_PLACES_API_KEY } from "@/constants";
 
 export default function ItemInfo({ control }: { control: Control<any> }) {
-  const { setValue, getValues } = useFormContext();
+  const { setValue, getValues, watch } = useFormContext();
+  const categoryId = watch("category_id");
+
   const { data: categories, isPending } = useQuery({
     queryKey: ["category"],
     queryFn: getCategories,
+  });
+  const { data: subcategories, isPending: isSubPending } = useQuery({
+    queryKey: ["sub-category"],
+    queryFn: () => getSubCategories(categoryId),
   });
   const [location, setLocation] = useState("");
 
@@ -84,6 +90,16 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
           label="Category"
           selectItems={categories?.data}
           disabled={isPending}
+        />
+        <CustomFormField
+          control={control}
+          fieldType={FormFieldType.SELECT}
+          placeholder="DSLR Camera"
+          name="sub_category_id"
+          className="py-3 px-4 rounded-lg border border-gray-3"
+          label="Sub-category"
+          selectItems={subcategories?.data}
+          disabled={isSubPending}
         />
         <CustomFormField
           control={control}

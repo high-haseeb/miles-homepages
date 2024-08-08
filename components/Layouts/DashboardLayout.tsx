@@ -172,16 +172,16 @@ export default function DashboardLayout({
           </Sheet>
           <div className="w-full flex-1">
             <form onSubmit={handleSearchSubmit}>
-              <div className="relative">
+              <Link href="/listings" className="relative block w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 text-sm" />
                 <Input
                   type="search"
                   value={searchValue}
                   onChange={handleSearchChange}
                   placeholder="Search products..."
-                  className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 max-w-[346px]"
+                  className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 max-w-[346px] outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
-              </div>
+              </Link>
             </form>
           </div>
           <DropdownMenu>
