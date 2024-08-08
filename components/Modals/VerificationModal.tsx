@@ -1,5 +1,11 @@
 "use client";
-import { useState, SetStateAction, Dispatch, useEffect } from "react";
+import {
+  useState,
+  SetStateAction,
+  Dispatch,
+  useEffect,
+  ChangeEvent,
+} from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -15,6 +21,8 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useToast } from "@/components/ui/use-toast";
@@ -170,19 +178,27 @@ function PhoneNumber({
   }, [startCountdown]);
   return (
     <div className="flex flex-col gap-y-10">
-      <div className="w-full flex items-center gap-x-3 py-3 px-4 border rounded-xl">
-        <Input
-          type="tel"
+      <div className="relative">
+        <PhoneInput
+          country={"ng"}
           value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          inputProps={{
+            name: "phone",
+            autoFocus: false,
+            onChange: (e: ChangeEvent<HTMLInputElement>) =>
+              setPhoneNumber(e.target.value),
+          }}
           placeholder="Phone number"
-          className={`outline-none flex-1 border-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
+          inputClass="!w-full !py-6 !pl-20 !px-4 !border-none h-auto"
+          containerClass={`outline-none pl-0 p-1 w-full border rounded-xl ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
         />
         <button
-          className="text-sm text-green-500 font-medium disabled:text-slate-200"
+          className="text-sm text-green-500 font-medium disabled:text-slate-200 absolute top-1/2 -translate-y-1/2 right-2"
           onClick={handleSendCode}
           disabled={
-            phoneNumber.length < 11 || phoneNumber.length > 14 || startCountdown
+            phoneNumber.split(" ").join("").length < 11 ||
+            phoneNumber.split(" ").join("").length > 14 ||
+            startCountdown
           }
         >
           Send code
