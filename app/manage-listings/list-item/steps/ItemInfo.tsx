@@ -66,7 +66,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
 
   return (
     <div className="flex flex-col gap-y-[30px]">
-      <div className="flex flex-col gap-y-[7px]">
+      <div className="hidden sm:flex flex-col gap-y-[7px]">
         <h4 className="font-bold text-2xl text-slate-800">List an item</h4>
         <p className="text-slate-300">
           To start listing, fill in the product information below.

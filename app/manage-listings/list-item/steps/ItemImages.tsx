@@ -136,35 +136,35 @@ export default function ItemImages({ control }: { control: Control<any> }) {
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-contain"
+                    className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
                     src={imageURLs[1] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-contain"
+                    className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
                     src={imageURLs[2] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-contain"
+                    className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
                     src={imageURLs[3] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-contain"
+                    className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
                     src={imageURLs[4] || "/images/default-img.png"}
                     alt="default-img"
                     width={103}
                     height={103}
-                    className="rounded-lg border border-gray-3 object-contain"
+                    className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                 </div>
               </div>

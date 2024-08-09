@@ -11,24 +11,24 @@ import All from "./tabs/All";
 
 export default function Bookings() {
   return (
-    <DashboardLayout>
+    <DashboardLayout noPaddingX>
       <>
-        <div className="flex flex-col">
-          <div className="flex flex-col gap-y-2.5">
+        <div className="flex flex-col px-[25px]">
+          <div className="flex flex-col gap-y-2.5 mb-2">
             <h3 className="text-2xl text-slate-900 font-bold">Bookings</h3>
             <p className="text-sm text-gray-1">Manage your bookings.</p>
           </div>
           <div className="flex items-center gap-x-7 self-end">
-            <button className="flex items-center gap-2 rounded-lg py-2 px-4 border-[0.5px] border-white bg-white text-sm text-slate-400">
+            <button className="flex items-center gap-2 rounded-lg py-2 px-4 sm:border-[0.5px] sm:border-white sm:bg-white text-sm text-slate-400">
               <FilterIcon /> Filter
             </button>
-            <button className="flex items-center gap-2 rounded-lg py-2 px-4 border-[0.5px] border-white bg-white text-sm text-slate-400">
+            <button className="flex items-center gap-2 rounded-lg py-2 px-4 sm:border-[0.5px] sm:border-white sm:bg-white text-sm text-slate-400">
               <SortIcon /> Sort
             </button>
           </div>
         </div>
-        <Tabs defaultValue="pending" className="w-full">
-          <TabsList className="gap-x-10 text-slate-400 bg-transparent h-auto pb-0 border-b border-gray-2 w-full rounded-none justify-start">
+        <Tabs defaultValue="pending" className="sm:px-[25px]">
+          <TabsList className="gap-x-10 max-sm:w-screen max-sm:overflow-x-auto w-full text-slate-400 bg-transparent h-auto pb-0 border-b border-gray-2 rounded-none justify-start">
             <TabsTrigger value="pending" className="tab-item">
               Pending request
             </TabsTrigger>

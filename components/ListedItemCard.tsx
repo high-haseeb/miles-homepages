@@ -66,16 +66,20 @@ export default function ListedItemCard({ link }: { link?: any }) {
         </CarouselContent>
       </Carousel>
 
-      <div className="flex flex-col gap-y-[5px]">
+      <div className="flex flex-col sm:gap-y-[5px]">
         <Chip
-          className="bg-green-50 text-green-500"
+          className="bg-green-50 text-green-500 mb-[3px] sm:mb-0"
           text="Available for bookings"
         />
-        <p className="text-slate-900">Nikon SB-6A</p>
-        <p className="text-slate-300">Quantity Available: 1/1</p>
-        <p className="text-slate-900 text-xl font-medium">
+        <p className="text-slate-900 text-xs sm:text-base">Nikon SB-6A</p>
+        <p className="text-slate-300 text-xs sm:text-base">
+          Quantity Available: 1/1
+        </p>
+        <p className="text-slate-900 text-lg sm:text-xl font-medium">
           NGN 40,000{" "}
-          <span className="text-lg text-slate-400 font-normal">per/day</span>
+          <span className="text-sm sm:text-lg text-slate-400 font-normal">
+            per/day
+          </span>
         </p>
       </div>
     </div>

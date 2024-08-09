@@ -39,7 +39,7 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
   }, [activeTab, watchRecurringDays, watchDateRanges, unregister]);
 
   return (
-    <DialogContent className="sm:max-w-[670px] w-full px-6">
+    <DialogContent className="sm:max-w-[670px] w-full px-6 h-screen sm:h-auto max-sm:py-[60px]">
       <DialogTitle className="hidden sr-only">Set Schedule Modal</DialogTitle>
       <div className="flex flex-col items-center">
         <div className="flex items-center gap-x-9 mb-[22px]">

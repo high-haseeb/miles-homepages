@@ -48,7 +48,7 @@ export default function Dashboard() {
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[15.33px]">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[15px] sm:gap-[15.33px]">
           <StatsCard
             src="/icons/star-badge.svg"
             title="LENDER RATING"
@@ -94,7 +94,7 @@ export default function Dashboard() {
                       />
                       <div className="flex flex-col gap-0.5">
                         <p className="text-sm text-slate-900">{item.name}</p>
-                        <p className="text-sm text-orange-500">
+                        <p className="hidden sm:block text-sm text-orange-500">
                           {item.pricePerDay} per day
                         </p>
                       </div>
@@ -110,7 +110,7 @@ export default function Dashboard() {
               </TableBody>
             </Table>
           </div>
-          <div className="flex flex-col gap-y-[18px] p-6 rounded-[10px] bg-cover bg-center bg-no-repeat bg-[url('/images/go-green-bg.png')]">
+          <div className="hidden sm:flex flex-col gap-y-[18px] p-6 rounded-[10px] bg-cover bg-center bg-no-repeat bg-[url('/images/go-green-bg.png')]">
             <h4 className="font-bold text-[22px] text-white leading-[28.64px]">
               Go green campaign
             </h4>

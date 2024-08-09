@@ -160,9 +160,9 @@ export default function ListItem() {
   return (
     <DashboardLayout>
       <>
-        <div className="flex items-center justify-between mb-[50px]">
+        <div className="flex items-center justify-between sm:mb-[50px]">
           <Backbtn />
-          <div className="max-w-[495px] w-full">
+          <div className="max-w-[495px] w-full hidden sm:block">
             <Stepper
               steps={steps}
               complete={currentStep === steps.length}
@@ -171,7 +171,7 @@ export default function ListItem() {
           </div>
           <Dialog>
             <DialogTrigger asChild>
-              <button className="p-4 text-slate-900">
+              <button className="p-4 text-slate-900 hidden sm:block">
                 <X className="h-5 w-5" />
               </button>
             </DialogTrigger>
@@ -195,6 +195,13 @@ export default function ListItem() {
               </div>
             </DialogContent>
           </Dialog>
+        </div>
+        <div className="w-full sm:hidden">
+          <Stepper
+            steps={steps}
+            complete={currentStep === steps.length}
+            currentStep={currentStep}
+          />
         </div>
         <div className="lg:px-[174px] w-full">
           <Form {...form}>
