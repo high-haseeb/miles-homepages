@@ -26,7 +26,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     queryFn: () => getListing(itemId),
   });
   const { data: listings, isPending: isListingsPending } = useQuery({
-    queryKey: ["listings"],
+    queryKey: ["listings", itemId],
     queryFn: () =>
       getListings({
         category: 1,

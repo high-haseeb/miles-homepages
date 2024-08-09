@@ -18,6 +18,7 @@ import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { createFileList, base64ToFile } from "@/utils";
 import DashboardLayout from "@/components/Layouts/DashboardLayout";
 import Backbtn from "@/components/Backbtn";
 import Stepper from "@/components/Stepper";
@@ -58,6 +59,7 @@ export default function ListItem() {
       description: "",
       image: [],
       category_id: "",
+      sub_category_id: "",
       quantity_available: undefined,
       estimated_value: undefined,
       price_per_day: undefined,
@@ -92,46 +94,46 @@ export default function ListItem() {
     //   setOpenVerifModal(true);
     //   return;
     // }
-    console.log("Form Submitted");
-    console.log(values);
 
     try {
-      let newListingObject: Partial<ListItemPayload> = {};
-
+      const formData = new FormData();
       for (const [key, value] of Object.entries(values)) {
         if (key === "multiple_date_ranges" && value) {
           const dateRangeString = `${format(
             (value as any).from,
             "M/d/yyyy"
           )}, ${format((value as any).to, "M/d/yyyy")}`;
-          newListingObject.multiple_date_ranges = dateRangeString;
-        } else if (key === "category_id") {
-          newListingObject.category_id = Number(value);
-        } else if (key === "sub_category_id" && value !== undefined) {
-          newListingObject.sub_category_id = Number(value);
-        } else if (Array.isArray(value)) {
-          (newListingObject as any)[key] = value.join(",");
-        } else if (value !== undefined) {
-          (newListingObject as any)[key] = value;
+          formData.append("multiple_date_ranges", dateRangeString);
+          formData.append("schedule_type", "IS_MULTIPLE");
+        } else if (key === "recurring_days_of_week") {
+          Array.from(value).forEach((day: any) => {
+            formData.append("recurring_days_of_week", day);
+          });
+          formData.append("schedule_type", "IS_RECURRENT");
+        } else if (key === "image") {
+          const imageFiles = Array.from(value as any[])
+            .filter((file: any) => typeof file === "string")
+            .map((base64: string, index: number) =>
+              base64ToFile(base64, `image-${index}`)
+            );
+          const fileList = createFileList(imageFiles);
+          Array.from(fileList).forEach((img: any) => {
+            formData.append("image", img);
+          });
+        } else {
+          formData.append(key, value as string | Blob);
         }
       }
-      newListingObject.sub_category_id = 2;
-      console.log(newListingObject);
-
-      const res = await mutation.mutateAsync(
-        newListingObject as ListItemPayload
-      );
-      console.log(res);
+      await mutation.mutateAsync(formData as any);
 
       toast({
         variant: "success",
         title: "Success",
         description: "Listing created successfully!",
       });
+      localStorage.removeItem("listItemForm");
+      router.push("/manage-listings");
     } catch (err: any) {
-      console.log(err);
-      console.log(mutation.error);
-
       const errorMessage =
         err.response?.data?.message || "An error occurred. Please try again.";
       toast({
@@ -140,8 +142,6 @@ export default function ListItem() {
         description: errorMessage,
       });
     }
-
-    console.log("Form Submitted");
   };
 
   const handleButtonClick = () => {

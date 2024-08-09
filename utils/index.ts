@@ -28,3 +28,18 @@ export function createFileList(filesArray: File[]): FileList {
   filesArray.forEach((file) => dataTransfer.items.add(file));
   return dataTransfer.files;
 }
+
+export const formatPrice = (value: string) => {
+  // Remove any non-digit characters except for periods
+  value = value.replace(/[^0-9.]/g, "");
+
+  // Split the value into integer and decimal parts
+  const parts = value.split(".");
+  let integerPart = parts[0];
+  const decimalPart = parts.length > 1 ? "." + parts[1] : "";
+
+  // Add commas to the integer part
+  integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  return integerPart + decimalPart;
+};

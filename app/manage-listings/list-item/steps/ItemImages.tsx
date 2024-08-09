@@ -7,7 +7,7 @@ import { FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
-import { createImageURLs, createFileList } from "@/utils";
+import { base64ToFile, fileToBase64 } from "@/utils";
 
 export default function ItemImages({ control }: { control: Control<any> }) {
   const { setValue, watch } = useFormContext();
@@ -16,19 +16,30 @@ export default function ItemImages({ control }: { control: Control<any> }) {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleFileChange = async (files: FileList) => {
-    const existingFilesArray = Array.from(
-      (watch("image") as FileList) || new FileList()
-    );
-    const newFilesArray = Array.from(files);
-    const combinedFilesArray = [...existingFilesArray, ...newFilesArray];
+    if (imageURLs?.length === 5) {
+      setDisabled(true);
+      return;
+    }
+    setDisabled(false);
+    const fileArray = Array.from(files);
 
-    const newURLs = combinedFilesArray.map((file) => URL.createObjectURL(file));
+    const compressedFiles = await Promise.all(
+      fileArray.map((file) =>
+        imageCompression(file, {
+          maxSizeMB: 0.1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        })
+      )
+    );
+
+    const newURLs = compressedFiles.map((file) => URL.createObjectURL(file));
     setImageURLs((prevURLs) => [...prevURLs, ...newURLs]);
 
-    const newFileList = createFileList(combinedFilesArray);
-    setValue("image", newFileList);
+    const base64Files = await Promise.all(compressedFiles.map(fileToBase64));
+    const currentImages = watch("image") || [];
+    setValue("image", [...currentImages, ...base64Files]);
   };
-
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -65,7 +76,13 @@ export default function ItemImages({ control }: { control: Control<any> }) {
   const image = watch("image");
 
   const images = useMemo(() => {
-    return image ? createImageURLs(image) : [];
+    return image
+      ? Array.from(image)
+          .filter((file: any) => typeof file === "string")
+          .map((base64: string, index: number) =>
+            URL.createObjectURL(base64ToFile(base64, `image-${index}`))
+          )
+      : [];
   }, [image]);
 
   useEffect(() => {

@@ -14,7 +14,7 @@ import { ItemProps, ItemImagesProps } from "@/types";
 
 import Chip from "./Chip";
 
-export default function ListedItemCard({ link }: { link?: any }) {
+export default function ListedItemCard({ item }: { item: ItemProps }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -36,30 +36,32 @@ export default function ListedItemCard({ link }: { link?: any }) {
     <div className="flex flex-col gap-y-[19px]">
       <Carousel setApi={setApi} className="w-full max-w-xs">
         <CarouselContent>
-          {images.map((image, index) => (
-            <CarouselItem key={index} className="relative basis-[100%] pl-1">
+          {item.item_images.map((imageItem: ItemImagesProps) => (
+            <CarouselItem
+              key={imageItem.image_id}
+              className="relative basis-[100%] pl-1"
+            >
               <div className="max-w-[258px] w-full h-[258px] p-1 rounded-lg">
-                {/* <Link href={link}> */}
                 <Image
-                  src={image.src}
+                  src={imageItem.image_url}
                   fill
                   className="object-cover rounded-lg border border-gray-2"
                   alt="card"
-                  layout="fill"
                 />
-                {/* </Link> */}
               </div>
               <CarouselPrevious className="left-8" />
               <CarouselNext className="right-4.5" />
               <div className="text-center flex items-center gap-x-3 absolute bottom-[22px] left-1/2 -translate-x-1/2">
-                {images.map((_, index) => (
-                  <span
-                    key={index}
-                    className={`block h-2 w-2 rounded-full ${
-                      current === index + 1 ? "bg-green-500" : "bg-slate-100"
-                    } `}
-                  />
-                ))}
+                {item.item_images.map(
+                  (imageItem: ItemImagesProps, index: number) => (
+                    <span
+                      key={imageItem.image_id}
+                      className={`block h-2 w-2 rounded-full ${
+                        current === index + 1 ? "bg-green-500" : "bg-slate-100"
+                      } `}
+                    />
+                  )
+                )}
               </div>
             </CarouselItem>
           ))}
@@ -69,14 +71,17 @@ export default function ListedItemCard({ link }: { link?: any }) {
       <div className="flex flex-col sm:gap-y-[5px]">
         <Chip
           className="bg-green-50 text-green-500 mb-[3px] sm:mb-0"
-          text="Available for bookings"
+          text={item.status}
         />
-        <p className="text-slate-900 text-xs sm:text-base">Nikon SB-6A</p>
+        <p className="text-slate-900 text-xs sm:text-base">
+          {item.product_name || "Nikon SB-6A"}
+        </p>
         <p className="text-slate-300 text-xs sm:text-base">
-          Quantity Available: 1/1
+          Quantity Available: {item.quantity_available}/
+          {item.quantity_available}
         </p>
         <p className="text-slate-900 text-lg sm:text-xl font-medium">
-          NGN 40,000{" "}
+          NGN {item.price_per_day || "40,000"}{" "}
           <span className="text-sm sm:text-lg text-slate-400 font-normal">
             per/day
           </span>

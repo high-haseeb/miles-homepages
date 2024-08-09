@@ -33,6 +33,8 @@ export interface CustomFormFieldProps {
 interface SelectItemsProps {
   category_id: string;
   category_name: string;
+  name?: string;
+  id?: string;
 }
 
 export interface LoginPayload {
@@ -110,6 +112,7 @@ export interface ListItemPayload {
   multiple_date_ranges?: string;
   recurring_days_of_week?: string[];
   recurring_end_date?: Date;
+  schedule_type?: string;
 }
 
 export interface ItemProps {

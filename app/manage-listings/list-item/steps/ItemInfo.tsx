@@ -24,7 +24,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
     queryFn: getCategories,
   });
   const { data: subcategories, isPending: isSubPending } = useQuery({
-    queryKey: ["sub-category"],
+    queryKey: ["sub-category", categoryId],
     queryFn: () => getSubCategories(categoryId),
   });
   const [location, setLocation] = useState("");

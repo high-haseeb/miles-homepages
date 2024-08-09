@@ -1,10 +1,19 @@
+"use client";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 
 import DashboardLayout from "@/components/Layouts/DashboardLayout";
 import ListItemIcon from "@/components/vectors/ListItemIcon";
 import ListedItemCard from "@/components/ListedItemCard";
+import { myListings } from "@/services/general.api";
+import { ItemProps } from "@/types";
 
 export default function Lisitngs() {
+  const { data: listings, isPending } = useQuery({
+    queryKey: ["my-listings"],
+    queryFn: () => myListings(),
+  });
+  const userListings = listings?.data?.userListings;
   return (
     <DashboardLayout>
       <>
@@ -31,14 +40,9 @@ export default function Lisitngs() {
           <ListItemIcon /> List New Item
         </Link>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[15px] sm:gap-x-[35px] gap-y-4.5 sm:gap-y-[25px]">
-          <ListedItemCard />
-          <ListedItemCard />
-          <ListedItemCard />
-          <ListedItemCard />
-          <ListedItemCard />
-          <ListedItemCard />
-          <ListedItemCard />
-          <ListedItemCard />
+          {userListings?.map((item: ItemProps) => (
+            <ListedItemCard key={item?.listing_id} item={item} />
+          ))}
         </div>
       </>
     </DashboardLayout>

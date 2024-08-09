@@ -24,7 +24,7 @@ export const getCategories = async () => {
 
 export const getSubCategories = async (id: string) => {
   try {
-    const response = await apiService.get(`/categories/${id}`);
+    const response = await apiService.get(`/sub_categories/${id}`);
     return response?.data;
   } catch (error: any) {
     throw error;
@@ -58,6 +58,15 @@ export const updateListing = async (
         Authorization: `Bearer ${token}`,
       },
     });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const myListings = async (page?: number) => {
+  try {
+    const response = await apiService.get(`/me/listings?page=${page || 1}`);
     return response?.data;
   } catch (error: any) {
     throw error;

@@ -30,8 +30,8 @@ const scheduleSchema = z.object({
 
 export const listItemFormSchema = z.object({
   product_name: z.string().min(1, "Product name is required"),
-  category_id: z.string().min(1, "Product name is required"),
-  sub_category_id: z.number().int().optional(),
+  category_id: z.string().min(1, "Category is required"),
+  sub_category_id: z.string().min(1, "Sub-category is required"),
   item_location: z.string().min(1, "Item location is required"),
   description: z.string().min(1, "Description is required"),
   quantity_available: z.number().int().min(1, "Quantity available is required"),
