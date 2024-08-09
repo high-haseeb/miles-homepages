@@ -128,5 +128,5 @@ input {
 }
 
 .tab-item {
-  @apply data-[state=active]:!bg-transparent data-[state=active]:border-b-[3px] data-[state=active]:border-green-500 rounded-none data-[state=active]:text-green-500 data-[state=active]:shadow-none;
+  @apply data-[state=active]:!bg-transparent data-[state=active]:border-b-[3px] data-[state=active]:border-green-500 data-[state=active]:text-green-500 data-[state=active]:!shadow-none;
 }

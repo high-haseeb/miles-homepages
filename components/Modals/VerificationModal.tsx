@@ -81,10 +81,10 @@ export default function VerificationModal({
   );
 }
 
-function PhoneNumber({
+export function PhoneNumber({
   setCurrentStep,
 }: {
-  setCurrentStep: Dispatch<SetStateAction<number>>;
+  setCurrentStep?: Dispatch<SetStateAction<number>>;
 }) {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [otp, setOtp] = useState<string>("");
@@ -144,7 +144,7 @@ function PhoneNumber({
         title: "Success",
         description: "Phone number verified.",
       });
-      setCurrentStep((prev) => prev + 1);
+      if (setCurrentStep) setCurrentStep((prev) => prev + 1);
     } catch (err) {
       toast({
         variant: "destructive",
@@ -264,7 +264,7 @@ function PhoneNumber({
   );
 }
 
-function VerifyIdentity({
+export function VerifyIdentity({
   date,
   setDate,
 }: {

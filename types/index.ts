@@ -196,3 +196,18 @@ export interface UpdateListingPayload {
   latitude?: number;
   longitude?: number;
 }
+
+export interface PaymentDetailsProps {
+  "product-renter": {
+    product: string;
+    renter: string;
+  };
+  id: string;
+  "date-time": {
+    date: string;
+    time: string;
+  };
+  price: string;
+  receipt: string;
+  arrId: string;
+}

@@ -27,8 +27,8 @@ export default function Bookings() {
             </button>
           </div>
         </div>
-        <Tabs defaultValue="pending" className="w-full border-b border-gray-2">
-          <TabsList className="gap-x-10 text-slate-400 bg-transparent h-auto pb-0">
+        <Tabs defaultValue="pending" className="w-full">
+          <TabsList className="gap-x-10 text-slate-400 bg-transparent h-auto pb-0 border-b border-gray-2 w-full rounded-none justify-start">
             <TabsTrigger value="pending" className="tab-item">
               Pending request
             </TabsTrigger>
