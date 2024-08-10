@@ -214,3 +214,20 @@ export interface PaymentDetailsProps {
   receipt: string;
   arrId: string;
 }
+
+export interface CreateBookingPayload {
+  listing_id: number;
+  price: string;
+  service_charge: string;
+  vat: string;
+  start_date: string;
+  end_date: string;
+  description: string;
+}
+
+export interface PageLimitParams {
+  page: number;
+  limit: number;
+  rental_status?: string;
+  lister_status?: string;
+}

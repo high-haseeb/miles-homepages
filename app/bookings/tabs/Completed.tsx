@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -11,9 +12,16 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import Chip from "@/components/Chip";
+import { getListerBookings } from "@/services/general.api";
 
 export default function Completed() {
   const router = useRouter();
+  const { data: completedBookings, isPending } = useQuery({
+    queryKey: ["bookings", "lister", "completed"],
+    queryFn: () =>
+      getListerBookings({ lister_status: "completed", page: 1, limit: 10 }),
+  });
+  // console.log(completedBookings);
   return (
     <Table className="py-[27px] px-[30px] rounded-[25px] mt-[25px] sm:mt-0">
       <TableHeader className="max-sm:hidden">

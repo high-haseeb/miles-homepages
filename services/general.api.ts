@@ -4,6 +4,8 @@ import {
   GetListingsParamsProps,
   ListingsByDateRangeParamsProps,
   UpdateListingPayload,
+  CreateBookingPayload,
+  PageLimitParams,
 } from "@/types";
 
 const getToken = () => {
@@ -12,6 +14,8 @@ const getToken = () => {
   }
   return null;
 };
+
+// categories
 
 export const getCategories = async () => {
   try {
@@ -31,6 +35,7 @@ export const getSubCategories = async (id: string) => {
   }
 };
 
+// Listings
 export const createListing = async (payload: ListItemPayload) => {
   const token = getToken();
   try {
@@ -113,6 +118,224 @@ export const getListing = async (id: string) => {
 export const searchListings = async (searchKeyword: string) => {
   try {
     const response = await apiService.get(`/search?search=${searchKeyword}`);
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+// Bookings
+export const createBooking = async (payload: CreateBookingPayload) => {
+  const token = getToken();
+  try {
+    const response = await apiService.post(`/bookings`, payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const cancelBooking = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/bookings/${id}/cancel`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const acceptBooking = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/bookings/${id}/accept`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const declineBooking = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/bookings/${id}/decline`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const confirmBookingPayment = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/bookings/${id}/confirm-payment`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const confirmBookingPickup = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/bookings/${id}/confirm-pickup`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const confirmBookingReturn = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/bookings/${id}/confirm-return`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const getRenterBookings = async (params: PageLimitParams) => {
+  const { rental_status, page, limit } = params;
+  const token = getToken();
+  try {
+    const response = await apiService.patch(
+      `/bookings/renter?rental_status=${rental_status}&page=${page}&limit=${limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const getListerBookings = async (params: PageLimitParams) => {
+  const { lister_status, page, limit } = params;
+  const token = getToken();
+  try {
+    const response = await apiService.patch(
+      `/bookings/lister?lister_status=${lister_status}&page=${page}&limit=${limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const getSingleBooking = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/bookings/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+// Schedule
+export const updateSchedule = async (id: string) => {
+  const token = getToken();
+  try {
+    const response = await apiService.put(`/schedules/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+// User Profile
+export const uploadUserPicture = async () => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/uploads`, {
+      headers: {
+        "Content-Type": "multipart/formdata",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const sendForgotPassword = async (payload: { email: string }) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/send-forgot-password`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const changePassword = async (payload: { newPassword: string }) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(
+      `/forgot-password?token=${token}`,
+      payload
+    );
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const resetPassword = async (payload: { newPassword: string }) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/reset-password`, payload);
     return response?.data;
   } catch (error: any) {
     throw error;
