@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -18,21 +19,28 @@ import BadgeIcon from "@/components/vectors/BadgeIcon";
 import FilledStarIcon from "@/components/vectors/FilledStarIcon";
 import InfoIcon from "@/components/vectors/InfoIcon";
 import VerifiedIcon from "@/components/vectors/VerifiedIcon";
-import { useAppContext } from "@/context/AppContext";
+import { useAppContext, UserDataType } from "@/context/AppContext";
 
 export default function Dashboard() {
   const { userData } = useAppContext();
-  const yearJoined = format(userData?.created_at!, "yyyy");
+  const [user, setUser] = useState<UserDataType>();
+  const yearJoined = user?.created_at
+    ? format(new Date(user.created_at), "yyyy")
+    : "2020";
+
+  useEffect(() => {
+    setUser(userData);
+  }, [userData]);
   return (
     <DashboardLayout>
       <>
         <div className="flex flex-col gap-[5px]">
           <h3 className="text-2xl text-slate-900 font-bold">
-            Welcome back, {userData?.first_name || "Femi"}
+            Welcome back, {user?.first_name}
           </h3>
           <div className="flex items-center gap-x-[11px]">
             <p className="text-xs text-slate-400 font-medium">
-              MEMBER SINCE {yearJoined || "2020"}
+              MEMBER SINCE {yearJoined}
             </p>
             <div className="h-2 w-2 bg-slate-200 rounded-full" />
             <div className="flex items-center gap-1">

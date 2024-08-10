@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 //remember to add isUserVerified context
 
-interface UserDataType {
+export interface UserDataType {
   accessToken?: string;
   bio?: string;
   created_at?: string;
