@@ -130,7 +130,6 @@ export const createBooking = async (payload: CreateBookingPayload) => {
   try {
     const response = await apiService.post(`/bookings`, payload, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -140,7 +139,7 @@ export const createBooking = async (payload: CreateBookingPayload) => {
   }
 };
 
-export const cancelBooking = async (id: string) => {
+export const cancelBooking = async (id: number) => {
   const token = getToken();
   try {
     const response = await apiService.patch(`/bookings/${id}/cancel`, {
@@ -154,7 +153,7 @@ export const cancelBooking = async (id: string) => {
   }
 };
 
-export const acceptBooking = async (id: string) => {
+export const acceptBooking = async (id: number) => {
   const token = getToken();
   try {
     const response = await apiService.patch(`/bookings/${id}/accept`, {
@@ -168,7 +167,7 @@ export const acceptBooking = async (id: string) => {
   }
 };
 
-export const declineBooking = async (id: string) => {
+export const declineBooking = async (id: number) => {
   const token = getToken();
   try {
     const response = await apiService.patch(`/bookings/${id}/decline`, {
@@ -263,7 +262,7 @@ export const getListerBookings = async (params: PageLimitParams) => {
 export const getSingleBooking = async (id: string) => {
   const token = getToken();
   try {
-    const response = await apiService.patch(`/bookings/${id}`, {
+    const response = await apiService.get(`/bookings/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

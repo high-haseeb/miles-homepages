@@ -1,39 +1,90 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/components/ui/use-toast";
 
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { CarouselCard } from "@/components/ListedItemCard";
 import { ItemProps } from "@/types";
 import Review from "@/components/Review";
-import {
-  getListing,
-  searchListings,
-  getListings,
-} from "@/services/general.api";
+import { getListing, createBooking } from "@/services/general.api";
 
 export default function ListedItem({ params }: { params: { itemId: string } }) {
-  const router = useRouter();
   const { itemId } = params;
-  const route = useRouter();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const [desc, setDesc] = useState<string>();
 
   const { data: listing, isPending } = useQuery({
-    queryKey: ["listing"],
+    queryKey: ["listing", itemId],
     queryFn: () => getListing(itemId),
   });
-  const { data: listings, isPending: isListingsPending } = useQuery({
-    queryKey: ["listings", itemId],
-    queryFn: () =>
-      getListings({
-        category: 1,
-        location: "lagos",
-      }),
+
+  const mutation = useMutation({
+    mutationFn: createBooking,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["listing", itemId] });
+    },
   });
-  const item = listing?.data;
+
+  console.log(listing);
+  const item = listing?.data?.listing;
+  const dateRange = item?.multiple_date_ranges
+    ? item?.multiple_date_ranges.split(",")
+    : null;
+  const peopleAlsoViewed = listing?.data?.peopleAlsoViewed;
+
+  const priceBreakdown = [
+    {
+      title: `NGN ${item?.price_per_day} * (x) Days`,
+      value: `NGN ${item?.price_per_day}x`,
+    },
+    {
+      title: "Service Charge",
+      value: "xxxx",
+    },
+    {
+      title: "VAT",
+      value: "xxxx",
+    },
+  ];
+
+  const handleBookingRequest = async () => {
+    try {
+      const values = {
+        listing_id: Number(itemId),
+        price: item?.price_per_day,
+        service_charge: "50",
+        vat: "50",
+        start_date: dateRange[0] ?? item?.start_date,
+        end_date: dateRange[1] ?? item?.end_date,
+        description: desc,
+      };
+      await mutation.mutateAsync(values);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "You've successfully requsted to book this item.",
+      });
+      router.push(`/renting/${itemId}`);
+    } catch (err: any) {
+      const errorMsg = err?.response?.data?.message || mutation.error;
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: errorMsg,
+      });
+    }
+  };
+  if (isPending) {
+    return <p>Pending..</p>;
+  }
   return (
     <DashboardLayout2>
       <div className="flex flex-col lg:px-[155px]">
@@ -70,11 +121,15 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
             <div className="flex border border-gray-4/50 rounded-[15px] divide-x w-full">
               <div className="py-2 px-6 flex-1">
                 <p className="text-sm text-slate-400 mb-[7px]">START DATE</p>
-                <p className="text-slate-800 font-medium">01/11/2020</p>
+                <p className="text-slate-800 font-medium">
+                  {dateRange?.[0] ?? item?.start_date}
+                </p>
               </div>
               <div className="py-2 px-6 flex-1">
                 <p className="text-sm text-slate-400 mb-[7px]">END DATE</p>
-                <p className="text-slate-800 font-medium">01/11/2020</p>
+                <p className="text-slate-800 font-medium">
+                  {dateRange?.[1] ?? item?.end_date}
+                </p>
               </div>
             </div>
             <div className="flex flex-col gap-y-2.5">
@@ -99,13 +154,16 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                   Is there something the listing owner should know
                 </p>
                 <Textarea
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
                   className="rounded-[14px] border-slate-100 pl-6 p-4 text-slate-200 text-sm bg-transparent"
                   placeholder="Send any other details about your request"
                 />
               </div>
               <div className="flex w-full">
                 <Button
-                  onClick={() => route.push(`/renting/${itemId}`)}
+                  onClick={handleBookingRequest}
+                  disabled={mutation.isPending}
                   className="rounded-[38px] w-full py-3 px-4 bg-green-500 font-medium text-white border-none"
                 >
                   Request to book
@@ -120,7 +178,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-[70px]">
-            {listings?.data?.map((item: ItemProps) => (
+            {peopleAlsoViewed?.map((item: ItemProps) => (
               <Link href={`/listings/${item.listing_id}`} key={item.listing_id}>
                 <div className="flex flex-col gap-y-[15px]">
                   <Image
@@ -161,18 +219,3 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     </DashboardLayout2>
   );
 }
-
-const priceBreakdown = [
-  {
-    title: "NGN 50,000 X 2 Days",
-    value: "NGN 100,000",
-  },
-  {
-    title: "Service Charge",
-    value: "xxxx",
-  },
-  {
-    title: "VAT",
-    value: "xxxx",
-  },
-];

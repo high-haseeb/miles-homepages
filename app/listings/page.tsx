@@ -89,7 +89,7 @@ export default function Listings() {
               </Badge>
             </div>
             <p className="text-sm text-black">
-              {currentListings?.length} results
+              {currentListings?.length} result(s)
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-[30px] overflow-y-auto md:pl-[30px]">

@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
 
 import AuthLayout from "@/components/Layouts/AuthLayout";
 import CustomFormField from "@/components/forms/CustomFormField";
@@ -76,12 +75,11 @@ export default function LoginPage({
         : "/dashboard";
       router.push(redirect);
     } catch (err: any) {
-      console.log(err);
-      console.log(mutation.error);
+      const errorMsg = err?.response?.data?.message || mutation.error;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: err?.response?.data?.message,
+        description: errorMsg,
       });
     }
   }

@@ -1,23 +1,23 @@
-// "use client"
-// import { useQuery } from "@tanstack/react-query";
+"use client";
+import { useQuery } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import Backbtn from "@/components/Backbtn";
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import Chat from "@/components/Chat";
 import RentalDetailsCard from "@/components/RentalDetailsCard";
-// import { getSingleBooking } from "@/services/general.api";
-
-export function generateStaticParams() {
-  return [{ itemId: "1a2b3c" }, { itemId: "4d5e6f" }, { itemId: "7g8h9i" }];
-}
+import { getSingleBooking } from "@/services/general.api";
 
 export default function Item({ params }: { params: { itemId: string } }) {
-  //   const { data: upcomingBookings, isPending } = useQuery({
-  //     queryKey: ["bookings", "lister", params.itemId],
-  //     queryFn: () =>
-  //       getSingleBooking(params.itemId),
-  //   });
+  const { itemId } = params;
+  const { data: upcomingBooking, isPending } = useQuery({
+    queryKey: ["bookings", "lister", itemId],
+    queryFn: () => getSingleBooking(itemId),
+  });
+  const booking = upcomingBooking?.data;
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
   return (
     <DashboardLayout2>
       <>
@@ -33,18 +33,18 @@ export default function Item({ params }: { params: { itemId: string } }) {
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <p className="font-bold text-slate-900">
-                You received a booking request from Lolu.B
+                You have initiated a booking request to {booking?.renter_name}.
               </p>
             </div>
             <div className="flex flex-col gap-y-2.5">
               <p className="text-slate-900">Activity</p>
               <div className="w-full">
-                <Chat />
+                <Chat status="renter" details={booking} />
               </div>
             </div>
           </div>
           <div className="md:w-1/2 w-full">
-            <RentalDetailsCard />
+            <RentalDetailsCard status="renter" details={booking} />
           </div>
         </div>
       </>

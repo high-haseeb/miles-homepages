@@ -106,10 +106,9 @@ export default function ListItem() {
           formData.append("multiple_date_ranges", dateRangeString);
           formData.append("schedule_type", "IS_MULTIPLE");
         } else if (key === "recurring_days_of_week") {
-          Array.from(value).forEach((day: any) => {
-            formData.append("recurring_days_of_week", day);
-          });
+          const days = value.join(", ");
           formData.append("schedule_type", "IS_RECURRENT");
+          formData.append("recurring_days_of_week", days);
         } else if (key === "image") {
           const imageFiles = Array.from(value as any[])
             .filter((file: any) => typeof file === "string")

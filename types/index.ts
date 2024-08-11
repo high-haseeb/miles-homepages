@@ -222,7 +222,7 @@ export interface CreateBookingPayload {
   vat: string;
   start_date: string;
   end_date: string;
-  description: string;
+  description?: string;
 }
 
 export interface PageLimitParams {
@@ -230,4 +230,23 @@ export interface PageLimitParams {
   limit: number;
   rental_status?: string;
   lister_status?: string;
+}
+
+export interface BookingDetails {
+  booking_id: number;
+  listing_id: number;
+  renter_id: number;
+  renter_name: string;
+  price: string;
+  service_charge: string;
+  vat: string;
+  listing_status: string;
+  rental_status: string;
+  start_date: Date | string;
+  end_date: Date | string;
+  description: string;
+  product_name: string;
+  price_per_day: string;
+  lister_name: string;
+  item_images: ItemImagesProps[];
 }
