@@ -1,7 +1,6 @@
 import {
   LoginPayload,
   SignupPayload,
-  ForgotPasswordPayload,
   SMSOTPPayload,
   VerifySMSOTPPayload,
 } from "@/types";
@@ -34,9 +33,18 @@ export const loginWithGoogle = async () => {
   }
 };
 
-export const forgotPassword = async (payload: ForgotPasswordPayload) => {
+export const forgotPassword = async (payload: { email: string }) => {
   try {
-    const response = await apiService.post("/auth/forgot-password", payload);
+    const response = await apiService.patch("/send-forgot-password", payload);
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const resetPassword = async (payload: { newPassword: string }) => {
+  try {
+    const response = await apiService.patch("/reset-password", payload);
     return response?.data;
   } catch (error: any) {
     throw error;

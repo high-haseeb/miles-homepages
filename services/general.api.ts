@@ -227,7 +227,7 @@ export const getRenterBookings = async (params: PageLimitParams) => {
   const { rental_status, page, limit } = params;
   const token = getToken();
   try {
-    const response = await apiService.patch(
+    const response = await apiService.get(
       `/bookings/renter?rental_status=${rental_status}&page=${page}&limit=${limit}`,
       {
         headers: {
@@ -245,7 +245,7 @@ export const getListerBookings = async (params: PageLimitParams) => {
   const { lister_status, page, limit } = params;
   const token = getToken();
   try {
-    const response = await apiService.patch(
+    const response = await apiService.get(
       `/bookings/lister?lister_status=${lister_status}&page=${page}&limit=${limit}`,
       {
         headers: {

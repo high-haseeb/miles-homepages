@@ -75,7 +75,7 @@ export default function LoginPage({
         : "/dashboard";
       router.push(redirect);
     } catch (err: any) {
-      const errorMsg = err?.response?.data?.message || mutation.error;
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",

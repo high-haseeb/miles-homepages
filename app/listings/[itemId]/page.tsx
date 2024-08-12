@@ -93,7 +93,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
       router.push(`/renting/${res?.data?.id}`);
     } catch (err: any) {
       console.log(err);
-      const errorMsg = err?.response?.data?.message || mutation.error;
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",

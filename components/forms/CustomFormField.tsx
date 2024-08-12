@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import {
   FormControl,
   FormDescription,
@@ -36,6 +38,7 @@ const RenderField = ({
 }) => {
   const { fieldType, placeholder, className, selectItems, renderSkeleton } =
     props;
+  const [viewPassword, setViewPassword] = useState(false);
 
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -71,15 +74,22 @@ const RenderField = ({
       );
     case FormFieldType.PASSWORD:
       return (
-        <div>
+        <div className="relative">
           <FormControl>
             <Input
-              type="password"
+              type={viewPassword ? "text" : "password"}
               placeholder={placeholder}
               {...field}
               className={`${className} h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
             />
           </FormControl>
+          <button
+            type="button"
+            onClick={() => setViewPassword((prev) => !prev)}
+            className="text-sm text-black underline absolute z-10 right-4 top-1/2 -translate-y-1/2"
+          >
+            Show
+          </button>
         </div>
       );
     case FormFieldType.SELECT:

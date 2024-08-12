@@ -9,7 +9,6 @@ import { Form } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
 
 import Backbtn from "@/components/Backbtn";
 import AuthLayout from "@/components/Layouts/AuthLayout";
@@ -105,13 +104,12 @@ export default function OnboardingPage({
         ? decodeURIComponent(redirectUrl as string)
         : "/dashboard";
       router.push(redirect);
-    } catch (err) {
+    } catch (err: any) {
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: isAxiosError(err)
-          ? err?.response?.data?.message
-          : "An unknown error occured",
+        description: errorMsg,
       });
     }
   }

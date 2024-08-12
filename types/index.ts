@@ -42,10 +42,6 @@ export interface LoginPayload {
   password: string;
 }
 
-export interface ForgotPasswordPayload {
-  email: string;
-}
-
 export interface SignupPayload {
   email: string;
   password: string;

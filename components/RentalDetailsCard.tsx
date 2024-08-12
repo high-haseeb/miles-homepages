@@ -68,7 +68,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       const res = await mutation.mutateAsync();
       console.log(res);
     } catch (err: any) {
-      const errorMsg = err?.response?.data?.message || mutation.error;
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -81,7 +81,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       const res = await acceptMutation.mutateAsync();
       console.log(res);
     } catch (err: any) {
-      const errorMsg = err?.response?.data?.message || mutation.error;
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -94,7 +94,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       const res = await declineMutation.mutateAsync();
       console.log(res);
     } catch (err: any) {
-      const errorMsg = err?.response?.data?.message || mutation.error;
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",

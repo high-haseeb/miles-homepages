@@ -10,12 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
 
 import AuthLayout from "@/components/Layouts/AuthLayout";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
-import { passwordSchema } from "@/constants/schemas";
 import { forgotPassword } from "@/services/auth.api";
 import { useAppContext } from "@/context/AppContext";
 
@@ -51,29 +49,23 @@ export default function ForgotPassword({
     },
   });
 
-  const redirectUrl = searchParams.redirect;
-
   async function onSubmit(values: z.infer<typeof forgotPasswordFormSchema>) {
     try {
       const res = await mutation.mutateAsync(values);
       toast({
         variant: "success",
         title: "Success",
-        description: "Log in successful!",
+        description: "Reset password link sent. \nCheck your email",
       });
       setToken(res?.data?.accessToken);
       setUserData(res?.data?.userData);
-      const redirect = redirectUrl
-        ? decodeURIComponent(redirectUrl as string)
-        : "/dashboard";
-      router.push(redirect);
+      router.push("/reset-password");
     } catch (err: any) {
-      console.log(err);
-      console.log(mutation.error);
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: err?.response?.data?.message,
+        description: errorMsg,
       });
     }
   }

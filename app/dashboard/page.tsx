@@ -20,10 +20,12 @@ import FilledStarIcon from "@/components/vectors/FilledStarIcon";
 import InfoIcon from "@/components/vectors/InfoIcon";
 import VerifiedIcon from "@/components/vectors/VerifiedIcon";
 import { useAppContext, UserDataType } from "@/context/AppContext";
+import VerificationModal from "@/components/Modals/VerificationModal";
 
 export default function Dashboard() {
   const { userData } = useAppContext();
   const [user, setUser] = useState<UserDataType>();
+  const [openVerifModal, setOpenVerifModal] = useState(false);
   const yearJoined = user?.created_at
     ? format(new Date(user.created_at), "yyyy")
     : "2020";
@@ -31,6 +33,10 @@ export default function Dashboard() {
   useEffect(() => {
     setUser(userData);
   }, [userData]);
+  const isNotVerified =
+    !user?.identity_verified ||
+    !user?.is_phone_number_verified ||
+    !user?.is_email_verified;
   return (
     <DashboardLayout>
       <>
@@ -126,9 +132,14 @@ export default function Dashboard() {
               Upgrade your profile by verifying your identity or address to
               enjoy unlimited access to your profile from any where in the world
             </p>
-            <button className="border border-gray-1 bg-gray-3 py-2 px-4 rounded-[38px] w-fit text-sm text-black font-medium">
-              Verify your profile
-            </button>
+            {isNotVerified && (
+              <button
+                onClick={() => setOpenVerifModal(true)}
+                className="border border-gray-1 bg-gray-3 py-2 px-4 rounded-[38px] w-fit text-sm text-black font-medium"
+              >
+                Verify your profile
+              </button>
+            )}
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:items-stretch gap-[30px]">
@@ -184,6 +195,10 @@ export default function Dashboard() {
           </div>
         </div>
       </>
+      <VerificationModal
+        openModal={openVerifModal}
+        handleOpenModal={setOpenVerifModal}
+      />
     </DashboardLayout>
   );
 }

@@ -133,13 +133,13 @@ export function PhoneNumber({
         title: "Success",
         description: res?.data,
       });
-    } catch (err) {
+    } catch (err: any) {
+      const errorMsg =
+        sendMutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: isAxiosError(err)
-          ? err?.response?.data?.message
-          : "An unknown error occured",
+        description: errorMsg,
       });
     }
   };
@@ -158,13 +158,13 @@ export function PhoneNumber({
         description: "Phone number verified.",
       });
       if (setCurrentStep) setCurrentStep((prev) => prev + 1);
-    } catch (err) {
+    } catch (err: any) {
+      const errorMsg =
+        verifyMutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: isAxiosError(err)
-          ? err?.response?.data?.message
-          : "An unknown error occured",
+        description: errorMsg,
       });
     }
   };
@@ -459,13 +459,13 @@ export function UploadPhoto({
         });
         handleOpenModal(false);
       }
-    } catch (err) {
+    } catch (err: any) {
+      const errorMsg =
+        profilePicMutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: isAxiosError(err)
-          ? err?.response?.data?.message
-          : "An unknown error occured",
+        description: errorMsg,
       });
     }
   };
