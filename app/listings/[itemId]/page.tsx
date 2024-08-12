@@ -13,13 +13,19 @@ import { CarouselCard } from "@/components/ListedItemCard";
 import { ItemProps } from "@/types";
 import Review from "@/components/Review";
 import { getListing, createBooking } from "@/services/general.api";
+import { useAppContext } from "@/context/AppContext";
+import VerificationModal from "@/components/Modals/VerificationModal";
 
 export default function ListedItem({ params }: { params: { itemId: string } }) {
   const { itemId } = params;
   const router = useRouter();
+  const { isLoggedIn, userData } = useAppContext();
+  const { is_email_verified, identity_verified, is_phone_number_verified } =
+    userData;
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [desc, setDesc] = useState<string>();
+  const [openVerifModal, setOpenVerifModal] = useState(false);
 
   const { data: listing, isPending } = useQuery({
     queryKey: ["listing", itemId],
@@ -33,11 +39,15 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     },
   });
 
-  console.log(listing);
+  // console.log(listing);
   const item = listing?.data?.listing;
   const dateRange = item?.multiple_date_ranges
     ? item?.multiple_date_ranges.split(",")
     : null;
+  const startDate =
+    dateRange?.[0] ?? item?.start_date ?? item?.recurring_start_date;
+  const endDate =
+    dateRange?.[1] ?? item?.start_date ?? item?.recurring_end_date;
   const peopleAlsoViewed = listing?.data?.peopleAlsoViewed;
 
   const priceBreakdown = [
@@ -56,24 +66,33 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   ];
 
   const handleBookingRequest = async () => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    }
+    if (!is_email_verified || !identity_verified || !is_phone_number_verified) {
+      setOpenVerifModal(true);
+    }
     try {
       const values = {
         listing_id: Number(itemId),
         price: item?.price_per_day,
         service_charge: "50",
         vat: "50",
-        start_date: dateRange[0] ?? item?.start_date,
-        end_date: dateRange[1] ?? item?.end_date,
+        start_date: startDate,
+        end_date: endDate,
         description: desc,
       };
-      await mutation.mutateAsync(values);
+      const res = await mutation.mutateAsync(values);
+
       toast({
         variant: "success",
         title: "Success",
         description: "You've successfully requsted to book this item.",
       });
-      router.push(`/renting/${itemId}`);
+
+      router.push(`/renting/${res?.data?.id}`);
     } catch (err: any) {
+      console.log(err);
       const errorMsg = err?.response?.data?.message || mutation.error;
       toast({
         variant: "destructive",
@@ -216,6 +235,10 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
           </div>
         </div>
       </div>
+      <VerificationModal
+        openModal={openVerifModal}
+        handleOpenModal={setOpenVerifModal}
+      />
     </DashboardLayout2>
   );
 }

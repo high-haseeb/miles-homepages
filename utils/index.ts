@@ -109,11 +109,11 @@ export const capitalize = (value: string) => {
 };
 
 export const formattedStatus = (status: string): string => {
-  if (status.toLowerCase().includes("pending")) {
+  if (status?.toLowerCase().includes("pending")) {
     return "pending";
-  } else if (status.toLowerCase().includes("awaiting")) {
+  } else if (status?.toLowerCase().includes("awaiting")) {
     return "awaiting";
-  } else if (status.toLowerCase().includes("completed")) {
+  } else if (status?.toLowerCase().includes("completed")) {
     return "completed";
   } else {
     return "progress";

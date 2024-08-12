@@ -117,15 +117,15 @@ export function ListedItemCard2({
 
   return (
     <div className="flex flex-col gap-y-[19px]">
-      <Carousel setApi={setApi} className="w-full max-w-xs">
-        <CarouselContent>
+      <Carousel setApi={setApi} className="w-full max-w-[258px]">
+        <CarouselContent className="h-[258px]">
           {item.item_images.map((imageItem: ItemImagesProps) => (
             <CarouselItem
               key={imageItem.image_id}
-              className="relative basis-[100%] pl-1"
+              className="relative basis-full pl-1"
             >
               <Link href={link}>
-                <div className="max-w-[258px] w-full h-[258px] p-1 rounded-lg">
+                <div className="w-full h-full p-1 rounded-lg">
                   <Image
                     src={imageItem.image_url}
                     fill
@@ -200,20 +200,16 @@ export function CarouselCard({ images }: { images: ItemImagesProps[] }) {
     });
   }, [api]);
   return (
-    <Carousel
-      setApi={setApi}
-      className="w-full max-h-[310px] h-full max-w-[510px]"
-    >
-      <CarouselContent>
+    <Carousel setApi={setApi} className="w-full max-w-[510px]">
+      <CarouselContent className="max-h-[310px] h-full">
         {images?.map((image) => (
           <CarouselItem
             key={image.image_id}
-            className="relative basis-[100%] pl-1"
+            className="relative basis-full p-1 aspect-square"
           >
             <Image
               src={image.image_url}
-              width={510}
-              height={310}
+              fill
               className="object-cover rounded-lg border border-gray-2"
               alt="card"
             />

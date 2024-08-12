@@ -139,11 +139,11 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
               </div>
             ))}
             <div className="py-4 px-3.5 flex items-center gap-x-5 mt-[15px] mb-10">
-              <p className="text-black">End recurring schedule:</p>
+              <p className="text-black">Recurring schedule:</p>
               <CustomFormField
                 control={control}
                 fieldType={FormFieldType.SKELETON}
-                name="recurring_end_date"
+                name="recurring_date"
                 className=""
                 renderSkeleton={(field) => (
                   <FormControl>
@@ -151,7 +151,10 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
                       <PopoverTrigger asChild>
                         <Button className="text-slate-300 bg-transparent font-normal">
                           {field.value ? (
-                            format(field.value, "PPP")
+                            <>
+                              {format(field.value.from, "LLL dd, y")} -{" "}
+                              {format(field.value.to, "LLL dd, y")}
+                            </>
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -159,13 +162,17 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
                         <Calendar
-                          mode="single"
-                          selected={field.value}
+                          mode="range"
+                          selected={
+                            field.value || { from: new Date(), to: new Date() }
+                          }
                           onSelect={field.onChange}
                           disabled={(date) =>
                             date < new Date() || date < new Date("1900-01-01")
                           }
                           initialFocus
+                          defaultMonth={field.value?.from || new Date()}
+                          numberOfMonths={1}
                         />
                       </PopoverContent>
                     </Popover>

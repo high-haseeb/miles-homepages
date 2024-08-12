@@ -244,6 +244,8 @@ export interface BookingDetails {
   rental_status: string;
   start_date: Date | string;
   end_date: Date | string;
+  recurring_start_date: Date | string;
+  recurring_end_date: Date | string;
   description: string;
   product_name: string;
   price_per_day: string;

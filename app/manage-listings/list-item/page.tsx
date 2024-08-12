@@ -25,7 +25,7 @@ import Stepper from "@/components/Stepper";
 import ItemInfo from "./steps/ItemInfo";
 import ItemImages from "./steps/ItemImages";
 import ExtraInfo from "./steps/ExtraInfo";
-import { StepProps, FormFieldType, ListItemPayload } from "@/types";
+import { StepProps } from "@/types";
 import { listItemFormSchema } from "@/constants/schemas";
 import Preview from "./steps/Preview";
 import { useAppContext } from "@/context/AppContext";
@@ -65,7 +65,7 @@ export default function ListItem() {
       price_per_day: undefined,
       recurring_days_of_week: [],
       multiple_date_ranges: { from: new Date(), to: new Date() },
-      recurring_end_date: new Date(),
+      recurring_date: { from: new Date(), to: new Date() },
     },
   });
 
@@ -109,6 +109,15 @@ export default function ListItem() {
           const days = value.join(", ");
           formData.append("schedule_type", "IS_RECURRENT");
           formData.append("recurring_days_of_week", days);
+        } else if (key === "recurring_date") {
+          formData.append(
+            "recurring_start_date",
+            format((value as any).from, "M/d/yyyy")
+          );
+          formData.append(
+            "recurring_end_date",
+            format((value as any).to, "M/d/yyyy")
+          );
         } else if (key === "image") {
           const imageFiles = Array.from(value as any[])
             .filter((file: any) => typeof file === "string")

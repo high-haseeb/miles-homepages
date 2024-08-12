@@ -62,7 +62,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   ];
   const startDate = format(details?.start_date, "dd/MM/yyyy");
   const endDate = format(details?.end_date, "dd/MM/yyyy");
-
+  // console.log(details);
   const handleCancelBooking = async () => {
     try {
       const res = await mutation.mutateAsync();
@@ -104,7 +104,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   };
 
   const formatStatus = formattedStatus(
-    details.listing_status ?? details.rental_status
+    details?.listing_status ?? details?.rental_status
   );
   const statusTextStyles = statusColor[formatStatus].text;
   const statusBgStyles = statusColor[formatStatus].bg;
@@ -113,7 +113,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
     <div className="rounded-xl border border-gray-4/35 bg-white p-5 flex flex-col overflow-x-hidden">
       <div className="flex items-end gap-x-[30px] mb-[22px]">
         <Image
-          src={details.item_images[0].image_url || "/images/polaroid-card.png"}
+          src={details?.item_images[0].image_url || "/images/polaroid-card.png"}
           width={200}
           height={200}
           alt="polaroid"
@@ -129,12 +129,12 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
               }}
             >
               {status === "renter"
-                ? details.listing_status
-                : details.rental_status}
+                ? details?.listing_status
+                : details?.rental_status}
             </Badge>
-            <p className="mb-[5px] text-slate-900">{details.product_name}</p>
+            <p className="mb-[5px] text-slate-900">{details?.product_name}</p>
             <p className="text-lg text-green-500 font-medium">
-              NGN {details.price_per_day}
+              NGN {details?.price_per_day}
             </p>
             <p className="text-sm text-slate-500 font-normal">per/day</p>
           </div>
@@ -166,7 +166,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         <div className="flex items-center justify-between mb-[31px]">
           <p className="text-green-500 font-medium text-xl">Total</p>
           <p className="text-green-500 font-medium text-xl">
-            NGN {details.price}
+            NGN {details?.price}
           </p>
         </div>
         <div
@@ -194,7 +194,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
             status === "renter" ? "flex" : "hidden"
           } justify-center w-full`}
         >
-          {details.listing_status.toLowerCase() === "pending request" && (
+          {details?.listing_status.toLowerCase() === "pending request" && (
             <Button
               onClick={handleCancelBooking}
               disabled={mutation.isPending}
@@ -203,7 +203,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
               Cancel booking
             </Button>
           )}
-          {details.listing_status.toLowerCase() === "awaiting payment" && (
+          {details?.listing_status.toLowerCase() === "awaiting payment" && (
             <Button className="rounded-[38px] py-3 px-4 bg-green-500 font-medium text-white border-none">
               Pay now
             </Button>

@@ -13,6 +13,8 @@ interface ChatProps {
 }
 
 export default function Chat({ status, details }: ChatProps) {
+  //   console.log(details);
+
   const startDate = format(details?.start_date, "MMM d, yyyy");
   const endDate = format(details?.end_date, "MMM d, yyyy");
   return (
@@ -39,7 +41,7 @@ export default function Chat({ status, details }: ChatProps) {
           </Avatar>
           <div className="flex flex-col">
             <div className="rounded-xl bg-white py-4.5 px-5 shadow text-slate-800">
-              {details.description}
+              {details?.description}
             </div>
             <p className="text-sm text-slate-400">Today 8:45 am</p>
           </div>

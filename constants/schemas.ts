@@ -42,5 +42,5 @@ export const listItemFormSchema = z.object({
   latitude: z.number().optional(),
   longitude: z.number().optional(),
   recurring_days_of_week: z.array(z.string()).optional(),
-  recurring_end_date: z.date().optional(),
+  recurring_date: z.any().optional(),
 });
