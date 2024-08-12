@@ -340,3 +340,18 @@ export const resetPassword = async (payload: { newPassword: string }) => {
     throw error;
   }
 };
+
+export const uploadProfilePic = async (payload: { image: File }) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/uploads`, payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};

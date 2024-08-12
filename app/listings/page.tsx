@@ -67,6 +67,10 @@ export default function Listings() {
     lng: 3.3792,
   };
 
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <DashboardLayout2
       noPaddingY

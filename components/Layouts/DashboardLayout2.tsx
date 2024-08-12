@@ -3,16 +3,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  CircleUser,
-  Home,
-  Menu,
-  Search,
-  Users,
-  ShoppingCart,
-  Bell,
-} from "lucide-react";
-
+import { Home, Menu, Search, Users, ShoppingCart, Bell } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -46,7 +38,7 @@ export default function DashboardLayout2({
   const pathname = usePathname();
   const router = useRouter();
 
-  const { handleLogout, isVerified } = useAppContext();
+  const { handleLogout, isVerified, userData } = useAppContext();
   const [openVerifModal, setOpenVerifModal] = useState(false);
 
   useEffect(() => {
@@ -180,7 +172,10 @@ export default function DashboardLayout2({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
+              <Avatar className="w-[42px] h-[42px]">
+                <AvatarImage src={userData?.image_url || ""} alt="photo" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>

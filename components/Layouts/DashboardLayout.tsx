@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
-  CircleUser,
   Home,
   Menu,
   Package,
@@ -14,6 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,7 +45,7 @@ export default function DashboardLayout({
 }: DashboardLayout2Props) {
   const pathname = usePathname();
   const router = useRouter();
-  const { handleLogout, isVerified } = useAppContext();
+  const { handleLogout, isVerified, userData } = useAppContext();
   const [openVerifModal, setOpenVerifModal] = useState(false);
 
   useEffect(() => {
@@ -219,7 +219,10 @@ export default function DashboardLayout({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
+                <Avatar className="w-[42px] h-[42px]">
+                  <AvatarImage src={userData?.image_url || ""} alt="photo" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>

@@ -1,19 +1,22 @@
 "use client";
 import {
   useState,
+  useRef,
   SetStateAction,
   Dispatch,
   useEffect,
   ChangeEvent,
+  RefObject,
 } from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, Camera } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
@@ -31,7 +34,12 @@ import Stepper from "../Stepper";
 import { StepProps } from "@/types";
 import InfoIcon from "../vectors/InfoIcon";
 import { sendSMSOTP, verifySMSOTP } from "@/services/auth.api";
-import { useAppContext } from "@/context/AppContext";
+import { uploadProfilePic } from "@/services/general.api";
+import { useAppContext, UserDataType } from "@/context/AppContext";
+import WriteIcon from "../vectors/WriteIcon";
+import GalleryIcon from "../vectors/GalleryIcon";
+import PhotoIcon from "../vectors/PhotoIcon";
+import { identifyUrlType, base64ToFile } from "@/utils";
 
 interface VerificationModalProps {
   openModal: boolean;
@@ -44,16 +52,21 @@ export default function VerificationModal({
 }: VerificationModalProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>();
-
   const steps: StepProps[] = [
     {
       1: <PhoneNumber setCurrentStep={setCurrentStep} />,
     },
     {
-      2: <VerifyIdentity date={date!} setDate={setDate} />,
+      2: (
+        <VerifyIdentity
+          date={date!}
+          setDate={setDate}
+          setCurrentStep={setCurrentStep}
+        />
+      ),
     },
     {
-      3: <UploadPhoto />,
+      3: <UploadPhoto handleOpenModal={handleOpenModal} />,
     },
   ];
 
@@ -176,6 +189,10 @@ export function PhoneNumber({
 
     return () => clearInterval(timerId);
   }, [startCountdown]);
+
+  const handleSkip = () => {
+    if (setCurrentStep) setCurrentStep((prev) => prev + 1);
+  };
   return (
     <div className="flex flex-col gap-y-10">
       <div className="relative">
@@ -251,7 +268,13 @@ export function PhoneNumber({
           <p className="text-sm text-slate-800">{timeLeft}s</p>
         </div>
       </div>
-      <div className="w-full mt-[100px]">
+      <div className="w-full mt-[100px] flex items-center gap-x-6">
+        <button
+          onClick={handleSkip}
+          className="py-3 px-4 text-center w-full rounded-[38px] text-slate-900 bg-transparent font-medium disabled:bg-slate-200"
+        >
+          Skip
+        </button>
         <button
           disabled={!otp || otp.length < 6}
           onClick={handleProceed}
@@ -267,10 +290,15 @@ export function PhoneNumber({
 export function VerifyIdentity({
   date,
   setDate,
+  setCurrentStep,
 }: {
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
 }) {
+  const handleSkip = () => {
+    if (setCurrentStep) setCurrentStep((prev) => prev + 1);
+  };
   return (
     <div className="flex flex-col gap-y-10">
       <div className="flex flex-col gap-y-[5px]">
@@ -316,7 +344,13 @@ export function VerifyIdentity({
           </p>
         </div>
       </div>
-      <div className="w-full mt-[100px]">
+      <div className="w-full mt-[100px] flex items-center gap-x-6">
+        <button
+          onClick={handleSkip}
+          className="py-3 px-4 text-center w-full rounded-[38px] text-slate-900 bg-transparent font-medium disabled:bg-slate-200"
+        >
+          Skip
+        </button>
         <button className="py-3 px-4 text-center w-full rounded-[38px] text-white bg-green-500 font-medium disabled:bg-green-200">
           Proceed
         </button>
@@ -325,6 +359,198 @@ export function VerifyIdentity({
   );
 }
 
-function UploadPhoto() {
-  return <div></div>;
+export function UploadPhoto({
+  handleOpenModal,
+}: {
+  handleOpenModal: Dispatch<SetStateAction<boolean>>;
+}) {
+  const { userData, setUserData } = useAppContext();
+  const [user, setUser] = useState<UserDataType | undefined>(undefined);
+  const [imageFileList, setImageFile] = useState<FileList | null>(null);
+  const [ppFile, setPPFile] = useState<File | null>(null);
+  const videoRef: RefObject<HTMLVideoElement> = useRef(null);
+  const canvasRef: RefObject<HTMLCanvasElement> = useRef(null);
+  const [photo, setPhoto] = useState<string>("");
+  const [isTakingPhoto, setIsTakingPhoto] = useState<boolean>(false);
+
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const profilePicMutation = useMutation({
+    mutationFn: uploadProfilePic,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+    },
+  });
+
+  useEffect(() => {
+    setUser(userData);
+    if (userData?.image_url) {
+      setPhoto(userData?.image_url);
+    }
+  }, [userData]);
+
+  const takeWebPhoto = async () => {
+    setIsTakingPhoto(true);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+      }
+    } catch (err) {
+      console.error("Error accessing webcam: ", err);
+      setIsTakingPhoto(false);
+    }
+  };
+
+  const stopWebPhoto = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
+    }
+  };
+
+  const takePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const context = canvasRef.current.getContext("2d");
+      if (context) {
+        context.drawImage(
+          videoRef.current,
+          0,
+          0,
+          canvasRef.current.width,
+          canvasRef.current.height
+        );
+        const dataURL = canvasRef.current.toDataURL("image/png");
+        setPhoto(dataURL);
+        setIsTakingPhoto(false);
+        stopWebPhoto();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const urlType = identifyUrlType(photo);
+    let file: File;
+    if (photo) {
+      if (urlType === "base64") {
+        file = base64ToFile(photo, "profile-photo");
+        setPPFile(file);
+      } else if (urlType === "blob" && imageFileList) {
+        file = imageFileList![0];
+        setPPFile(file);
+      } else return;
+    }
+  }, [photo]);
+
+  const handleSubmit = async () => {
+    try {
+      if (ppFile) {
+        const res = await profilePicMutation.mutateAsync({
+          image: ppFile,
+        });
+        console.log(res);
+        setUserData({ ...userData, image_url: res?.data?.image_url });
+        toast({
+          variant: "success",
+          title: "Success",
+          description: "Profile picture uploaded.",
+        });
+        handleOpenModal(false);
+      }
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: isAxiosError(err)
+          ? err?.response?.data?.message
+          : "An unknown error occured",
+      });
+    }
+  };
+
+  const fullName = `${user?.first_name} ${user?.last_name}`;
+
+  return (
+    <div className="flex flex-col px-12 relative">
+      <div className="flex flex-col items-center gap-y-[5px] text-center mb-[11px]">
+        <Avatar className="w-[150px] h-[150px]">
+          <AvatarImage
+            src={photo || "https://github.com/shadcn.png"}
+            alt="photo"
+          />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <div className="flex items-center gap-x-[9px]">
+          <p className="text-slate-800">{fullName}</p>
+          <WriteIcon />
+        </div>
+      </div>
+      <p className="text-xs text-gray-1 mb-1">
+        Finish up by uploading a clear portrait of you. File size not larger
+        than 5MB
+      </p>
+      <div className="self-center flex items-center justify-between w-full max-w-[334px]">
+        <label
+          htmlFor="upload-photo"
+          className="flex items-center py-2.5 px-5 gap-x-[7px] text-slate-800 cursor-pointer"
+        >
+          <GalleryIcon />
+          Gallery
+          <input
+            id="upload-photo"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const files = e.target.files;
+              if (files && files[0]) {
+                setImageFile(e.target.files);
+                setPhoto(URL.createObjectURL(files[0]));
+              }
+            }}
+          />
+        </label>
+        <button
+          className="flex items-center py-2.5 px-5 gap-x-[7px] text-slate-800"
+          onClick={takeWebPhoto}
+        >
+          <PhotoIcon />
+          Take a photo
+        </button>
+      </div>
+      {isTakingPhoto && (
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-full">
+          <video
+            ref={videoRef}
+            width="640"
+            height="480"
+            className="rounded-xl"
+          />
+          <button
+            onClick={takePhoto}
+            className="absolute bottom-5 z-20 bg-white left-1/2 -translate-x-1/2 rounded-full text-slate-300 border-[3px] border-slate-300 h-16 w-16 flex items-center justify-center"
+          >
+            <Camera className="w-10 h-10" />
+          </button>
+          <canvas
+            ref={canvasRef}
+            width="640"
+            height="480"
+            style={{ display: "none" }}
+          />
+        </div>
+      )}
+      <div className="w-full mt-5">
+        <button
+          onClick={handleSubmit}
+          disabled={!ppFile || profilePicMutation.isPending}
+          className="py-3 px-4 text-center w-full rounded-[38px] text-white bg-green-500 font-medium disabled:bg-green-200"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  );
 }

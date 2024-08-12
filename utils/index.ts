@@ -1,3 +1,5 @@
+// files manipulation
+
 export const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -29,6 +31,53 @@ export function createFileList(filesArray: File[]): FileList {
   return dataTransfer.files;
 }
 
+export function createFileList2(file: File): FileList {
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(file);
+  return dataTransfer.files;
+}
+
+export async function bloburlToFileList(
+  imageUrl: string,
+  fileName: string
+): Promise<FileList> {
+  // Fetch the image data from the URL
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
+
+  // Create a File from the Blob
+  const file = new File([blob], fileName, { type: blob.type });
+
+  // Create a DataTransfer to hold the File
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(file);
+
+  // Return the FileList
+  return dataTransfer.files;
+}
+
+export function identifyUrlType(url: string): "base64" | "blob" | "unknown" {
+  // Check if the string starts with the base64 data URL scheme
+  if (url.startsWith("data:")) {
+    return "base64";
+  }
+
+  // Check if the string starts with the Blob URL scheme
+  if (url.startsWith("blob:")) {
+    return "blob";
+  }
+
+  // If neither, return 'unknown'
+  return "unknown";
+}
+export function base64ToFileList(base64: string, filename: string) {
+  const file = base64ToFile(base64, filename);
+  const fileList = createFileList2(file);
+  return fileList;
+}
+
+// Others
+
 export const formatPrice = (value: string) => {
   // Remove any non-digit characters except for periods
   value = value.replace(/[^0-9.]/g, "");
@@ -42,4 +91,31 @@ export const formatPrice = (value: string) => {
   integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   return integerPart + decimalPart;
+};
+
+export const toCurrency = (number: number, country: string = "en-NG") => {
+  const formatter = new Intl.NumberFormat(country, {
+    style: "currency",
+    currency: country === "en-NG" ? "NGN" : "GBP",
+  });
+
+  return formatter.format(number).split(".00")[0];
+};
+
+export const capitalize = (value: string) => {
+  const valArr = value.split("");
+  const firstLetter = valArr.shift();
+  return [firstLetter!.toUpperCase(), ...valArr].join("");
+};
+
+export const formattedStatus = (status: string): string => {
+  if (status.toLowerCase().includes("pending")) {
+    return "pending";
+  } else if (status.toLowerCase().includes("awaiting")) {
+    return "awaiting";
+  } else if (status.toLowerCase().includes("completed")) {
+    return "completed";
+  } else {
+    return "progress";
+  }
 };

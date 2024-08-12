@@ -7,12 +7,16 @@ import UpdateEmail from "../modals/UpdateEmail";
 import UpdateName from "../modals/UpdateName";
 import VerifyPhoneNumber from "../modals/VerifyPhoneNumber";
 import VerifyUserIdentity from "../modals/VerifyUserIdentity";
+import { useAppContext } from "@/context/AppContext";
+import UpdateProfilePicture from "../modals/UpdateProfilePicture";
 
 export default function Accounts() {
   const [openPhoneVerif, setOpenPhoneVerif] = useState(false);
   const [openEmailVerif, setOpenEmailVerif] = useState(false);
   const [openIDVerif, setOpenIDVerif] = useState(false);
   const [openNameVerif, setOpenNameVerif] = useState(false);
+  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const { userData } = useAppContext();
 
   return (
     <>
@@ -21,13 +25,16 @@ export default function Accounts() {
           <p className="w-[135px] font-medium text-slate-900">Profile Photo</p>
           <div className="flex items-center">
             <Avatar className="w-[70px] h-[70px] mr-[25px]">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage src={userData?.image_url || ""} alt="profile-pic" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <button className="py-3 px-4 border-none text-sm text-slate-300 mr-2.5 font-medium">
               Remove
             </button>
-            <button className="py-3 px-4 border-none text-sm text-green-500 font-medium">
+            <button
+              className="py-3 px-4 border-none text-sm text-green-500 font-medium"
+              onClick={() => setOpenUploadModal(true)}
+            >
               Update
             </button>
           </div>
@@ -39,12 +46,12 @@ export default function Accounts() {
           <div className="flex items-center">
             <Input
               className="py-3 px-4 text-sm text-slate-900 mr-[25px] h-auto"
-              value="Femi"
+              value={userData?.first_name}
               disabled
             />
             <Input
               className="py-3 px-4 text-sm text-slate-900 mr-2.5 h-auto"
-              value="Lawal"
+              value={userData?.last_name}
               disabled
             />
             <button
@@ -60,7 +67,7 @@ export default function Accounts() {
           <div className="flex items-center">
             <Input
               className="py-3 px-4 text-sm text-slate-900 mr-2.5 h-auto"
-              value="07034753927"
+              value={userData?.phone_number || ""}
               disabled
             />
             <div className="flex items-center gap-1">
@@ -80,7 +87,7 @@ export default function Accounts() {
           <div className="flex items-center">
             <Input
               className="py-3 px-4 text-sm text-slate-900 mr-2.5 h-auto"
-              value="Femi.lawal@gmail.com"
+              value={userData?.email}
               disabled
             />
             <div className="flex items-center gap-1">
@@ -106,7 +113,7 @@ export default function Accounts() {
               disabled
             />
             <div className="flex items-center gap-1 w-full">
-              <VerifiedIcon notVerified />
+              <VerifiedIcon notVerified={!userData?.identity_verified} />
               <p className="text-xs text-error font-medium">Not Verified</p>
               <button
                 onClick={() => setOpenIDVerif(true)}
@@ -133,6 +140,10 @@ export default function Accounts() {
       <VerifyUserIdentity
         openModal={openIDVerif}
         handleOpenModal={setOpenIDVerif}
+      />
+      <UpdateProfilePicture
+        openModal={openUploadModal}
+        handleOpenModal={setOpenUploadModal}
       />
     </>
   );

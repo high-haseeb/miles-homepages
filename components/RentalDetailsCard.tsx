@@ -6,11 +6,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 import { BookingDetails } from "@/types";
+import { statusColor } from "@/constants";
 import {
   cancelBooking,
   acceptBooking,
   declineBooking,
 } from "@/services/general.api";
+import { formattedStatus } from "@/utils";
 
 interface ChatProps {
   details: BookingDetails;
@@ -100,6 +102,13 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       });
     }
   };
+
+  const formatStatus = formattedStatus(
+    details.listing_status ?? details.rental_status
+  );
+  const statusTextStyles = statusColor[formatStatus].text;
+  const statusBgStyles = statusColor[formatStatus].bg;
+
   return (
     <div className="rounded-xl border border-gray-4/35 bg-white p-5 flex flex-col overflow-x-hidden">
       <div className="flex items-end gap-x-[30px] mb-[22px]">
@@ -114,6 +123,10 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
           <div className="flex flex-col">
             <Badge
               className={`rounded-[15px] py-[3px] px-[15px] text-xs w-fit`}
+              style={{
+                color: statusTextStyles,
+                backgroundColor: statusBgStyles,
+              }}
             >
               {status === "renter"
                 ? details.listing_status

@@ -5,18 +5,64 @@ import { Input } from "@/components/ui/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { useToast } from "@/components/ui/use-toast";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Form } from "@/components/ui/form";
+
+import { useAppContext } from "@/context/AppContext";
+import CustomFormField from "@/components/forms/CustomFormField";
+import { FormFieldType } from "@/types";
 
 interface VerificationModalProps {
   openModal: boolean;
   handleOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 
+const loginFormSchema = z.object({
+  firstName: z.string().min(2, {
+    message: "First name must be at least 2 characters",
+  }),
+  lastName: z.string().min(2, {
+    message: "Last name must be at least 2 characters",
+  }),
+});
+
 export default function UpdateName({
   openModal,
   handleOpenModal,
 }: VerificationModalProps) {
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const { toast } = useToast();
+  const { userData } = useAppContext();
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      firstName: userData?.first_name,
+      lastName: userData?.last_name,
+    },
+  });
+  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    // try {
+    //   const res = await mutation.mutateAsync(values);
+    //   toast({
+    //     variant: "success",
+    //     title: "Success",
+    //     description: "Log in successful!",
+    //   });
+    //   setToken(res?.data?.accessToken);
+    //   setUserData(res?.data?.userData);
+    //   const redirect = redirectUrl
+    //     ? decodeURIComponent(redirectUrl as string)
+    //     : "/dashboard";
+    //   router.push(redirect);
+    // } catch (err: any) {
+    //   const errorMsg = err?.response?.data?.message || mutation.error;
+    //   toast({
+    //     variant: "destructive",
+    //     title: "Uh oh! Something went wrong.",
+    //     description: errorMsg,
+    //   });
+    // }
   };
 
   return (
@@ -29,21 +75,30 @@ export default function UpdateName({
           </p>
         </div>
         <div className="w-full flex flex-col">
-          <form className="flex flex-col gap-y-[35px]" onSubmit={onSubmit}>
-            <Input
-              className="h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 py-3 px-4"
-              placeholder="First name"
-              name="first_name"
-            />
-            <Input
-              className="h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 py-3 px-4"
-              placeholder="Last name"
-              name="last_name"
-            />
-            <button className="mt-[60px] py-3 px-4 text-center w-full rounded-[38px] text-white bg-green-500 font-medium disabled:bg-green-200">
-              Update
-            </button>
-          </form>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-y-[35px] overflow-x-hidden"
+            >
+              <CustomFormField
+                control={form.control}
+                name="firstName"
+                fieldType={FormFieldType.INPUT}
+                placeholder="First name"
+                className="p-4 rounded-xl"
+              />
+              <CustomFormField
+                control={form.control}
+                name="lastName"
+                fieldType={FormFieldType.INPUT}
+                placeholder="Last name"
+                className="p-4 rounded-xl"
+              />
+              <button className="mt-[60px] py-3 px-4 text-center w-full rounded-[38px] text-white bg-green-500 font-medium disabled:bg-green-200">
+                Update
+              </button>
+            </form>
+          </Form>
         </div>
       </DialogContent>
     </Dialog>
