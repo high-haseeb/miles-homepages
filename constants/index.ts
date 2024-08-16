@@ -181,6 +181,7 @@ export const API_URL = IS_DEV_MODE
   : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
 
 console.log(API_URL);
+console.log(process.env.NEXT_PUBLIC_API_URL);
 
 // export const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/v1`;
 
