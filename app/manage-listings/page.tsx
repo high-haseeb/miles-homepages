@@ -14,6 +14,7 @@ export default function Lisitngs() {
     queryFn: () => myListings(),
   });
   const userListings = listings?.data?.userListings;
+  console.log(userListings);
   return (
     <DashboardLayout>
       <>
@@ -39,7 +40,7 @@ export default function Lisitngs() {
         >
           <ListItemIcon /> List New Item
         </Link>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[15px] sm:gap-x-[35px] gap-y-4.5 sm:gap-y-[25px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-[15px] sm:gap-x-[37.5px] gap-y-4.5 sm:gap-y-10">
           {userListings?.map((item: ItemProps) => (
             <ListedItemCard key={item?.listing_id} item={item} />
           ))}

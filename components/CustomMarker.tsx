@@ -1,6 +1,6 @@
 // CustomMarker.tsx
 import React from "react";
-import { Marker } from "@vis.gl/react-google-maps";
+import { AdvancedMarker, Marker } from "@vis.gl/react-google-maps";
 
 interface CustomMarkerProps {
   lat: number;

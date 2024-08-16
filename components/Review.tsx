@@ -15,7 +15,7 @@ export default function Review() {
             <p className="text-slate-800">Anslem Rex</p>
             <VerifiedIcon />
           </div>
-          <p className="text-slate-400">Apr 16, 2020</p>
+          <p className="text-slate-400 text-sm">Apr 16, 2020</p>
         </div>
         <div className="flex">
           <StarIcon />
@@ -24,7 +24,7 @@ export default function Review() {
           <StarIcon />
           <StarIcon />
         </div>
-        <p className="text-slate-400 mt-[5px]">
+        <p className="text-slate-400 text-sm mt-[5px]">
           EOS R5 is a powerhouse mirrorless camera, boasting groundbreaking
           features like 8K video recording...
         </p>

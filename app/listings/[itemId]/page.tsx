@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
+import { Minus, Plus } from "lucide-react";
 
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { CarouselCard } from "@/components/ListedItemCard";
@@ -25,6 +26,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [desc, setDesc] = useState<string>();
+  const [quantity, setQuantity] = useState(1);
   const [openVerifModal, setOpenVerifModal] = useState(false);
 
   const { data: listing, isPending } = useQuery({
@@ -39,7 +41,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     },
   });
 
-  // console.log(listing);
+  console.log(listing);
   const item = listing?.data?.listing;
   const dateRange = item?.multiple_date_ranges
     ? item?.multiple_date_ranges.split(",")
@@ -106,22 +108,26 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   }
   return (
     <DashboardLayout2>
-      <div className="flex flex-col lg:px-[155px]">
+      <div className="flex flex-col lg:px-[155px] gap-y-10">
         <div className="flex items-stretch justify-between sm:gap-x-20 mb-10">
           <div className="flex flex-col max-w-[632px] md:basis-[60%] w-full">
             <CarouselCard images={item?.item_images} />
-            <div className="mt-5 mb-4.5">
-              <p className="mb-[5px] text-slate-400">
+            <div className="mt-[15px] mb-0.5">
+              <p className="text-slate-900 text-sm">
                 Listed by{" "}
                 <span className="text-orange-500 font-medium">
                   {item?.full_name}
                 </span>
               </p>
-              <p className="text-slate-500">Lagos 1.5 km away</p>
+              <p className="text-slate-900 text-sm">Lagos 1.5 km away</p>
+              <p className="text-slate-900 text-sm">
+                {item?.quantity_available}/{item?.quantity_available} Available
+                for rent
+              </p>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col mt-[30px]">
               <p className="text-xl text-slate-900 mb-2.5">Description</p>
-              <p className="text-slate-400">
+              <p className="text-slate-400 text-sm">
                 {item?.description}{" "}
                 {item?.description?.length > 215 && (
                   <span className="text-orange-600">Read More</span>
@@ -131,36 +137,59 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
           </div>
           <div className="border border-slate-100 rounded-[14px] py-4.5 px-6 flex flex-col gap-y-[15px] w-full md:basis-[40%]">
             <div className="flex flex-col">
-              <p className="mb-[5px] text-slate-900">{item?.product_name}</p>
-              <p className="text-lg text-green-500 font-medium">
+              <p className="text-sm text-slate-900">{item?.product_name}</p>
+              <p className="text-green-500 font-medium">
                 NGN {item?.price_per_day}{" "}
-                <span className="text-base text-slate-500">per/day</span>
+                <span className="text-sm text-slate-500">per/day</span>
               </p>
             </div>
             <div className="flex border border-gray-4/50 rounded-[15px] divide-x w-full">
               <div className="py-2 px-6 flex-1">
                 <p className="text-sm text-slate-400 mb-[7px]">START DATE</p>
-                <p className="text-slate-800 font-medium">
+                <p className="text-slate-800 font-medium text-sm">
                   {dateRange?.[0] ?? item?.start_date}
                 </p>
               </div>
               <div className="py-2 px-6 flex-1">
                 <p className="text-sm text-slate-400 mb-[7px]">END DATE</p>
-                <p className="text-slate-800 font-medium">
+                <p className="text-slate-800 font-medium text-sm">
                   {dateRange?.[1] ?? item?.end_date}
                 </p>
               </div>
             </div>
+            <div className="flex items-center gap-x-10 my-[21px]">
+              <p className="text-sm text-green-500">QUANTITY</p>
+              <div className="flex items-center gap-x-5">
+                <button
+                  onClick={() => {
+                    if (quantity === 1) return;
+                    else setQuantity((prev) => prev - 1);
+                  }}
+                  className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
+                >
+                  <Minus className="w-3 h-3" />
+                </button>
+                {quantity}
+                <button
+                  onClick={() => {
+                    setQuantity((prev) => prev + 1);
+                  }}
+                  className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
+                >
+                  <Plus className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
             <div className="flex flex-col gap-y-2.5">
-              <p className="text-sm text-slate-400">PRICE BREAKDOWN</p>
+              <p className="text-sm text-green-500">PRICE BREAKDOWN</p>
               <div className="flex flex-col border-b pb-[15px] gap-y-[5px]">
                 {priceBreakdown.map((item, index) => (
                   <div
                     key={`itemId-${index + 1}`}
                     className="flex items-center justify-between"
                   >
-                    <p className="text-slate-900">{item.title}</p>
-                    <p className="text-slate-900">{item.value}</p>
+                    <p className="text-slate-900 text-sm">{item.title}</p>
+                    <p className="text-slate-900 text-sm">{item.value}</p>
                   </div>
                 ))}
               </div>
@@ -175,7 +204,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                 <Textarea
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
-                  className="rounded-[14px] border-slate-100 pl-6 p-4 text-slate-200 text-sm bg-transparent"
+                  className="rounded-[14px] border-slate-100 pl-6 p-4 text-slate-200 text-sm bg-transparent outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Send any other details about your request"
                 />
               </div>
@@ -192,11 +221,19 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
           </div>
         </div>
         <div className="flex flex-col gap-y-5">
+          <p className="text-slate-900 font-medium text-xl">Reviews</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+            <Review />
+            <Review />
+            <Review />
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-5">
           <p className="text-slate-900 font-medium text-xl">
             People also viewed
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-[70px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-[70px]">
             {peopleAlsoViewed?.map((item: ItemProps) => (
               <Link href={`/listings/${item.listing_id}`} key={item.listing_id}>
                 <div className="flex flex-col gap-y-[15px]">
@@ -205,33 +242,27 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                       item?.item_images?.[0]?.image_url || "/images/speaker.png"
                     }
                     alt="item"
-                    height={230}
-                    width={230}
+                    height={195}
+                    width={195}
                     className="object-cover rounded-lg"
                   />
-                  <div className="flex flex-col gap-y-[5px]">
-                    <p className="text-slate-900">Nikon SB-6A</p>
+                  <div className="flex flex-col text-sm">
+                    <p className="text-slate-900 mb-0.5">Nikon SB-6A</p>
                     <p className="text-slate-300">Listed by Femi . Lawal</p>
                     <p className="text-orange-600 font-medium">
                       Lagos 1.5 km away
                     </p>
-                    <p className="text-slate-900 text-xl font-medium">
+                    <p className="text-slate-900 font-medium">
                       NGN 40,000{" "}
-                      <span className="text-lg text-slate-400 font-normal">
+                      <span className="text-sm text-slate-400 font-normal">
                         per/day
                       </span>
                     </p>
+                    <p className="text-slate-400">2/2 Available for rent</p>
                   </div>
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-        <div className="flex flex-col gap-y-5 mt-[55px]">
-          <p className="text-slate-900 font-medium text-xl">Reviews</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-9">
-            <Review />
-            <Review />
           </div>
         </div>
       </div>

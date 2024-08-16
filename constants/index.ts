@@ -163,15 +163,22 @@ export const statusColor: {
     text: "#D33030",
     bg: "#FFEDEC",
   },
+  rejected: {
+    text: "#D33030",
+    bg: "#FFEDEC",
+  },
 };
 
 export const minLengthRegex = /^.{8,}$/;
 export const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
-export const GOOGLE_PLACES_API_KEY = "AIzaSyDRFQ7Y5BN-dFMWugSvUQ6W_7Onx9UIi_0";
+export const GOOGLE_PLACES_API_KEY =
+  process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY;
 
 export const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
 export const API_URL = IS_DEV_MODE
-  ? `https://miles-rental-backend.onrender.com/v1`
-  : `https://miles-rental-backend.onrender.com/v1`;
+  ? `${process.env.NEXT_PUBLIC_API_URL}/v1`
+  : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
+
+export const PURE_API_URL = process.env.NEXT_PUBLIC_API_URL;

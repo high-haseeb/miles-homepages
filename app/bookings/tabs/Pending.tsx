@@ -10,17 +10,40 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { format } from "date-fns";
 
 import Chip from "@/components/Chip";
 import { getListerBookings } from "@/services/general.api";
+import { DetailListType, DetailsType } from "@/types";
 
 export default function Pending() {
   const router = useRouter();
   const { data: pendingBookings, isPending } = useQuery({
     queryKey: ["bookings", "lister", "pending"],
     queryFn: () =>
-      getListerBookings({ lister_status: "pending", page: 1, limit: 10 }),
+      getListerBookings({
+        lister_status: "PENDING REQUEST",
+        page: 1,
+        limit: 10,
+      }),
   });
+  console.log(pendingBookings);
+  const detailsList = pendingBookings?.data?.rows;
+  const formattedDate = (dateString: string) => {
+    const structuredDate = new Date(dateString);
+    return format(structuredDate, "MMM d, yyyy");
+  };
+  const details = detailsList?.map((detail: DetailListType) => ({
+    avatar: "",
+    customer: detail?.lister_name,
+    item: detail?.product_name,
+    duration: `${formattedDate(detail?.start_date)} - ${formattedDate(
+      detail?.end_date
+    )}`,
+    status: detail?.listing_status,
+    itemId: detail?.booking_id,
+  }));
+
   return (
     <Table className="py-[27px] px-[30px] rounded-[25px] mt-[25px] sm:mt-0">
       <TableHeader className="max-sm:hidden">
@@ -31,7 +54,7 @@ export default function Pending() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {details.map((detail, index) => (
+        {details?.map((detail: DetailsType, index: number) => (
           <TableRow
             key={detail.customer}
             className={`border-none py-[25px] px-[22px] cursor-pointer ${

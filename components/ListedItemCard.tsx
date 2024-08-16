@@ -33,7 +33,7 @@ export default function ListedItemCard({ item }: { item: ItemProps }) {
   }, [api]);
 
   return (
-    <div className="flex flex-col gap-y-[19px]">
+    <div className="flex flex-col gap-y-[15px]">
       <Carousel setApi={setApi} className="w-full max-w-xs">
         <CarouselContent>
           {item.item_images.map((imageItem: ItemImagesProps) => (
@@ -41,7 +41,7 @@ export default function ListedItemCard({ item }: { item: ItemProps }) {
               key={imageItem.image_id}
               className="relative basis-[100%] pl-1"
             >
-              <div className="max-w-[258px] w-full h-[258px] p-1 rounded-lg">
+              <div className="max-w-[195px] w-full h-[195px] p-1 rounded-lg">
                 <Image
                   src={imageItem.image_url}
                   fill
@@ -68,23 +68,23 @@ export default function ListedItemCard({ item }: { item: ItemProps }) {
         </CarouselContent>
       </Carousel>
 
-      <div className="flex flex-col sm:gap-y-[5px]">
+      <div className="flex flex-col">
         <Chip
-          className="bg-green-50 text-green-500 mb-[3px] sm:mb-0"
+          className="bg-green-50 text-green-500 mb-[3px] sm:mb-[15px]"
           text={item.status}
         />
-        <p className="text-slate-900 text-xs sm:text-base">
+        <p className="text-slate-900 text-xs sm:text-sm">
           {item.product_name || "Nikon SB-6A"}
         </p>
-        <p className="text-slate-300 text-xs sm:text-base">
-          Quantity Available: {item.quantity_available}/
-          {item.quantity_available}
-        </p>
-        <p className="text-slate-900 text-lg sm:text-xl font-medium">
+        <p className="text-slate-900 text-sm sm:text-base font-medium">
           NGN {item.price_per_day || "40,000"}{" "}
-          <span className="text-sm sm:text-lg text-slate-400 font-normal">
+          <span className="text-xs sm:text-sm text-slate-400 font-normal">
             per/day
           </span>
+        </p>
+        <p className="text-slate-300 text-xs sm:text-sm">
+          Quantity Available: {item.quantity_available}/
+          {item.quantity_available}
         </p>
       </div>
     </div>
@@ -116,9 +116,9 @@ export function ListedItemCard2({
   }, [api]);
 
   return (
-    <div className="flex flex-col gap-y-[19px]">
-      <Carousel setApi={setApi} className="w-full max-w-[258px]">
-        <CarouselContent className="h-[258px]">
+    <div className="flex flex-col gap-y-[15px]">
+      <Carousel setApi={setApi} className="w-full max-w-[195px]">
+        <CarouselContent className="h-[195px]">
           {item.item_images.map((imageItem: ItemImagesProps) => (
             <CarouselItem
               key={imageItem.image_id}
@@ -154,14 +154,17 @@ export function ListedItemCard2({
         </CarouselContent>
       </Carousel>
 
-      <div className="flex flex-col gap-y-[5px]">
-        <p className="text-slate-900">{item.product_name}</p>
-        <p className="text-slate-300">Listed by {item.full_name}</p>
-        <p className="text-orange-600 font-medium">Lagos 1.5 km away</p>
-        <p className="text-slate-900 text-xl font-medium">
-          NGN {item.price_per_day}{" "}
-          <span className="text-lg text-slate-400 font-normal">per/day</span>
+      <div className="flex flex-col">
+        <p className="text-slate-900 text-sm mb-0.5 font-medium">
+          {item.product_name}
         </p>
+        <p className="text-slate-300 text-sm">Listed by {item.full_name}</p>
+        <p className="text-orange-600 text-sm">Lagos 1.5 km away</p>
+        <p className="text-slate-900 font-medium">
+          NGN {item.price_per_day}{" "}
+          <span className="text-sm text-slate-400 font-normal">per/day</span>
+        </p>
+        <p className="text-slate-400 text-sm">2/2 Available for rent</p>
       </div>
     </div>
   );

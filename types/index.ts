@@ -248,3 +248,29 @@ export interface BookingDetails {
   lister_name: string;
   item_images: ItemImagesProps[];
 }
+
+export interface DetailListType {
+  booking_id: number;
+  description: string;
+  end_date: string;
+  lister_name: string;
+  listing_id: number;
+  listing_status: string;
+  price: string;
+  product_name: string;
+  rental_status: string;
+  renter_id: number;
+  renter_name: string;
+  service_charge: string;
+  start_date: string;
+  vat: string;
+}
+
+export interface DetailsType {
+  avatar?: string;
+  customer: string;
+  item: string;
+  duration: string;
+  status: string;
+  itemId: number;
+}

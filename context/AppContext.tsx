@@ -84,6 +84,7 @@ export default function AppContextProvider({
 
   const handleLogout = () => {
     setToken("");
+    setUserData({});
     localStorage.clear();
     sessionStorage.clear();
     setIsLoggedIn(false);

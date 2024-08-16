@@ -10,17 +10,39 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { format } from "date-fns";
 
 import Chip from "@/components/Chip";
 import { getRenterBookings } from "@/services/general.api";
+import { DetailListType, DetailsType } from "@/types";
 
 export default function Pending() {
   const router = useRouter();
   const { data: pendingBookings, isPending } = useQuery({
     queryKey: ["bookings", "renter", "pending"],
     queryFn: () =>
-      getRenterBookings({ rental_status: "pending", page: 1, limit: 10 }),
+      getRenterBookings({
+        rental_status: "AWAITING APPROVAL",
+        page: 1,
+        limit: 10,
+      }),
   });
+  console.log(pendingBookings);
+  const detailsList = pendingBookings?.data?.rows;
+  const formattedDate = (dateString: string) => {
+    const structuredDate = new Date(dateString);
+    return format(structuredDate, "MMM d, yyyy");
+  };
+  const details = detailsList?.map((detail: DetailListType) => ({
+    avatar: "",
+    customer: detail?.lister_name,
+    item: detail?.product_name,
+    duration: `${formattedDate(detail?.start_date)} - ${formattedDate(
+      detail?.end_date
+    )}`,
+    status: detail?.rental_status,
+    itemId: detail?.booking_id,
+  }));
   return (
     <Table className="py-[27px] px-[30px] rounded-[25px] mt-[25px] sm:mt-0">
       <TableHeader className="max-sm:hidden">
@@ -31,13 +53,13 @@ export default function Pending() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {details.map((detail, index) => (
+        {details?.map((detail: DetailsType, index: number) => (
           <TableRow
-            key={detail.customer}
+            key={detail.itemId}
             className={`border-none py-[25px] px-[22px] cursor-pointer ${
               (index + 1) % 2 === 0 ? "bg-transparent" : "bg-white"
             }`}
-            onClick={() => router.push(`/bookings/${detail.itemId}`)}
+            onClick={() => router.push(`/renting/${detail.itemId}`)}
           >
             <TableCell className="flex items-center gap-x-4.5">
               <Avatar className="w-[50px] h-[50px]">
@@ -76,30 +98,3 @@ export default function Pending() {
     </Table>
   );
 }
-
-const details = [
-  {
-    avatar: "",
-    customer: "Lolu B.",
-    item: "Polaroid SB-6A",
-    duration: "Jan 1, 2020 - Mar 15, 2020",
-    status: "Requested",
-    itemId: "1a2b3c",
-  },
-  {
-    avatar: "",
-    customer: "Abolaji B.",
-    item: "Cannon XB-FG",
-    duration: "Feb 5, 2020 ",
-    status: "Requested",
-    itemId: "4d5e6f",
-  },
-  {
-    avatar: "",
-    customer: "Gifty Ogechukwu",
-    item: "HoverAir X1",
-    duration: "Nov 18, 2020",
-    status: "Requested",
-    itemId: "7g8h9i",
-  },
-];

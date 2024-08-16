@@ -1,5 +1,6 @@
 "use client";
 import React, { FormEvent, useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { APIProvider, Map, InfoWindow } from "@vis.gl/react-google-maps";
 import { useQuery } from "@tanstack/react-query";
@@ -96,7 +97,7 @@ export default function Listings() {
               {currentListings?.length} result(s)
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-[30px] overflow-y-auto md:pl-[30px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-[30px] gap-y-10 overflow-y-auto md:pl-[30px]">
             {currentListings?.map((item: ItemProps) => (
               <ListedItemCard2
                 item={item}
@@ -107,7 +108,7 @@ export default function Listings() {
           </div>
         </div>
         <div className="flex-1">
-          <APIProvider apiKey={GOOGLE_PLACES_API_KEY}>
+          <APIProvider apiKey={GOOGLE_PLACES_API_KEY!}>
             <Map
               style={{ width: "100%", height: "100%" }}
               defaultCenter={defaultCenter}
@@ -132,10 +133,23 @@ export default function Listings() {
                   }}
                   onCloseClick={() => setSelectedItem(null)}
                 >
-                  <div>
-                    <h4>{selectedItem.product_name}</h4>
-                    <p>NGN {selectedItem.price_per_day} per day</p>
-                    <p>{selectedItem.item_location}</p>
+                  <div className="p-4 flex items-center gap-x-4">
+                    <div>
+                      <Image
+                        src={selectedItem?.item_images?.[0]?.image_url}
+                        alt="item"
+                        width={100}
+                        height={100}
+                        className="object-cover rounded-full"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="text-sm text-slate-800">
+                        {selectedItem.product_name}
+                      </h4>
+                      <p>NGN {selectedItem.price_per_day} per day</p>
+                      <p>{selectedItem.item_location}</p>
+                    </div>
                   </div>
                 </InfoWindow>
               )}
