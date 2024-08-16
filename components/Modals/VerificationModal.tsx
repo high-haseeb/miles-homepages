@@ -294,7 +294,7 @@ export function VerifyIdentity({
 }: {
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
-  setCurrentStep: Dispatch<SetStateAction<number>>;
+  setCurrentStep?: Dispatch<SetStateAction<number>>;
 }) {
   const handleSkip = () => {
     if (setCurrentStep) setCurrentStep((prev) => prev + 1);
