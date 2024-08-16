@@ -442,7 +442,7 @@ export function UploadPhoto({
         setPPFile(file);
       } else return;
     }
-  }, [photo]);
+  }, [photo, imageFileList]);
 
   const handleSubmit = async () => {
     try {
