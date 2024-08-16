@@ -172,14 +172,16 @@ export const statusColor: {
 export const minLengthRegex = /^.{8,}$/;
 export const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
-export const GOOGLE_PLACES_API_KEY =
-  process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY;
+export const GOOGLE_PLACES_API_KEY = process.env.NEXT_GOOGLE_PLACES_API_KEY;
 
 export const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
-// export const API_URL = IS_DEV_MODE
-//   ? `${process.env.NEXT_PUBLIC_API_URL}/v1`
-//   : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
-export const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/v1`;
+export const API_URL = IS_DEV_MODE
+  ? `${process.env.NEXT_PUBLIC_API_URL}/v1`
+  : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
+
+console.log(API_URL);
+
+// export const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/v1`;
 
 export const PURE_API_URL = process.env.NEXT_PUBLIC_API_URL;
