@@ -177,8 +177,9 @@ export const GOOGLE_PLACES_API_KEY =
 
 export const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
-export const API_URL = IS_DEV_MODE
-  ? `${process.env.NEXT_PUBLIC_API_URL}/v1`
-  : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
+// export const API_URL = IS_DEV_MODE
+//   ? `${process.env.NEXT_PUBLIC_API_URL}/v1`
+//   : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
+export const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/v1`;
 
 export const PURE_API_URL = process.env.NEXT_PUBLIC_API_URL;
