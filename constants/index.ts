@@ -172,7 +172,8 @@ export const statusColor: {
 export const minLengthRegex = /^.{8,}$/;
 export const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
-export const GOOGLE_PLACES_API_KEY = process.env.NEXT_GOOGLE_PLACES_API_KEY;
+export const GOOGLE_PLACES_API_KEY =
+  process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY;
 
 export const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
