@@ -27,7 +27,6 @@ interface AppContextType {
   handleLogout: () => void;
   userData: UserDataType;
   isVerified: boolean;
-  setIsVerified: React.Dispatch<React.SetStateAction<boolean>>;
   setUserData: React.Dispatch<React.SetStateAction<UserDataType>>;
 }
 
@@ -35,7 +34,6 @@ const AppContext = createContext<AppContextType>({
   token: "",
   isLoggedIn: false,
   isVerified: false,
-  setIsVerified: () => {},
   setToken: () => {},
   handleLogout: () => {},
   userData: {},
@@ -77,6 +75,11 @@ export default function AppContextProvider({
   useEffect(() => {
     if (userData) {
       localStorage.setItem("userData", JSON.stringify(userData));
+      const verified =
+        userData?.identity_verified &&
+        userData?.is_email_verified &&
+        userData?.is_phone_number_verified;
+      setIsVerified(Boolean(verified));
     } else {
       localStorage.removeItem("userData");
     }
@@ -100,7 +103,6 @@ export default function AppContextProvider({
         setUserData,
         userData,
         isVerified,
-        setIsVerified,
       }}
     >
       {children}

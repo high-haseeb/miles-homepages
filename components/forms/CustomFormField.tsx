@@ -215,7 +215,7 @@ export default function CustomFormField(props: CustomFormFieldProps) {
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-full">
           {label && (
             <FormLabel className="text-black font-medium mb-2">
               {label}

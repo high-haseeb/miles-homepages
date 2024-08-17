@@ -183,7 +183,10 @@ export default function ListItem() {
                 <X className="h-5 w-5" />
               </button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[350px] py-[43.5px] px-[21.5px] flex flex-col gap-y-[23px] items-center">
+            <DialogContent
+              showClose={false}
+              className="sm:max-w-[350px] py-[43.5px] px-[21.5px] flex flex-col gap-y-[23px] items-center"
+            >
               <p className="text-center text-black">
                 Do you want to close the listing form? Your progress has been
                 saved.
@@ -191,12 +194,12 @@ export default function ListItem() {
               <div className="flex items-center gap-x-6">
                 <Button
                   onClick={() => router.push("/manage-listings")}
-                  className="text-slate-400 rounded-lg hover:bg-transparent py-2 px-3 border-none bg-transparent w-fit"
+                  className="text-slate-400 rounded-lg h-auto py-2 px-3 border-none bg-transparent w-fit"
                 >
                   Close
                 </Button>
                 <DialogClose>
-                  <Button className="text-white rounded-lg py-2 px-3 border-none bg-green-500 hover:bg-green-600 w-fit">
+                  <Button className="text-white h-auto rounded-lg py-2 px-3 border-none bg-green-500 hover:bg-green-600 w-fit">
                     Continue
                   </Button>
                 </DialogClose>

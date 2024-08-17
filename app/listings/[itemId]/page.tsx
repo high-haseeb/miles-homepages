@@ -16,13 +16,12 @@ import Review from "@/components/Review";
 import { getListing, createBooking } from "@/services/general.api";
 import { useAppContext } from "@/context/AppContext";
 import VerificationModal from "@/components/Modals/VerificationModal";
+import Backbtn from "@/components/Backbtn";
 
 export default function ListedItem({ params }: { params: { itemId: string } }) {
   const { itemId } = params;
   const router = useRouter();
-  const { isLoggedIn, userData } = useAppContext();
-  const { is_email_verified, identity_verified, is_phone_number_verified } =
-    userData;
+  const { isLoggedIn, isVerified } = useAppContext();
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [desc, setDesc] = useState<string>();
@@ -71,7 +70,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     if (!isLoggedIn) {
       router.push("/login");
     }
-    if (!is_email_verified || !identity_verified || !is_phone_number_verified) {
+    if (!isVerified) {
       setOpenVerifModal(true);
     }
     try {
@@ -108,9 +107,12 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   }
   return (
     <DashboardLayout2>
-      <div className="flex flex-col lg:px-[155px] gap-y-10">
-        <div className="flex items-stretch justify-between sm:gap-x-20 mb-10">
+      <div className="flex flex-col lg:px-[93px] gap-y-10">
+        <div className="flex flex-col md:flex-row md:items-stretch justify-between max-md:gap-y-10 sm:gap-x-20 mb-10">
           <div className="flex flex-col max-w-[632px] md:basis-[60%] w-full">
+            <div className="mb-[30px]">
+              <Backbtn />
+            </div>
             <CarouselCard images={item?.item_images} />
             <div className="mt-[15px] mb-0.5">
               <p className="text-slate-900 text-sm">
@@ -247,18 +249,25 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                     className="object-cover rounded-lg"
                   />
                   <div className="flex flex-col text-sm">
-                    <p className="text-slate-900 mb-0.5">Nikon SB-6A</p>
-                    <p className="text-slate-300">Listed by Femi . Lawal</p>
+                    <p className="text-slate-900 mb-0.5">
+                      {item?.product_name}
+                    </p>
+                    <p className="text-slate-300">
+                      Listed by {item?.full_name}
+                    </p>
                     <p className="text-orange-600 font-medium">
                       Lagos 1.5 km away
                     </p>
                     <p className="text-slate-900 font-medium">
-                      NGN 40,000{" "}
+                      NGN {item?.price_per_day}{" "}
                       <span className="text-sm text-slate-400 font-normal">
                         per/day
                       </span>
                     </p>
-                    <p className="text-slate-400">2/2 Available for rent</p>
+                    <p className="text-slate-400">
+                      {item?.quantity_available}/{item?.quantity_available}{" "}
+                      Available for rent
+                    </p>
                   </div>
                 </div>
               </Link>

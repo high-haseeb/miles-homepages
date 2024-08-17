@@ -40,16 +40,12 @@ import WriteIcon from "../vectors/WriteIcon";
 import GalleryIcon from "../vectors/GalleryIcon";
 import PhotoIcon from "../vectors/PhotoIcon";
 import { identifyUrlType, base64ToFile } from "@/utils";
-
-interface VerificationModalProps {
-  openModal: boolean;
-  handleOpenModal: Dispatch<SetStateAction<boolean>>;
-}
+import { ModalProps } from "@/types";
 
 export default function VerificationModal({
   openModal,
   handleOpenModal,
-}: VerificationModalProps) {
+}: ModalProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>();
   const steps: StepProps[] = [
@@ -72,7 +68,10 @@ export default function VerificationModal({
 
   return (
     <Dialog open={openModal} onOpenChange={handleOpenModal} defaultOpen={false}>
-      <DialogContent className="py-9 px-[30px] rounded-[14px] max-w-[545px] bg-white flex flex-col">
+      <DialogContent
+        showClose={false}
+        className="py-9 px-[30px] rounded-[14px] max-w-[545px] bg-white flex flex-col"
+      >
         <div className="mb-8 flex flex-col gap-1">
           <h3 className="font-bold text-slate-9 text-2xl">
             Verify your Profile

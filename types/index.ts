@@ -274,3 +274,25 @@ export interface DetailsType {
   status: string;
   itemId: number;
 }
+
+export interface ModalProps {
+  openModal: boolean;
+  handleOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface UpdateScheduleProps {
+  // For a single date
+  single_date?: Date | string;
+
+  // For a date range
+  start_date?: Date | string;
+  end_date?: Date | string;
+
+  //For days of the week (can store multiple days)
+  multiple_date_ranges?: DateRange;
+
+  // For recurring day of the week with a date range
+  recurring_days_of_week?: string[];
+  recurring_start_date?: Date | string;
+  recurring_end_date?: Date | string;
+}

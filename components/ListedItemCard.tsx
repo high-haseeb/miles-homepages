@@ -14,7 +14,13 @@ import { ItemProps, ItemImagesProps } from "@/types";
 
 import Chip from "./Chip";
 
-export default function ListedItemCard({ item }: { item: ItemProps }) {
+export default function ListedItemCard({
+  item,
+  link,
+}: {
+  item: ItemProps;
+  link: string;
+}) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -41,14 +47,16 @@ export default function ListedItemCard({ item }: { item: ItemProps }) {
               key={imageItem.image_id}
               className="relative basis-[100%] pl-1"
             >
-              <div className="max-w-[195px] w-full h-[195px] p-1 rounded-lg">
-                <Image
-                  src={imageItem.image_url}
-                  fill
-                  className="object-cover rounded-lg border border-gray-2"
-                  alt="card"
-                />
-              </div>
+              <Link href={link}>
+                <div className="max-w-[195px] w-full h-[195px] p-1 rounded-lg">
+                  <Image
+                    src={imageItem.image_url}
+                    fill
+                    className="object-cover rounded-lg border border-gray-2"
+                    alt="card"
+                  />
+                </div>
+              </Link>
               <CarouselPrevious className="left-8" />
               <CarouselNext className="right-4.5" />
               <div className="text-center flex items-center gap-x-3 absolute bottom-[22px] left-1/2 -translate-x-1/2">

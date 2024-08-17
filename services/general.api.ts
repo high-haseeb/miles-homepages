@@ -6,6 +6,7 @@ import {
   UpdateListingPayload,
   CreateBookingPayload,
   PageLimitParams,
+  UpdateScheduleProps,
 } from "@/types";
 
 const getToken = () => {
@@ -72,6 +73,77 @@ export const updateListing = async (
 export const myListings = async (page?: number) => {
   try {
     const response = await apiService.get(`/me/listings?page=${page || 1}`);
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+// get single user listing
+export const myListing = async (id: number) => {
+  try {
+    const response = await apiService.get(`/listings/${id}`);
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+// delete single user listing
+export const delMyListing = async (id: number) => {
+  const token = getToken();
+  try {
+    const response = await apiService.delete(`/me/listings/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const updateListingAvailability = async ({
+  params,
+  payload,
+}: {
+  params: { id: number };
+  payload: { status: string };
+}) => {
+  const token = getToken();
+  const { id } = params;
+  try {
+    const response = await apiService.patch(
+      `/me/listing_availability/${id}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const updateSchedule = async ({
+  params,
+  payload,
+}: {
+  params: { id: number };
+  payload: UpdateScheduleProps;
+}) => {
+  const token = getToken();
+  const { id } = params;
+  try {
+    const response = await apiService.put(`/schedules/${id}`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response?.data;
   } catch (error: any) {
     throw error;
@@ -273,36 +345,7 @@ export const getSingleBooking = async (id: string) => {
   }
 };
 
-// Schedule
-export const updateSchedule = async (id: string) => {
-  const token = getToken();
-  try {
-    const response = await apiService.put(`/schedules/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response?.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
-
 // User Profile
-export const uploadUserPicture = async () => {
-  const token = getToken();
-  try {
-    const response = await apiService.patch(`/uploads`, {
-      headers: {
-        "Content-Type": "multipart/formdata",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response?.data;
-  } catch (error: any) {
-    throw error;
-  }
-};
 
 export const sendForgotPassword = async (payload: { email: string }) => {
   const token = getToken();
