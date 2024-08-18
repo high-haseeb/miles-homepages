@@ -28,6 +28,7 @@ export interface CustomFormFieldProps {
   renderSkeleton?: (field: any) => React.ReactNode;
   selectItems?: SelectItemsProps[];
   date?: DateRange;
+  fullwidth?: boolean;
 }
 
 interface SelectItemsProps {

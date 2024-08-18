@@ -44,7 +44,8 @@ export default function Settings() {
               name="password"
               fieldType={FormFieldType.PASSWORD}
               placeholder="Password"
-              className="p-4 rounded-xl flex-grow"
+              className="p-4 rounded-xl"
+              fullwidth
             />
             <Button
               className="h-auto py-3 px-5 rounded-[38px] w-fit"

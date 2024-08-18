@@ -6,7 +6,7 @@ import imageCompression from "browser-image-compression";
 import { FormControl } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "@/components/forms/CustomFormField";
-import { FormFieldType } from "@/types";
+import { FormFieldType, ItemImagesProps } from "@/types";
 import { base64ToFile, fileToBase64 } from "@/utils";
 
 export default function ItemImages({ control }: { control: Control<any> }) {
@@ -14,6 +14,7 @@ export default function ItemImages({ control }: { control: Control<any> }) {
   const [disabled, setDisabled] = useState(false);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [itemImages, setItemImages] = useState<ItemImagesProps[]>();
 
   const handleFileChange = async (files: FileList) => {
     if (imageURLs?.length === 5) {
@@ -95,6 +96,16 @@ export default function ItemImages({ control }: { control: Control<any> }) {
     setImageURLs(images);
   }, [images]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const formDetails = localStorage.getItem("listItemForm");
+      if (formDetails) {
+        const parsedFormDetails = JSON.parse(formDetails);
+        setItemImages(parsedFormDetails?.item_images);
+      }
+    }
+  }, []);
+
   return (
     <div className="flex flex-col gap-y-[30px]">
       <div className="flex flex-col gap-y-3.5">
@@ -149,35 +160,55 @@ export default function ItemImages({ control }: { control: Control<any> }) {
                 </div>
                 <div className="flex items-center justify-between mt-2.5">
                   <Image
-                    src={imageURLs[0] || "/images/default-img.png"}
+                    src={
+                      imageURLs[0] ||
+                      itemImages!?.[0]?.image_url ||
+                      "/images/default-img.png"
+                    }
                     alt="default-img"
                     width={103}
                     height={103}
                     className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
-                    src={imageURLs[1] || "/images/default-img.png"}
+                    src={
+                      imageURLs[1] ||
+                      itemImages!?.[1]?.image_url ||
+                      "/images/default-img.png"
+                    }
                     alt="default-img"
                     width={103}
                     height={103}
                     className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
-                    src={imageURLs[2] || "/images/default-img.png"}
+                    src={
+                      imageURLs[2] ||
+                      itemImages!?.[2]?.image_url ||
+                      "/images/default-img.png"
+                    }
                     alt="default-img"
                     width={103}
                     height={103}
                     className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
-                    src={imageURLs[3] || "/images/default-img.png"}
+                    src={
+                      imageURLs[3] ||
+                      itemImages!?.[3]?.image_url ||
+                      "/images/default-img.png"
+                    }
                     alt="default-img"
                     width={103}
                     height={103}
                     className="rounded-lg border border-gray-3 object-contain w-[42px] h-[42px] sm:w-[103px] sm:h-[103px]"
                   />
                   <Image
-                    src={imageURLs[4] || "/images/default-img.png"}
+                    src={
+                      imageURLs[4] ||
+                      itemImages!?.[4]?.image_url ||
+                      "/images/default-img.png"
+                    }
                     alt="default-img"
                     width={103}
                     height={103}

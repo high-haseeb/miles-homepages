@@ -19,20 +19,19 @@ interface ChatProps {
 export default function Chat({ status, details }: ChatProps) {
   const [socketObj, setSocketObj] = useState<Socket | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
-  const startDate = format(details?.start_date, "MMM d, yyyy");
-  const endDate = format(details?.end_date, "MMM d, yyyy");
   const [message, setMessage] = useState<string>("");
+  // const startDate = format(details?.start_date, "MMM d, yyyy");
+  // const endDate = format(details?.end_date, "MMM d, yyyy");
+  // console.log(details);
+
+  const user =
+    status === "lister" ? details?.lister_name : details?.renter_name;
 
   useEffect(() => {
     const socket = io(PURE_API_URL!);
     setSocketObj(socket);
-
     socket.on("connect", () => {
       console.log("socket connected");
-    });
-
-    socket.on("message", (msg) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
     return () => {
@@ -42,10 +41,18 @@ export default function Chat({ status, details }: ChatProps) {
 
   const handleSendMessage = () => {
     if (socketObj && message.trim()) {
-      socketObj.emit("message", message);
+      socketObj.emit("message", { username: user, message });
       setMessage(""); // Clear input field after sending
     }
   };
+
+  useEffect(() => {
+    if (socketObj) {
+      socketObj.on("message", (msg) => {
+        setMessages((prevMessages) => [...prevMessages, msg]);
+      });
+    }
+  }, [messages, socketObj]);
 
   return (
     <div className="flex flex-col w-full">
@@ -78,10 +85,15 @@ export default function Chat({ status, details }: ChatProps) {
         </div>
         <div className="w-full flex flex-col gap-y-2.5 ml-16">
           <Textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             className="bg-transparent py-[34px] px-[33px] bg-white border border-gray-2 rounded-[14px]"
             placeholder="Message Luis B..."
           />
-          <Button className="rounded-lg border border-gray-4 gap-2 py-2 px-4 text-slate-400 self-end w-fit bg-transparent">
+          <Button
+            onClick={handleSendMessage}
+            className="rounded-lg border border-gray-4 gap-2 py-2 px-4 text-slate-400 self-end w-fit bg-transparent"
+          >
             <SendIcon /> Send Message
           </Button>
         </div>

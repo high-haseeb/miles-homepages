@@ -135,7 +135,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         <div className="flex flex-col gap-y-5 flex-grow">
           <div className="flex flex-col">
             <Badge
-              className={`rounded-[15px] py-[3px] px-[15px] text-xs w-fit`}
+              className={`rounded-[15px] py-[3px] px-[15px] text-xs w-fit mb-2.5`}
               style={{
                 color: statusTextStyles,
                 backgroundColor: statusBgStyles,
@@ -211,8 +211,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
           className={`${
             status === "renter" ||
             details?.listing_status?.toLowerCase() === "rejected" ||
-            details?.listing_status?.toLowerCase() ||
-            "awaiting payment"
+            details?.listing_status?.toLowerCase() === "awaiting payment"
               ? "hidden"
               : "flex justify-between"
           } items-center`}
@@ -234,6 +233,33 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         </div>
         <div
           className={`${
+            status === "renter" ||
+            details?.listing_status?.toLowerCase() === "rejected" ||
+            details?.listing_status?.toLowerCase() === "awaiting approval"
+              ? "hidden"
+              : "flex justify-between"
+          } items-center`}
+        >
+          <Button
+            onClick={handleCancelBooking}
+            disabled={mutation.isPending}
+            className="rounded-[38px] py-3 px-4 bg-transparent border-none font-medium text-slate-400"
+          >
+            Cancel booking
+          </Button>
+          <Button
+            onClick={handleAcceptBooking}
+            disabled={
+              acceptMutation.isPending ||
+              details?.listing_status?.toLowerCase() === "awaiting payment"
+            }
+            className="rounded-[38px] py-3 px-4 bg-green-500 font-medium text-white border-none"
+          >
+            Request accepted
+          </Button>
+        </div>
+        <div
+          className={`${
             status === "renter" ? "flex" : "hidden"
           } justify-center w-full`}
         >
@@ -241,13 +267,13 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
             <Button
               onClick={handleCancelBooking}
               disabled={mutation.isPending}
-              className="rounded-[38px] py-3 px-4 bg-transparent border-none font-medium text-slate-400"
+              className="rounded-[38px] py-3 px-4 bg-transparent border-none font-medium text-slate-400 w-full"
             >
               Cancel booking
             </Button>
           )}
           {details?.listing_status.toLowerCase() === "awaiting payment" && (
-            <Button className="rounded-[38px] py-3 px-4 bg-green-500 font-medium text-white border-none">
+            <Button className="rounded-[38px] py-3 px-4 bg-green-500 font-medium text-white border-none w-full">
               Pay now
             </Button>
           )}

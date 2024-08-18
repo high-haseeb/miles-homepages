@@ -14,7 +14,7 @@ export default function Lisitngs() {
     queryFn: () => myListings(),
   });
   const userListings = listings?.data?.userListings;
-  console.log(userListings);
+  // console.log(userListings);
   return (
     <DashboardLayout>
       <>

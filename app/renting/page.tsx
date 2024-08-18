@@ -1,6 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import DashboardLayout from "@/components/Layouts/DashboardLayout";
 import FilterIcon from "@/components/vectors/FilterIcon";
 import SortIcon from "@/components/vectors/SortIcon";
 import Pending from "./tabs/Pending";
@@ -8,10 +7,11 @@ import Upcoming from "./tabs/Upcoming";
 import Progress from "./tabs/Progress";
 import Completed from "./tabs/Completed";
 import All from "./tabs/All";
+import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 
 export default function Rentals() {
   return (
-    <DashboardLayout noPaddingX>
+    <DashboardLayout2>
       <>
         <div className="flex flex-col px-[25px]">
           <div className="flex flex-col gap-y-2.5 mb-2">
@@ -62,6 +62,6 @@ export default function Rentals() {
           </TabsContent>
         </Tabs>
       </>
-    </DashboardLayout>
+    </DashboardLayout2>
   );
 }

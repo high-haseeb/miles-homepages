@@ -34,6 +34,11 @@ export default function MyListing({
   const [hasChanged, setHasChanged] = useState(false);
   const [openAvailability, setOpenEditAvailability] = useState(false);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleReadMore = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const { data: listing, isPending } = useQuery({
     queryKey: ["listing"],
@@ -47,7 +52,7 @@ export default function MyListing({
     },
   });
 
-  console.log(listing);
+  // console.log(listing);
   const listedItem = listing?.data?.listing;
   const formatStatus = formattedStatus(listedItem?.status);
   const statusTextStyles = statusColor[formatStatus].text;
@@ -89,6 +94,10 @@ export default function MyListing({
     setHasChanged(true);
   };
 
+  const truncatedDescription =
+    listedItem?.description?.slice(0, 215) +
+    (listedItem?.description?.length > 215 ? "..." : "");
+
   return (
     <DashboardLayout2>
       <div className="flex flex-col lg:px-[93px] gap-y-10">
@@ -127,9 +136,11 @@ export default function MyListing({
             <div>
               <p className="text-xl text-slate-900 mb-2.5">Description</p>
               <p className="text-slate-400 text-sm">
-                {listedItem?.description}{" "}
+                {isExpanded ? listedItem?.description : truncatedDescription}{" "}
                 {listedItem?.description?.length > 215 && (
-                  <span className="text-orange-600">Read More</span>
+                  <button className="text-orange-600" onClick={toggleReadMore}>
+                    {isExpanded ? "Read Less" : "Read More"}
+                  </button>
                 )}
               </p>
             </div>
@@ -157,9 +168,31 @@ export default function MyListing({
             </div>
             <div className="flex items-center gap-x-[50px]">
               <Button
-                onClick={() =>
-                  router.push("/manage-listings/list-item?edit=true")
-                }
+                onClick={() => {
+                  const formattedListedItem: any = {};
+                  for (const [key, value] of Object.entries(listedItem)) {
+                    if (key === "category_id" || key === "sub_category_id") {
+                      formattedListedItem[key] = String(value);
+                    } else if (
+                      key === "estimated_value" ||
+                      key === "price_per_day" ||
+                      key === "quantity_available" ||
+                      key === "latitude" ||
+                      key === "longitude"
+                    ) {
+                      formattedListedItem[key] = Number(value);
+                    } else {
+                      formattedListedItem[key] = value;
+                    }
+                  }
+                  localStorage.setItem(
+                    "listItemForm",
+                    JSON.stringify(formattedListedItem)
+                  );
+                  router.push(
+                    `/manage-listings/list-item?edit=true&itemID=${listedItem?.listing_id}`
+                  );
+                }}
                 className="rounded-lg bg-green-500 py-5 px-10 h-auto text-white font-medium"
               >
                 Edit Listing

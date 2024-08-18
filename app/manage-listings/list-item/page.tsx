@@ -30,12 +30,18 @@ import { listItemFormSchema } from "@/constants/schemas";
 import Preview from "./steps/Preview";
 import { useAppContext } from "@/context/AppContext";
 import { InitialValuesProps } from "@/types";
-import { createListing } from "@/services/general.api";
+import { createListing, updateListing } from "@/services/general.api";
 import VerificationModal from "@/components/Modals/VerificationModal";
 
-export default function ListItem() {
+export default function ListItem({
+  searchParams,
+}: {
+  searchParams?: { edit: string; itemID: string };
+}) {
   const [currentStep, setCurrentStep] = useState(1);
   const [openVerifModal, setOpenVerifModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedItemId, setEditedItemId] = useState<number>();
   const [initialValues, setInitialValues] = useState<InitialValuesProps | null>(
     null
   );
@@ -43,9 +49,16 @@ export default function ListItem() {
   const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
-  const { isLoggedIn, isVerified, userData } = useAppContext();
+  const { isLoggedIn, isVerified } = useAppContext();
   const mutation = useMutation({
     mutationFn: createListing,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["listings"] });
+    },
+  });
+
+  const editMutation = useMutation({
+    mutationFn: updateListing,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["listings"] });
     },
@@ -78,6 +91,21 @@ export default function ListItem() {
     }
   }, [form]);
 
+  useEffect(() => {
+    if (searchParams) {
+      const { edit, itemID } = searchParams;
+      setIsEditing(Boolean(edit));
+      setEditedItemId(Number(itemID));
+      const formDetails = localStorage.getItem("listItemForm");
+      if (formDetails) {
+        const parsedFormDetails = JSON.parse(formDetails);
+        setInitialValues(parsedFormDetails);
+        form.reset(parsedFormDetails);
+      }
+      setCurrentStep(4);
+    }
+  }, [searchParams, form]);
+
   const steps: StepProps[] = [
     { 1: <ItemInfo control={form.control} /> },
     { 2: <ItemImages control={form.control} /> },
@@ -90,11 +118,11 @@ export default function ListItem() {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
-    // if (!isVerified) {
-    //   setOpenVerifModal(true);
-    //   return;
-    // }
-
+    if (!isVerified) {
+      setOpenVerifModal(true);
+      return;
+    }
+    console.log("level 1");
     try {
       const formData = new FormData();
       for (const [key, value] of Object.entries(values)) {
@@ -105,11 +133,11 @@ export default function ListItem() {
           )}, ${format((value as any).to, "M/d/yyyy")}`;
           formData.append("multiple_date_ranges", dateRangeString);
           formData.append("schedule_type", "IS_MULTIPLE");
-        } else if (key === "recurring_days_of_week") {
+        } else if (key === "recurring_days_of_week" && value) {
           const days = value.join(", ");
           formData.append("schedule_type", "IS_RECURRENT");
           formData.append("recurring_days_of_week", days);
-        } else if (key === "recurring_date") {
+        } else if (key === "recurring_date" && value) {
           formData.append(
             "recurring_start_date",
             format((value as any).from, "M/d/yyyy")
@@ -118,7 +146,7 @@ export default function ListItem() {
             "recurring_end_date",
             format((value as any).to, "M/d/yyyy")
           );
-        } else if (key === "image") {
+        } else if (key === "image" && value) {
           const imageFiles = Array.from(value as any[])
             .filter((file: any) => typeof file === "string")
             .map((base64: string, index: number) =>
@@ -132,22 +160,47 @@ export default function ListItem() {
           formData.append(key, value as string | Blob);
         }
       }
-      await mutation.mutateAsync(formData as any);
+      if (isEditing) {
+        // const newFormData: any = {};
+        // for (const [key, value] of formData) {
+        //   newFormData[key] = value;
+        // }
+        // const newPayload = {
+        //   product_name: newFormData?.product_name,
+        //   category_id: newFormData?.category_id,
+        //   sub_category_id: newFormData?.sub_category_id,
+        //   item_location: newFormData?.item_location,
+        //   description: newFormData?.description,
+        //   quantity_available: newFormData?.quantity_available,
+        //   estimated_value: newFormData?.estimated_value,
+        //   price_per_day: newFormData?.price_per_day,
+        //   latitude: newFormData?.latitude,
+        //   longitude: newFormData?.longitude,
+        // };
+        const payload = formData as any;
+        const params = { id: editedItemId! };
+        await editMutation.mutateAsync({ params, payload });
+        console.log("level 2");
+      } else {
+        await mutation.mutateAsync(formData as any);
+      }
 
       toast({
         variant: "success",
         title: "Success",
-        description: "Listing created successfully!",
+        description: `Listing ${
+          isEditing ? "updated" : "created"
+        } successfully!`,
       });
       localStorage.removeItem("listItemForm");
       router.push("/manage-listings");
     } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.message || "An error occurred. Please try again.";
+      console.log(err);
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: errorMessage,
+        description: errorMsg,
       });
     }
   };
@@ -240,7 +293,7 @@ export default function ListItem() {
                       currentStep === steps.length && "block"
                     }`}
                   >
-                    List item
+                    {isEditing ? "Update" : "List"} item
                   </Button>
                 )}
               </div>

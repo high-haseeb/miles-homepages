@@ -52,11 +52,15 @@ export const createListing = async (payload: ListItemPayload) => {
   }
 };
 
-export const updateListing = async (
-  id: string,
-  payload: UpdateListingPayload
-) => {
+export const updateListing = async ({
+  params,
+  payload,
+}: {
+  params: { id: number };
+  payload: UpdateListingPayload;
+}) => {
   const token = getToken();
+  const { id } = params;
   try {
     const response = await apiService.put(`/me/listings/${id}`, payload, {
       headers: {

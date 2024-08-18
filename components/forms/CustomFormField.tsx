@@ -209,13 +209,13 @@ const RenderField = ({
 };
 
 export default function CustomFormField(props: CustomFormFieldProps) {
-  const { control, label, name, extraInfo } = props;
+  const { control, label, name, extraInfo, fullwidth } = props;
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className={`${fullwidth ? "w-full" : ""}`}>
           {label && (
             <FormLabel className="text-black font-medium mb-2">
               {label}

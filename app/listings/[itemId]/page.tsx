@@ -69,9 +69,11 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   const handleBookingRequest = async () => {
     if (!isLoggedIn) {
       router.push("/login");
+      return;
     }
     if (!isVerified) {
       setOpenVerifModal(true);
+      return;
     }
     try {
       const values = {
