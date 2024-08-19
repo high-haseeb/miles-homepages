@@ -119,7 +119,7 @@ export const updateListingAvailability = async ({
   const { id } = params;
   try {
     const response = await apiService.patch(
-      `/me/listing_availability/${id}`,
+      `/listing_availability/${id}`,
       payload,
       {
         headers: {

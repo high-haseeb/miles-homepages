@@ -161,25 +161,25 @@ export default function ListItem({
         }
       }
       if (isEditing) {
-        // const newFormData: any = {};
-        // for (const [key, value] of formData) {
-        //   newFormData[key] = value;
-        // }
-        // const newPayload = {
-        //   product_name: newFormData?.product_name,
-        //   category_id: newFormData?.category_id,
-        //   sub_category_id: newFormData?.sub_category_id,
-        //   item_location: newFormData?.item_location,
-        //   description: newFormData?.description,
-        //   quantity_available: newFormData?.quantity_available,
-        //   estimated_value: newFormData?.estimated_value,
-        //   price_per_day: newFormData?.price_per_day,
-        //   latitude: newFormData?.latitude,
-        //   longitude: newFormData?.longitude,
-        // };
+        const newFormData: any = {};
+        for (const [key, value] of formData) {
+          newFormData[key] = value;
+        }
+        const newPayload = {
+          product_name: newFormData?.product_name,
+          category_id: newFormData?.category_id,
+          sub_category_id: newFormData?.sub_category_id,
+          item_location: newFormData?.item_location,
+          description: newFormData?.description,
+          quantity_available: newFormData?.quantity_available,
+          estimated_value: newFormData?.estimated_value,
+          price_per_day: newFormData?.price_per_day,
+          latitude: newFormData?.latitude,
+          longitude: newFormData?.longitude,
+        };
         const payload = formData as any;
         const params = { id: editedItemId! };
-        await editMutation.mutateAsync({ params, payload });
+        await editMutation.mutateAsync({ params, payload: newPayload });
         console.log("level 2");
       } else {
         await mutation.mutateAsync(formData as any);
