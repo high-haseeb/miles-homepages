@@ -40,25 +40,22 @@ export default function ListedItemCard({
 
   return (
     <div className="flex flex-col gap-y-[15px]">
-      <Carousel setApi={setApi} className="w-full max-w-xs">
+      <Carousel setApi={setApi} className="w-full max-w-xs relative">
         <CarouselContent>
-          {item.item_images.map((imageItem: ItemImagesProps) => (
-            <CarouselItem
-              key={imageItem.image_id}
-              className="relative basis-[100%] pl-1"
-            >
-              <Link href={link}>
-                <div className="max-w-[195px] w-full h-[195px] p-1 rounded-lg">
+          {item?.item_images.map((imageItem: ItemImagesProps) => (
+            <CarouselItem key={imageItem.image_id} className="relative">
+              <Link href={link} className="block p-1">
+                <div className="flex aspect-square h-full w-full rounded-lg">
                   <Image
                     src={imageItem.image_url}
-                    fill
+                    width={195}
+                    height={195}
                     className="object-cover rounded-lg border border-gray-2"
                     alt="card"
                   />
                 </div>
               </Link>
-              <CarouselPrevious className="left-8" />
-              <CarouselNext className="right-4.5" />
+
               <div className="text-center flex items-center gap-x-3 absolute bottom-[22px] left-1/2 -translate-x-1/2">
                 {item.item_images.map(
                   (imageItem: ItemImagesProps, index: number) => (
@@ -74,6 +71,8 @@ export default function ListedItemCard({
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious className="absolute left-5" />
+        <CarouselNext className="absolute right-5" />
       </Carousel>
 
       <div className="flex flex-col">
@@ -125,26 +124,21 @@ export function ListedItemCard2({
 
   return (
     <div className="flex flex-col gap-y-[15px]">
-      <Carousel setApi={setApi} className="w-full max-w-[195px]">
-        <CarouselContent className="h-[195px]">
+      <Carousel setApi={setApi} className="w-full max-w-xs relative">
+        <CarouselContent>
           {item.item_images.map((imageItem: ItemImagesProps) => (
-            <CarouselItem
-              key={imageItem.image_id}
-              className="relative basis-full pl-1"
-            >
-              <Link href={link}>
-                <div className="w-full h-full p-1 rounded-lg">
+            <CarouselItem key={imageItem.image_id} className="relative">
+              <Link href={link} className="block p-1">
+                <div className="flex aspect-square h-full w-full rounded-lg">
                   <Image
                     src={imageItem.image_url}
-                    fill
+                    width={195}
+                    height={195}
                     className="object-cover rounded-lg border border-gray-2"
                     alt="card"
-                    layout="fill"
                   />
                 </div>
               </Link>
-              <CarouselPrevious className="left-8" />
-              <CarouselNext className="right-4.5" />
               <div className="text-center flex items-center gap-x-3 absolute bottom-[22px] left-1/2 -translate-x-1/2">
                 {item.item_images.map(
                   (imageItem: ItemImagesProps, index: number) => (
@@ -160,6 +154,8 @@ export function ListedItemCard2({
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious className="absolute left-5" />
+        <CarouselNext className="absolute right-5" />
       </Carousel>
 
       <div className="flex flex-col">
@@ -212,20 +208,19 @@ export function CarouselCard({ images }: { images: ItemImagesProps[] }) {
   }, [api]);
   return (
     <Carousel setApi={setApi} className="w-full max-w-[510px]">
-      <CarouselContent className="max-h-[310px] h-full">
+      <CarouselContent>
         {images?.map((image) => (
-          <CarouselItem
-            key={image.image_id}
-            className="relative basis-full p-1 aspect-square"
-          >
-            <Image
-              src={image.image_url}
-              fill
-              className="object-cover rounded-lg border border-gray-2"
-              alt="card"
-            />
-            <CarouselPrevious className="left-8" />
-            <CarouselNext className="right-4.5" />
+          <CarouselItem key={image.image_id} className="relative">
+            <div className="flex h-auto w-full rounded-lg">
+              <Image
+                src={image.image_url}
+                width={510}
+                height={310}
+                className="object-cover rounded-lg h-[310px] border border-gray-2"
+                alt="card"
+              />
+            </div>
+
             <div className="text-center flex items-center gap-x-3 absolute bottom-[22px] left-1/2 -translate-x-1/2">
               {images.map((_, index) => (
                 <span
@@ -239,6 +234,8 @@ export function CarouselCard({ images }: { images: ItemImagesProps[] }) {
           </CarouselItem>
         ))}
       </CarouselContent>
+      <CarouselPrevious className="absolute left-12" />
+      <CarouselNext className="absolute right-12" />
     </Carousel>
   );
 }

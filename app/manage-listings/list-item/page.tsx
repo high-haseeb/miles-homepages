@@ -32,6 +32,8 @@ import { useAppContext } from "@/context/AppContext";
 import { InitialValuesProps } from "@/types";
 import { createListing, updateListing } from "@/services/general.api";
 import VerificationModal from "@/components/Modals/VerificationModal";
+import SuccessModal from "./steps/modals/SuccessModal";
+import LoadingItemModal from "./steps/modals/LoadingItemModal";
 
 export default function ListItem({
   searchParams,
@@ -40,6 +42,7 @@ export default function ListItem({
 }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [openVerifModal, setOpenVerifModal] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedItemId, setEditedItemId] = useState<number>();
   const [initialValues, setInitialValues] = useState<InitialValuesProps | null>(
@@ -49,11 +52,12 @@ export default function ListItem({
   const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
-  const { isLoggedIn, isVerified } = useAppContext();
+  const { isLoggedIn, isVerified, userData } = useAppContext();
   const mutation = useMutation({
     mutationFn: createListing,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["listings"] });
+      setOpenSuccessModal(true);
     },
   });
 
@@ -61,6 +65,7 @@ export default function ListItem({
     mutationFn: updateListing,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["listings"] });
+      setOpenSuccessModal(true);
     },
   });
 
@@ -102,7 +107,9 @@ export default function ListItem({
         setInitialValues(parsedFormDetails);
         form.reset(parsedFormDetails);
       }
-      setCurrentStep(4);
+      if (edit) {
+        setCurrentStep(4);
+      }
     }
   }, [searchParams, form]);
 
@@ -193,7 +200,6 @@ export default function ListItem({
         } successfully!`,
       });
       localStorage.removeItem("listItemForm");
-      router.push("/manage-listings");
     } catch (err: any) {
       console.log(err);
       const errorMsg = mutation?.error?.message || err?.response?.data?.message;
@@ -303,6 +309,15 @@ export default function ListItem({
         <VerificationModal
           openModal={openVerifModal}
           handleOpenModal={setOpenVerifModal}
+        />
+        <SuccessModal
+          name={userData?.first_name}
+          openModal={openSuccessModal}
+          handleOpenModal={setOpenSuccessModal}
+        />
+        <LoadingItemModal
+          openModal={mutation?.isPending || editMutation?.isPending}
+          isEditing={isEditing}
         />
       </>
     </DashboardLayout>

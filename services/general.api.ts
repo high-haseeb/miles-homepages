@@ -402,3 +402,17 @@ export const uploadProfilePic = async (payload: { image: File }) => {
     throw error;
   }
 };
+
+export const updateEmail = async (payload: { email: string }) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(`/update-user`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};

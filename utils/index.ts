@@ -117,6 +117,8 @@ export const formattedStatus = (status: string): string => {
     return "completed";
   } else if (status?.toLowerCase().includes("rejected")) {
     return "rejected";
+  } else if (status?.toLowerCase().includes("available")) {
+    return "available";
   } else {
     return "progress";
   }

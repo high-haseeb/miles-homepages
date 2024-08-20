@@ -9,7 +9,11 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
-import { myListing, updateListingAvailability } from "@/services/general.api";
+import {
+  myListing,
+  updateListingAvailability,
+  myListings,
+} from "@/services/general.api";
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import Backbtn from "@/components/Backbtn";
 import Review from "@/components/Review";
@@ -45,6 +49,15 @@ export default function MyListing({
     queryFn: () => myListing(itemId),
   });
 
+  const { data: allListings } = useQuery({
+    queryKey: ["my-listings"],
+    queryFn: () => myListings(),
+  });
+  const userListings = allListings?.data?.userListings;
+  const filteredUserListings = userListings?.filter(
+    (listing: ItemProps) => Number(listing?.listing_id) !== Number(itemId)
+  );
+
   const mutationAvailability = useMutation({
     mutationFn: updateListingAvailability,
     onSuccess: () => {
@@ -57,7 +70,12 @@ export default function MyListing({
   const formatStatus = formattedStatus(listedItem?.status);
   const statusTextStyles = statusColor[formatStatus].text;
   const statusBgStyles = statusColor[formatStatus].bg;
-  const peopleAlsoViewed = listing?.data?.peopleAlsoViewed;
+
+  useEffect(() => {
+    if (listedItem?.status === "Available for Booking") {
+      setAvailability(true);
+    } else setAvailability(false);
+  }, [listedItem]);
 
   useEffect(() => {
     if (!hasChanged) return;
@@ -217,13 +235,13 @@ export default function MyListing({
         <div className="flex flex-col gap-y-5">
           <p className="text-slate-900 font-medium text-xl">More Listings</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-[70px]">
-            {peopleAlsoViewed?.map((item: ItemProps) => {
+            {filteredUserListings?.map((item: ItemProps) => {
               const formatStatus = formattedStatus(item?.status);
               const statusTextStyles = statusColor[formatStatus].text;
               const statusBgStyles = statusColor[formatStatus].bg;
               return (
                 <Link
-                  href={`/listings/${item.listing_id}`}
+                  href={`/manage-listings/${item.listing_id}`}
                   key={item.listing_id}
                 >
                   <div className="flex flex-col gap-y-[15px]">
@@ -235,7 +253,7 @@ export default function MyListing({
                       alt="item"
                       height={195}
                       width={195}
-                      className="object-cover rounded-lg"
+                      className="object-cover h-[195px] w-[195px] rounded-lg"
                     />
                     <Badge
                       className={`rounded-[15px] py-[3px] px-[15px] text-xs w-fit`}

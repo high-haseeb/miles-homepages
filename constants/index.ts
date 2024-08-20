@@ -167,6 +167,10 @@ export const statusColor: {
     text: "#D33030",
     bg: "#FFEDEC",
   },
+  available: {
+    text: "#015F2A",
+    bg: "#E6F7ED",
+  },
 };
 
 export const minLengthRegex = /^.{8,}$/;
