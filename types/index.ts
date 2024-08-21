@@ -170,9 +170,10 @@ export interface VerifySMSOTPPayload {
 }
 
 export interface GetListingsParamsProps {
-  category?: number;
+  category?: number | string;
   location?: string;
-  date?: Date;
+  startDate?: Date | string;
+  endDate?: Date | string;
 }
 
 export interface SearchListingsKeywordProps {
@@ -296,4 +297,10 @@ export interface UpdateScheduleProps {
   recurring_days_of_week?: string[];
   recurring_start_date?: Date | string;
   recurring_end_date?: Date | string;
+}
+
+export interface CategoryProps {
+  category_id: number;
+  category_name: string;
+  subcategories: string[];
 }

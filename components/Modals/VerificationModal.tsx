@@ -360,7 +360,9 @@ export function VerifyIdentity({
 
 export function UploadPhoto({
   handleOpenModal,
+  openModal,
 }: {
+  openModal?: boolean;
   handleOpenModal: Dispatch<SetStateAction<boolean>>;
 }) {
   const { userData, setUserData } = useAppContext();
@@ -468,6 +470,12 @@ export function UploadPhoto({
       });
     }
   };
+
+  useEffect(() => {
+    if (!openModal) {
+      stopWebPhoto();
+    }
+  }, [openModal]);
 
   const fullName = `${user?.first_name} ${user?.last_name}`;
 

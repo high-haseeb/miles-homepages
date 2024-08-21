@@ -64,7 +64,6 @@ export const updateListing = async ({
   try {
     const response = await apiService.put(`/me/listings/${id}`, payload, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -156,10 +155,10 @@ export const updateSchedule = async ({
 
 // Get all listings and filter by category, date, and location
 export const getListings = async (params: GetListingsParamsProps) => {
-  const { category, date, location } = params;
+  const { category, startDate, endDate, location } = params;
   try {
     const response = await apiService.get(
-      `/listings?category=${category}&location=${location}&date=${date}`
+      `/listings?category=${category}&location=${location}&startDate=${startDate}&endDate=${endDate}`
     );
     return response?.data;
   } catch (error: any) {
@@ -406,7 +405,7 @@ export const uploadProfilePic = async (payload: { image: File }) => {
 export const updateEmail = async (payload: { email: string }) => {
   const token = getToken();
   try {
-    const response = await apiService.patch(`/update-user`, payload, {
+    const response = await apiService.patch(`/update-email`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

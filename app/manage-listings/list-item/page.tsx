@@ -129,7 +129,6 @@ export default function ListItem({
       setOpenVerifModal(true);
       return;
     }
-    console.log("level 1");
     try {
       const formData = new FormData();
       for (const [key, value] of Object.entries(values)) {
@@ -184,7 +183,6 @@ export default function ListItem({
           latitude: newFormData?.latitude,
           longitude: newFormData?.longitude,
         };
-        const payload = formData as any;
         const params = { id: editedItemId! };
         await editMutation.mutateAsync({ params, payload: newPayload });
         console.log("level 2");

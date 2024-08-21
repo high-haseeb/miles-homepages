@@ -213,8 +213,10 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
               align="end"
               className="flex flex-col gap-6 px-2 py-4"
             >
-              <DropdownMenuItem className="flex items-center gap-x-2 px-4 cursor-pointer">
-                <RentalsIcon /> My Rentals
+              <DropdownMenuItem className="px-4 cursor-pointer">
+                <Link href="/renting" className="flex items-center gap-x-2">
+                  <RentalsIcon /> My Rentals
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="px-4 cursor-pointer">
                 <Link href="/dashboard" className="flex items-center gap-x-2">

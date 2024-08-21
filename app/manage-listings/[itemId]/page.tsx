@@ -116,6 +116,63 @@ export default function MyListing({
     listedItem?.description?.slice(0, 215) +
     (listedItem?.description?.length > 215 ? "..." : "");
 
+  function handleEdit() {
+    const formattedListedItem: any = {};
+
+    for (const [key, value] of Object.entries(listedItem)) {
+      if (value !== null && value !== undefined) {
+        if (key === "category_id" || key === "sub_category_id") {
+          formattedListedItem[key] = String(value);
+        } else if (
+          [
+            "estimated_value",
+            "price_per_day",
+            "quantity_available",
+            "latitude",
+            "longitude",
+          ].includes(key)
+        ) {
+          formattedListedItem[key] = Number(value);
+        } else if (
+          key === "multiple_date_ranges" &&
+          typeof value === "string" &&
+          value
+        ) {
+          const dates = value.split(", ");
+          if (dates.length === 2) {
+            formattedListedItem[key] = {
+              from: new Date(dates[0]),
+              to: new Date(dates[1]),
+            };
+          }
+        } else if (
+          key === "recurring_days_of_week" &&
+          typeof value === "string" &&
+          value
+        ) {
+          const days = value.split(", ");
+          formattedListedItem[key] = days;
+        } else {
+          formattedListedItem[key] = value;
+        }
+      }
+    }
+
+    try {
+      localStorage.setItem("listItemForm", JSON.stringify(formattedListedItem));
+
+      if (listedItem?.listing_id) {
+        router.push(
+          `/manage-listings/list-item?edit=true&itemID=${listedItem.listing_id}`
+        );
+      } else {
+        console.error("No listing ID found");
+      }
+    } catch (error) {
+      console.error("Failed to save data or navigate:", error);
+    }
+  }
+
   return (
     <DashboardLayout2>
       <div className="flex flex-col lg:px-[93px] gap-y-10">
@@ -186,31 +243,7 @@ export default function MyListing({
             </div>
             <div className="flex items-center gap-x-[50px]">
               <Button
-                onClick={() => {
-                  const formattedListedItem: any = {};
-                  for (const [key, value] of Object.entries(listedItem)) {
-                    if (key === "category_id" || key === "sub_category_id") {
-                      formattedListedItem[key] = String(value);
-                    } else if (
-                      key === "estimated_value" ||
-                      key === "price_per_day" ||
-                      key === "quantity_available" ||
-                      key === "latitude" ||
-                      key === "longitude"
-                    ) {
-                      formattedListedItem[key] = Number(value);
-                    } else {
-                      formattedListedItem[key] = value;
-                    }
-                  }
-                  localStorage.setItem(
-                    "listItemForm",
-                    JSON.stringify(formattedListedItem)
-                  );
-                  router.push(
-                    `/manage-listings/list-item?edit=true&itemID=${listedItem?.listing_id}`
-                  );
-                }}
+                onClick={handleEdit}
                 className="rounded-lg bg-green-500 py-5 px-10 h-auto text-white font-medium"
               >
                 Edit Listing

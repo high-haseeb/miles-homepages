@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
 import { updateEmail } from "@/services/general.api";
+import { useAppContext } from "@/context/AppContext";
 
 interface VerificationModalProps {
   openModal: boolean;
@@ -20,6 +21,7 @@ export default function UpdateEmail({
   const [email, setEmail] = useState("");
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { setUserData } = useAppContext();
 
   const mutation = useMutation({
     mutationFn: updateEmail,
@@ -32,7 +34,14 @@ export default function UpdateEmail({
     e.preventDefault();
     try {
       const res = await mutation.mutateAsync({ email: email });
-      console.log(res);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: res?.data?.message,
+      });
+      setUserData(res?.data?.updatedUser);
+      handleOpenModal(false);
+      setEmail("");
     } catch (err: any) {
       const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
@@ -63,7 +72,7 @@ export default function UpdateEmail({
               onChange={(e) => setEmail(e.target.value)}
             />
             <Button
-              disabled={!email}
+              disabled={!email || mutation.isPending}
               className="mt-[60px] py-3 px-4 text-center w-full rounded-[38px] text-white bg-green-500 font-medium disabled:bg-green-200"
             >
               Update

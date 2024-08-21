@@ -3,15 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  Bell,
-  Home,
-  Menu,
-  Package,
-  Search,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
+import { Bell, Home, Menu, Search, ShoppingCart, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -230,8 +222,10 @@ export default function DashboardLayout({
               align="end"
               className="flex flex-col gap-6 px-2 py-4"
             >
-              <DropdownMenuItem className="flex items-center gap-x-2 px-4 cursor-pointer">
-                <RentalsIcon /> My Rentals
+              <DropdownMenuItem className="px-4 cursor-pointer">
+                <Link href="/renting" className="flex items-center gap-x-2">
+                  <RentalsIcon /> My Rentals
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="px-4 cursor-pointer">
                 <Link href="/dashboard" className="flex items-center gap-x-2">

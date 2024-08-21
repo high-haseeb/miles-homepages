@@ -4,20 +4,41 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { APIProvider, Map, InfoWindow } from "@vis.gl/react-google-maps";
 import { useQuery } from "@tanstack/react-query";
+import { DateRange } from "react-day-picker";
+import { addDays, format } from "date-fns";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { ListedItemCard2 } from "@/components/ListedItemCard";
 import { GOOGLE_PLACES_API_KEY } from "@/constants";
 import CustomMarker from "@/components/CustomMarker";
-import { ItemProps } from "@/types";
-import { getListings, searchListings } from "@/services/general.api";
-import { Badge } from "@/components/ui/badge";
+import { ItemProps, CategoryProps } from "@/types";
+import {
+  getListings,
+  searchListings,
+  getCategories,
+} from "@/services/general.api";
+import { Button } from "@/components/ui/button";
 
 export default function Listings() {
   const router = useRouter();
   const [selectedItem, setSelectedItem] = useState<ItemProps | null>(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [currentListings, setCurrentListings] = useState([]);
+  const [location, setLocation] = useState("");
+  const [category, setCategory] = useState<CategoryProps>();
+  const [date, setDate] = React.useState<DateRange | undefined>();
 
   const updateSearchParams = (keyword: string) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -40,16 +61,23 @@ export default function Listings() {
   };
 
   const { data: listings, isPending } = useQuery({
-    queryKey: ["listings"],
+    queryKey: ["listings", category?.category_id],
     queryFn: () =>
       getListings({
-        category: 1,
-        location: "lagos",
+        category: category?.category_id || "",
+        location: "",
+        startDate: "",
+        endDate: "",
       }),
   });
 
+  const { data: categories } = useQuery({
+    queryKey: ["category"],
+    queryFn: getCategories,
+  });
+
   const { data: searchResult, isPending: isSearching } = useQuery({
-    queryKey: ["listings"],
+    queryKey: ["listings", searchKeyword],
     queryFn: () => searchListings(searchKeyword),
   });
 
@@ -60,8 +88,6 @@ export default function Listings() {
       setCurrentListings(listings?.data);
     }
   }, [listings, searchKeyword, searchResult]);
-
-  console.log(currentListings);
 
   const defaultCenter = {
     lat: 6.5244,
@@ -83,15 +109,44 @@ export default function Listings() {
         <div className="flex flex-col flex-1 pb-[25px]">
           <div className="px-[30px] py-[23px] flex items-center justify-between">
             <div className="flex items-center gap-x-2.5">
-              <Badge className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
-                Category
-              </Badge>
-              <Badge className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                    {category?.category_name || "Category"}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {categories?.data?.map((category: CategoryProps) => (
+                    <DropdownMenuItem
+                      onClick={() => setCategory(category)}
+                      key={category?.category_id}
+                    >
+                      {category?.category_name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
                 Location
-              </Badge>
-              <Badge className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
-                Dates
-              </Badge>
+              </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                    Dates
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    initialFocus
+                    mode="range"
+                    defaultMonth={date?.from}
+                    selected={date}
+                    onSelect={setDate}
+                    numberOfMonths={1}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
             <p className="text-sm text-black">
               {currentListings?.length} result(s)

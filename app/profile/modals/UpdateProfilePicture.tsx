@@ -24,7 +24,10 @@ export default function UpdateProfilePicture({
           </p>
         </div>
         <div className="w-full flex flex-col">
-          <UploadPhoto handleOpenModal={handleOpenModal} />
+          <UploadPhoto
+            handleOpenModal={handleOpenModal}
+            openModal={openModal}
+          />
         </div>
       </DialogContent>
     </Dialog>

@@ -119,7 +119,7 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
                     <FormControl>
                       <Checkbox
                         className="rounded-full self-end text-end data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500 disabled:opacity-100 border-gray-1 h-4 w-4"
-                        checked={field.value?.includes(day)}
+                        checked={field?.value?.includes(day)}
                         onCheckedChange={(checked) => {
                           const currentValue = Array.isArray(field.value)
                             ? field.value
