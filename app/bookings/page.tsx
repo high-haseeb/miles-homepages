@@ -8,6 +8,8 @@ import Upcoming from "./tabs/Upcoming";
 import Progress from "./tabs/Progress";
 import Completed from "./tabs/Completed";
 import All from "./tabs/All";
+import Rejected from "./tabs/Rejected";
+import Cancelled from "./tabs/Cancelled";
 
 export default function Bookings() {
   return (
@@ -41,6 +43,12 @@ export default function Bookings() {
             <TabsTrigger value="completed" className="tab-item">
               Completed
             </TabsTrigger>
+            <TabsTrigger value="cancelled" className="tab-item">
+              Cancelled
+            </TabsTrigger>
+            <TabsTrigger value="rejected" className="tab-item">
+              Rejected
+            </TabsTrigger>
             <TabsTrigger value="all" className="tab-item">
               All
             </TabsTrigger>
@@ -56,6 +64,12 @@ export default function Bookings() {
           </TabsContent>
           <TabsContent value="completed">
             <Completed />
+          </TabsContent>
+          <TabsContent value="cancelled">
+            <Cancelled />
+          </TabsContent>
+          <TabsContent value="rejected">
+            <Rejected />
           </TabsContent>
           <TabsContent value="all">
             <All />

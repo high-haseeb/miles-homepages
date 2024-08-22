@@ -16,19 +16,15 @@ import { getRenterBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
 
-export default function Upcoming() {
+export default function Cancelled() {
   const router = useRouter();
-  const { data: upcomingBookings, isPending } = useQuery({
-    queryKey: ["bookings", "renter", "upcoming"],
+  const { data: rejectedBookings, isPending } = useQuery({
+    queryKey: ["bookings", "renter", "cancelled"],
     queryFn: () =>
-      getRenterBookings({
-        rental_status: "AWAITING PAYMENT",
-        page: 1,
-        limit: 10,
-      }),
+      getRenterBookings({ rental_status: "CANCELED", page: 1, limit: 10 }),
   });
 
-  const detailsList = upcomingBookings?.data?.rows;
+  const detailsList = rejectedBookings?.data?.rows;
 
   const details = detailsList?.map((detail: DetailListType) => ({
     avatar: "",
@@ -83,7 +79,7 @@ export default function Upcoming() {
                 <div className="max-sm:flex max-sm:flex-col max-sm:justify-end max-sm:gap-y-[3px] max-sm:text-right">
                   <Chip
                     text={detail.status}
-                    className="bg-orange-50 self-end text-orange-500 sm:text-sm text-[10px] capitalize"
+                    className="bg-[#FFEDEC] self-end text-[#D33030] sm:text-sm text-[10px] capitalize"
                   />
                   <p className="text-xs text-slate-900 sm:hidden">
                     {detail.duration}
@@ -98,7 +94,7 @@ export default function Upcoming() {
               colSpan={3}
               className="text-center text-slate-300 py-9 text-lg"
             >
-              No upcoming booking
+              No cancelled booking
             </TableCell>
           </TableRow>
         )}

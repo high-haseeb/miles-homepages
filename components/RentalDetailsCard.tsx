@@ -30,7 +30,15 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
     mutationFn: () => cancelBooking(details.listing_id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["listing", details.listing_id, "cancel"],
+        queryKey: ["listing", details.listing_id],
+      });
+    },
+  });
+  const listerCancel = useMutation({
+    mutationFn: () => cancelBooking(details.booking_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["listing", details.listing_id],
       });
     },
   });
@@ -38,7 +46,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
     mutationFn: () => acceptBooking(details.booking_id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["listing", details.booking_id, "accept"],
+        queryKey: ["listing", details.booking_id],
       });
     },
   });
@@ -46,7 +54,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
     mutationFn: () => declineBooking(details.booking_id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["listing", details.booking_id, "decline"],
+        queryKey: ["listing", details.booking_id],
       });
     },
   });
@@ -69,8 +77,29 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   // console.log(details);
   const handleCancelBooking = async () => {
     try {
-      const res = await mutation.mutateAsync();
-      console.log(res);
+      await mutation.mutateAsync();
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Booking cancelled successfully",
+      });
+    } catch (err: any) {
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: errorMsg,
+      });
+    }
+  };
+  const handleListerCancel = async () => {
+    try {
+      await listerCancel.mutateAsync();
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Booking cancelled successfully",
+      });
     } catch (err: any) {
       const errorMsg = mutation?.error?.message || err?.response?.data?.message;
       toast({
@@ -82,7 +111,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   };
   const handleAcceptBooking = async () => {
     try {
-      const res = await acceptMutation.mutateAsync();
+      await acceptMutation.mutateAsync();
       toast({
         variant: "success",
         title: "Success",
@@ -99,8 +128,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   };
   const handleDeclineBooking = async () => {
     try {
-      const res = await declineMutation.mutateAsync();
-      console.log(res);
+      await declineMutation.mutateAsync();
       toast({
         variant: "success",
         title: "Success",
@@ -121,6 +149,8 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   );
   const statusTextStyles = statusColor[formatStatus].text;
   const statusBgStyles = statusColor[formatStatus].bg;
+
+  // console.log(details);
 
   return (
     <div className="rounded-xl border border-gray-4/35 bg-white p-5 flex flex-col overflow-x-hidden">
@@ -171,6 +201,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         <p className="text-sm text-green-500">QUANTITY</p>
         <div className="flex items-center gap-x-5">
           <button
+            disabled
             onClick={() => {
               if (quantity === 1) return;
               else setQuantity((prev) => prev - 1);
@@ -181,6 +212,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
           </button>
           {quantity}
           <button
+            disabled
             onClick={() => {
               setQuantity((prev) => prev + 1);
             }}
@@ -209,11 +241,10 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         </div>
         <div
           className={`${
-            status === "renter" ||
-            details?.listing_status?.toLowerCase() === "rejected" ||
-            details?.listing_status?.toLowerCase() === "awaiting payment"
-              ? "hidden"
-              : "flex justify-between"
+            status === "lister" &&
+            details?.rental_status?.toLowerCase() === "awaiting approval"
+              ? "flex justify-between"
+              : "hidden"
           } items-center`}
         >
           <Button
@@ -233,16 +264,16 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         </div>
         <div
           className={`${
-            status === "renter" ||
-            details?.listing_status?.toLowerCase() === "rejected" ||
-            details?.listing_status?.toLowerCase() === "awaiting approval"
-              ? "hidden"
-              : "flex justify-between"
+            status === "lister" &&
+            details?.rental_status?.toLowerCase() === "awaiting payment"
+              ? "flex justify-between"
+              : "hidden"
           } items-center`}
         >
           <Button
-            onClick={handleCancelBooking}
-            disabled={mutation.isPending}
+            onClick={handleListerCancel}
+            disabled={listerCancel.isPending}
+            variant="ghost"
             className="rounded-[38px] py-3 px-4 bg-transparent border-none font-medium text-slate-400"
           >
             Cancel booking

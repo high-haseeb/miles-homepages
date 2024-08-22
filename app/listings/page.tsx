@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { APIProvider, Map, InfoWindow } from "@vis.gl/react-google-maps";
 import { useQuery } from "@tanstack/react-query";
 import { DateRange } from "react-day-picker";
-import { addDays, format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { ListedItemCard2 } from "@/components/ListedItemCard";
@@ -38,7 +38,9 @@ export default function Listings() {
   const [currentListings, setCurrentListings] = useState([]);
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState<CategoryProps>();
-  const [date, setDate] = React.useState<DateRange | undefined>();
+  const [date, setDate] = useState<DateRange | undefined>();
+  const [confirmedDate, setConfirmedDate] = useState<DateRange | undefined>();
+  const [openCalendar, setOpenCalendar] = useState(false);
 
   const updateSearchParams = (keyword: string) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -61,13 +63,13 @@ export default function Listings() {
   };
 
   const { data: listings, isPending } = useQuery({
-    queryKey: ["listings", category?.category_id],
+    queryKey: ["listings", category?.category_id, confirmedDate],
     queryFn: () =>
       getListings({
         category: category?.category_id || "",
         location: "",
-        startDate: "",
-        endDate: "",
+        startDate: confirmedDate ? confirmedDate?.from : "",
+        endDate: confirmedDate ? confirmedDate?.to : "",
       }),
   });
 
@@ -94,9 +96,9 @@ export default function Listings() {
     lng: 3.3792,
   };
 
-  if (isPending) {
-    return <p>Loading...</p>;
-  }
+  // if (isPending) {
+  //   return <p>Loading...</p>;
+  // }
 
   return (
     <DashboardLayout2
@@ -130,7 +132,7 @@ export default function Listings() {
               <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
                 Location
               </Button>
-              <Popover>
+              <Popover onOpenChange={setOpenCalendar} open={openCalendar}>
                 <PopoverTrigger asChild>
                   <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
                     Dates
@@ -145,6 +147,25 @@ export default function Listings() {
                     onSelect={setDate}
                     numberOfMonths={1}
                   />
+                  <div className="flex items-center justify-end gap-x-2 mt-4 border border-t p-3">
+                    <PopoverClose asChild>
+                      <Button
+                        className="text-sm text-black py-1 px-3 rounded-lg"
+                        variant="ghost"
+                      >
+                        Cancel
+                      </Button>
+                    </PopoverClose>
+                    <Button
+                      onClick={() => {
+                        setConfirmedDate(date);
+                        setOpenCalendar(false);
+                      }}
+                      className="text-sm text-white bg-green-500 py-1 px-3 rounded-lg"
+                    >
+                      Save
+                    </Button>
+                  </div>
                 </PopoverContent>
               </Popover>
             </div>

@@ -1,3 +1,27 @@
+import { DateRange } from "react-day-picker";
+import { format } from "date-fns";
+
+export function calculateDaysInRange(
+  dateRange: DateRange | undefined
+): number | null {
+  if (!dateRange?.from || !dateRange?.to) {
+    return null;
+  }
+
+  const fromDate = new Date(dateRange.from);
+  const toDate = new Date(dateRange.to);
+
+  const timeDifference = toDate.getTime() - fromDate.getTime();
+  const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+  return Math.ceil(dayDifference) + 1;
+}
+
+export const formattedDate = (dateString: string) => {
+  const structuredDate = new Date(dateString);
+  return format(structuredDate, "MMM d, yyyy");
+};
+
 // files manipulation
 
 export const fileToBase64 = (file: File): Promise<string> => {

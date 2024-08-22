@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,6 +8,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import { Minus, Plus } from "lucide-react";
+import { format } from "date-fns";
+import { DateRange } from "react-day-picker";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { CarouselCard } from "@/components/ListedItemCard";
@@ -17,6 +26,7 @@ import { getListing, createBooking } from "@/services/general.api";
 import { useAppContext } from "@/context/AppContext";
 import VerificationModal from "@/components/Modals/VerificationModal";
 import Backbtn from "@/components/Backbtn";
+import { toCurrency, calculateDaysInRange } from "@/utils";
 
 export default function ListedItem({ params }: { params: { itemId: string } }) {
   const { itemId } = params;
@@ -26,7 +36,12 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   const { toast } = useToast();
   const [desc, setDesc] = useState<string>();
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(0);
   const [openVerifModal, setOpenVerifModal] = useState(false);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [openCalendar, setOpenCalendar] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [priceDays, setPriceDays] = useState(0);
 
   const { data: listing, isPending } = useQuery({
     queryKey: ["listing", itemId],
@@ -40,29 +55,49 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     },
   });
 
-  console.log(listing);
+  // console.log(listing);
   const item = listing?.data?.listing;
-  const dateRange = item?.multiple_date_ranges
-    ? item?.multiple_date_ranges.split(",")
-    : null;
-  const startDate =
-    dateRange?.[0] ?? item?.start_date ?? item?.recurring_start_date;
-  const endDate =
-    dateRange?.[1] ?? item?.start_date ?? item?.recurring_end_date;
   const peopleAlsoViewed = listing?.data?.peopleAlsoViewed;
+
+  useEffect(() => {
+    const mdateRange = item?.multiple_date_ranges
+      ? item?.multiple_date_ranges.split(",")
+      : null;
+    const startDate =
+      mdateRange?.[0] ?? item?.start_date ?? item?.recurring_start_date;
+    const endDate =
+      mdateRange?.[1] ?? item?.start_date ?? item?.recurring_end_date;
+
+    setPrice(Number(item?.price_per_day));
+    setDateRange({
+      from: new Date(startDate),
+      to: new Date(endDate),
+    });
+  }, [item]);
+
+  useEffect(() => {
+    if (dateRange) {
+      const days = calculateDaysInRange(dateRange!);
+      if (days !== null) {
+        const totalP = price * days;
+        setPriceDays(totalP);
+        setTotalPrice(totalP + 500 + 125);
+      }
+    }
+  }, [price, dateRange]);
 
   const priceBreakdown = [
     {
-      title: `NGN ${item?.price_per_day} * (x) Days`,
-      value: `NGN ${item?.price_per_day}x`,
+      title: `${toCurrency(price)} x ${calculateDaysInRange(dateRange)}`,
+      value: toCurrency(priceDays),
     },
     {
       title: "Service Charge",
-      value: "xxxx",
+      value: toCurrency(500),
     },
     {
       title: "VAT",
-      value: "xxxx",
+      value: toCurrency(125),
     },
   ];
 
@@ -81,8 +116,8 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
         price: item?.price_per_day,
         service_charge: "50",
         vat: "50",
-        start_date: startDate,
-        end_date: endDate,
+        start_date: format(dateRange?.from as Date, "MM/dd/yyyy"),
+        end_date: format(dateRange?.to as Date, "MM/dd/yyyy"),
         description: desc,
       };
       const res = await mutation.mutateAsync(values);
@@ -107,6 +142,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   if (isPending) {
     return <p>Pending..</p>;
   }
+
   return (
     <DashboardLayout2>
       <div className="flex flex-col lg:px-[93px] gap-y-10">
@@ -139,35 +175,77 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
               </p>
             </div>
           </div>
+
           <div className="border border-slate-100 rounded-[14px] py-4.5 px-6 flex flex-col gap-y-[15px] w-full md:basis-[40%]">
             <div className="flex flex-col">
               <p className="text-sm text-slate-900">{item?.product_name}</p>
               <p className="text-green-500 font-medium">
-                NGN {item?.price_per_day}{" "}
+                {toCurrency(price)}{" "}
                 <span className="text-sm text-slate-500">per/day</span>
               </p>
             </div>
-            <div className="flex border border-gray-4/50 rounded-[15px] divide-x w-full">
-              <div className="py-2 px-6 flex-1">
-                <p className="text-sm text-slate-400 mb-[7px]">START DATE</p>
-                <p className="text-slate-800 font-medium text-sm">
-                  {dateRange?.[0] ?? item?.start_date}
-                </p>
-              </div>
-              <div className="py-2 px-6 flex-1">
-                <p className="text-sm text-slate-400 mb-[7px]">END DATE</p>
-                <p className="text-slate-800 font-medium text-sm">
-                  {dateRange?.[1] ?? item?.end_date}
-                </p>
-              </div>
-            </div>
+            <Popover onOpenChange={setOpenCalendar} open={openCalendar}>
+              <PopoverTrigger asChild>
+                <div className="flex border border-gray-4/50 rounded-[15px] divide-x w-full cursor-pointer">
+                  <div className="py-2 px-6 flex-1">
+                    <p className="text-sm text-slate-400 mb-[7px]">
+                      START DATE
+                    </p>
+                    <p className="text-slate-800 font-medium text-sm">
+                      {dateRange?.from instanceof Date &&
+                      !isNaN(dateRange.from.getTime())
+                        ? format(dateRange.from, "MM/dd/yyyy")
+                        : item?.start_date}
+                    </p>
+                  </div>
+                  <div className="py-2 px-6 flex-1">
+                    <p className="text-sm text-slate-400 mb-[7px]">END DATE</p>
+                    <p className="text-slate-800 font-medium text-sm">
+                      {dateRange?.to instanceof Date &&
+                      !isNaN(dateRange.to.getTime())
+                        ? format(dateRange.to, "MM/dd/yyyy")
+                        : item?.end_date}
+                    </p>
+                  </div>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={dateRange?.from}
+                  selected={dateRange}
+                  onSelect={setDateRange}
+                  numberOfMonths={1}
+                />
+                <div className="flex items-center justify-end gap-x-2 mt-4 border border-t p-3">
+                  <PopoverClose asChild>
+                    <Button
+                      className="text-sm text-black py-1 px-3 rounded-lg"
+                      variant="ghost"
+                    >
+                      Cancel
+                    </Button>
+                  </PopoverClose>
+                  <Button
+                    onClick={() => {
+                      setOpenCalendar(false);
+                    }}
+                    className="text-sm text-white bg-green-500 py-1 px-3 rounded-lg"
+                  >
+                    Save
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
             <div className="flex items-center gap-x-10 my-[21px]">
               <p className="text-sm text-green-500">QUANTITY</p>
               <div className="flex items-center gap-x-5">
                 <button
                   onClick={() => {
                     if (quantity === 1) return;
-                    else setQuantity((prev) => prev - 1);
+                    setQuantity((prev) => prev - 1);
+                    setPrice((prev) => prev - Number(item?.price_per_day));
                   }}
                   className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
                 >
@@ -176,7 +254,9 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                 {quantity}
                 <button
                   onClick={() => {
+                    if (quantity === Number(item?.quantity_available)) return;
                     setQuantity((prev) => prev + 1);
+                    setPrice((prev) => prev + Number(item?.price_per_day));
                   }}
                   className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
                 >
@@ -199,7 +279,9 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
               </div>
               <div className="flex items-center justify-between mb-5">
                 <p className="text-green-500 font-bold text-sm">Total</p>
-                <p className="text-green-500 font-bold text-sm">NGN 150,000</p>
+                <p className="text-green-500 font-bold text-sm">
+                  {toCurrency(totalPrice)}
+                </p>
               </div>
               <div className="flex flex-col gap-y-2.5">
                 <p className="text-slate-300 text-sm">

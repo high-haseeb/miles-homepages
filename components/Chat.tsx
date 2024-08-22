@@ -90,12 +90,12 @@ export default function Chat({ status, details }: ChatProps) {
             className="bg-transparent py-[34px] px-[33px] bg-white border border-gray-2 rounded-[14px]"
             placeholder="Message Luis B..."
           />
-          <Button
+          <button
             onClick={handleSendMessage}
-            className="rounded-lg border border-gray-4 gap-2 py-2 px-4 text-slate-400 self-end w-fit bg-transparent"
+            className="rounded-lg border flex border-gray-4 gap-2 py-2 px-4 text-slate-400 self-end w-fit bg-transparent"
           >
             <SendIcon /> Send Message
-          </Button>
+          </button>
         </div>
       </div>
     </div>

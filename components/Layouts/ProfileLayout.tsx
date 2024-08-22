@@ -5,11 +5,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
-  CircleUser,
-  Home,
   Menu,
-  ShoppingCart,
-  Users,
+  CalendarDays,
+  ClipboardList,
+  LayoutGrid,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -71,7 +71,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                     : "text-slate-400"
                 } items-center gap-2 rounded-lg px-4 py-2 text-sm transition-all hover:text-orange-500`}
               >
-                <Home className="h-4 w-4" />
+                <LayoutGrid className="h-4 w-4" />
                 Dashboard
               </Link>
               <Link
@@ -82,7 +82,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                     : "text-slate-400"
                 } items-center gap-2 rounded-lg px-4 py-2 text-sm transition-all hover:text-orange-500`}
               >
-                <ShoppingCart className="h-4 w-4" />
+                <CalendarDays className="h-4 w-4" />
                 Bookings
               </Link>
               <Link
@@ -93,7 +93,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                     : "text-slate-400"
                 } items-center gap-2 rounded-lg px-4 py-2 text-sm transition-all hover:text-orange-500`}
               >
-                <Users className="h-4 w-4" />
+                <ClipboardList className="h-4 w-4" />
                 Listings
               </Link>
             </nav>
@@ -143,7 +143,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                       : "text-slate-400"
                   } items-center gap-2 rounded-xl mx-[-0.65rem] px-4.5 py-3 text-sm transition-all hover:text-orange-500`}
                 >
-                  <Home className="h-5 w-5" />
+                  <LayoutGrid className="h-5 w-5" />
                   Dashboard
                 </Link>
                 <Link
@@ -154,7 +154,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                       : "text-slate-400"
                   } items-center gap-2 rounded-xl mx-[-0.65rem] px-4.5 py-3 text-sm transition-all hover:text-orange-500`}
                 >
-                  <ShoppingCart className="h-5 w-5" />
+                  <CalendarDays className="h-5 w-5" />
                   Bookings
                 </Link>
                 <Link
@@ -165,7 +165,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                       : "text-slate-400"
                   } items-center gap-2 rounded-xl mx-[-0.65rem] px-4.5 py-3 text-sm transition-all hover:text-orange-500`}
                 >
-                  <Users className="h-5 w-5" />
+                  <ClipboardList className="h-5 w-5" />
                   Listings
                 </Link>
               </nav>
@@ -187,67 +187,74 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
               </p>
             </div>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                size="icon"
-                className="ml-auto hidden sm:block text-[#394455] h-8 w-8 hover:bg-transparent bg-transparent mr-11"
-              >
-                <Bell className="h-6 w-6" />
-                <span className="sr-only">Toggle notifications</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <Notifications />
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <Avatar className="w-[42px] h-[42px]">
-                  <AvatarImage src={userData?.image_url || ""} alt="photo" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="flex flex-col gap-6 px-2 py-4"
-            >
-              <DropdownMenuItem className="px-4 cursor-pointer">
-                <Link href="/renting" className="flex items-center gap-x-2">
-                  <RentalsIcon /> My Rentals
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="px-4 cursor-pointer">
-                <Link href="/dashboard" className="flex items-center gap-x-2">
-                  <DashboardIcon /> Dashboard
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="px-4 cursor-pointer">
-                <Link href="/profile" className="flex items-center gap-x-2">
-                  <ProfileIcon />
-                  Profile
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="flex items-center gap-x-2 px-4 cursor-pointer"
-                onClick={() => {
-                  handleLogout();
-                  router.push("/");
-                }}
-              >
-                <LogoutIcon /> Logout
-              </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-transparent">
-                <Link
-                  href="/renting"
-                  className="py-1 px-4 rounded-[38px] bg-green-500 w-fit text-white"
+          <div className="flex items-center gap-x-11">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="ml-auto hidden sm:block text-[#394455] p-2 bg-transparent"
                 >
-                  Switch to Renting
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <Bell className="h-6 w-6" />
+                  <span className="sr-only">Toggle notifications</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <Notifications />
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className="flex items-center gap-1">
+                <Button className="bg-transparent hover:bg-transparent text-slate-800">
+                  <Avatar className="w-[42px] h-[42px] rounded-full">
+                    <AvatarImage src={userData?.image_url || ""} alt="photo" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <p className="font-bold ml-3.5 text-slate-800 hidden sm:block">
+                    {userData?.first_name || ""}
+                  </p>
+                  <ChevronDown className="text-slate-800 hidden sm:block" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="flex flex-col gap-6 px-2 py-4"
+              >
+                <DropdownMenuItem className="px-4 cursor-pointer">
+                  <Link href="/renting" className="flex items-center gap-x-2">
+                    <RentalsIcon /> My Rentals
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="px-4 cursor-pointer">
+                  <Link href="/dashboard" className="flex items-center gap-x-2">
+                    <DashboardIcon /> Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="px-4 cursor-pointer">
+                  <Link href="/profile" className="flex items-center gap-x-2">
+                    <ProfileIcon />
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="flex items-center gap-x-2 px-4 cursor-pointer"
+                  onClick={() => {
+                    handleLogout();
+                    router.push("/");
+                  }}
+                >
+                  <LogoutIcon /> Logout
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-transparent">
+                  <Link
+                    href="/renting"
+                    className="py-1 px-4 rounded-[38px] bg-green-500 w-fit text-white"
+                  >
+                    Switch to Renting
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </header>
         <main className="flex flex-1 flex-col gap-[25px] p-[24px] lg:gap-[30px] lg:p-[25px] lg:px-[30px] bg-pearl-400 overflow-y-auto overflow-x-hidden">
           {children}
