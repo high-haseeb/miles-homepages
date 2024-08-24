@@ -84,6 +84,8 @@ export default function ListItem({
       recurring_days_of_week: [],
       multiple_date_ranges: { from: new Date(), to: new Date() },
       recurring_date: { from: new Date(), to: new Date() },
+      state: "",
+      city: "",
     },
   });
 

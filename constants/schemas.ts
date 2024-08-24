@@ -43,4 +43,6 @@ export const listItemFormSchema = z.object({
   longitude: z.number().optional(),
   recurring_days_of_week: z.array(z.string()).optional(),
   recurring_date: z.any().optional(),
+  state: z.string().min(1, "State is required"),
+  city: z.string().min(1, "City is required"),
 });

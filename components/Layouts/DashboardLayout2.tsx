@@ -123,10 +123,10 @@ export default function DashboardLayout2({
             </nav>
             <div className="mt-4 py-3.5 px-2.5">
               <Link
-                href="/renting"
+                href={pathname === "/renting" ? "/bookings" : "/renting"}
                 className="py-3 px-5 rounded-[38px] bg-green-500 w-full sm:w-fit text-white"
               >
-                Switch to Renting
+                Switch to {pathname === "/renting" ? "Lister" : "Renter"}
               </Link>
             </div>
           </SheetContent>
@@ -224,10 +224,10 @@ export default function DashboardLayout2({
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-transparent">
                 <Link
-                  href="/renting"
+                  href={pathname === "/renting" ? "/bookings" : "/renting"}
                   className="py-1 px-4 rounded-[38px] bg-green-500 w-fit text-white"
                 >
-                  Switch to Renting
+                  Switch to {pathname === "/renting" ? "Lister" : "Renter"}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>

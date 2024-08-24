@@ -157,6 +157,8 @@ export interface InitialValuesProps {
   multiple_date_ranges: DateRange;
   recurring_days_of_week: string[];
   recurring_end_date: Date;
+  state: string;
+  city: string;
 }
 
 export interface SMSOTPPayload {

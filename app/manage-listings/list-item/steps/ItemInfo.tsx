@@ -101,6 +101,26 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
           selectItems={subcategories?.data}
           disabled={isSubPending}
         />
+        <div className="flex flex-col sm:flex-row sm:gap-x-6 gap-y-[30px]">
+          <CustomFormField
+            control={control}
+            fieldType={FormFieldType.INPUT}
+            placeholder="Lagos"
+            name="state"
+            className="py-3 px-4 rounded-lg border border-gray-3"
+            label="State"
+            fullwidth
+          />
+          <CustomFormField
+            control={control}
+            fieldType={FormFieldType.INPUT}
+            placeholder="Ikeja"
+            name="city"
+            className="py-3 px-4 rounded-lg border border-gray-3"
+            label="City"
+            fullwidth
+          />
+        </div>
         <CustomFormField
           control={control}
           fieldType={FormFieldType.SKELETON}
