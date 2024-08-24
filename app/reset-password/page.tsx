@@ -32,7 +32,7 @@ export default function ResetPassword() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { toast } = useToast();
-  const { setToken, setUserData } = useAppContext();
+  const { setUserData } = useAppContext();
 
   const mutation = useMutation({
     mutationFn: resetPassword,
@@ -62,7 +62,6 @@ export default function ResetPassword() {
         title: "Success",
         description: "New password successfully set.",
       });
-      setToken(res?.data?.accessToken);
       setUserData(res?.data?.userData);
       router.push("/login");
     } catch (err: any) {
@@ -143,7 +142,7 @@ export default function ResetPassword() {
             placeholder="Confirm password"
             className="p-4 rounded-xl "
           />
-          <div className="flex flex-col gap-y-[22.5px]">
+          <div className="flex flex-col">
             <Button
               type="submit"
               disabled={mutation.isPending}

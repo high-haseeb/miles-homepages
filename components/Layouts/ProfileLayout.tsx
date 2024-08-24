@@ -180,7 +180,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <div className="flex flex-col gap-1 sm:gap-y-[7px]">
+            <div className="hidden sm:flex flex-col gap-1 sm:gap-y-[7px]">
               <p className="text-lg sm:text-xl text-slate-900 font-bold">
                 Account
               </p>
