@@ -145,29 +145,41 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
 
   return (
     <DashboardLayout2>
-      <div className="flex flex-col lg:px-[93px] gap-y-10">
-        <div className="flex flex-col md:flex-row md:items-stretch justify-between max-md:gap-y-10 sm:gap-x-20 mb-10">
+      <div className="flex flex-col lg:px-[93px] gap-y-10 relative">
+        <div className="flex flex-col md:flex-row md:items-stretch justify-between max-md:gap-y-10 sm:gap-x-20 sm:mb-10">
           <div className="flex flex-col max-w-[632px] md:basis-[60%] w-full">
             <div className="mb-[30px]">
               <Backbtn />
             </div>
             <CarouselCard images={item?.item_images} />
             <div className="mt-[15px] mb-0.5">
-              <p className="text-slate-900 text-sm">
-                Listed by{" "}
+              <p className="text-slate-900 text-xs sm:text-sm max-sm:mb-2.5">
+                {item?.product_name} Listed by{" "}
                 <span className="text-orange-500 font-medium">
                   {item?.full_name}
                 </span>
               </p>
-              <p className="text-slate-900 text-sm">Lagos 1.5 km away</p>
-              <p className="text-slate-900 text-sm">
+              <p className="text-slate-900 text-sm hidden sm:block">
+                Lagos 1.5 km away
+              </p>
+              <p className="text-slate-900 text-sm max-sm:hidden">
                 {item?.quantity_available}/{item?.quantity_available} Available
                 for rent
               </p>
+              <p className="text-xs text-slate-300 sm:hidden">
+                Quantity Available: {item?.quantity_available}/
+                {item?.quantity_available}
+              </p>
+              <p className="text-slate-900 text-sm sm:hidden">
+                NGN 50,000{" "}
+                <span className="text-xs text-slate-300">per/day</span>
+              </p>
             </div>
-            <div className="flex flex-col mt-[30px]">
-              <p className="text-xl text-slate-900 mb-2.5">Description</p>
-              <p className="text-slate-400 text-sm">
+            <div className="flex flex-col sm:mt-[30px] max-sm:py-2.5">
+              <p className="text-xl text-slate-900 mb-2.5 hidden sm:block">
+                Description
+              </p>
+              <p className="text-slate-400 text-xs sm:text-sm">
                 {item?.description}{" "}
                 {item?.description?.length > 215 && (
                   <span className="text-orange-600">Read More</span>
@@ -176,10 +188,10 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
             </div>
           </div>
 
-          <div className="border border-slate-100 rounded-[14px] py-4.5 px-6 flex flex-col gap-y-[15px] w-full md:basis-[40%]">
+          <div className="border border-slate-100 rounded-[14px] py-4.5 px-6 sm:flex flex-col gap-y-[15px] w-full md:basis-[40%]">
             <div className="flex flex-col">
               <p className="text-sm text-slate-900">{item?.product_name}</p>
-              <p className="text-green-500 font-medium">
+              <p className="text-green-500 font-medium mb-4">
                 {toCurrency(price)}{" "}
                 <span className="text-sm text-slate-500">per/day</span>
               </p>

@@ -131,7 +131,7 @@ export default function DashboardLayout2({
             </div>
           </SheetContent>
         </Sheet>
-        <div className="flex items-center gap-x-[50px] w-full flex-1">
+        <div className="flex items-center sm:gap-x-[50px] w-full flex-1">
           <Link href="/">
             <Image
               src="/images/logo.svg"
@@ -154,7 +154,7 @@ export default function DashboardLayout2({
             </Link>
           </form>
         </div>
-        <div className="flex items-center gap-x-9 mr-[176px]">
+        <div className="hidden sm:flex items-center gap-x-9 mr-[176px]">
           <Link
             href="/manage-listings/list-item"
             className="text-slate-900 hover:text-green-500"
@@ -235,7 +235,7 @@ export default function DashboardLayout2({
         </div>
       </header>
       <main
-        className={`flex flex-1 flex-col gap-[25px] p-[24px] lg:gap-[30px] ${
+        className={`flex flex-1 flex-col gap-[25px] p-5 sm:p-6 lg:gap-[30px] ${
           noPaddingY ? "lg:py-0" : "lg:py-[25px]"
         } lg:px-[30px] bg-pearl-400 overflow-y-auto overflow-x-hidden`}
       >

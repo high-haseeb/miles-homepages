@@ -107,13 +107,13 @@ export default function Listings() {
       handleSearchChange={(e) => setSearchKeyword(e.target.value)}
       handleSearchSubmit={handleSearchSubmit}
     >
-      <div className="flex flex-col md:flex-row gap-[30px] h-full max-h-screen overflow-hidden md:-mx-[30px]">
+      <div className="flex flex-col sm:flex-row gap-[30px] h-full max-h-screen overflow-hidden sm:-mx-[30px]">
         <div className="flex flex-col flex-1 pb-[25px]">
-          <div className="px-[30px] py-[23px] flex items-center justify-between">
-            <div className="flex items-center gap-x-2.5">
+          <div className="sm:px-[30px] sm:py-[23px] max-sm:mb-[30px] flex flex-col sm:flex-row gap-[5px] sm:items-center justify-between">
+            <div className="flex items-center gap-x-[5px] sm:gap-x-2.5">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                  <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
                     {category?.category_name || "Category"}
                   </Button>
                 </DropdownMenuTrigger>
@@ -129,12 +129,12 @@ export default function Listings() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+              <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
                 Location
               </Button>
               <Popover onOpenChange={setOpenCalendar} open={openCalendar}>
                 <PopoverTrigger asChild>
-                  <Button className="py-2 px-[15px] hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                  <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
                     Dates
                   </Button>
                 </PopoverTrigger>
@@ -169,11 +169,11 @@ export default function Listings() {
                 </PopoverContent>
               </Popover>
             </div>
-            <p className="text-sm text-black">
+            <p className="text-[10px] sm:text-sm text-slate-900">
               {currentListings?.length} result(s)
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-[30px] gap-y-10 overflow-y-auto md:pl-[30px]">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-[15px] sm:gap-x-[30px] gap-y-6 sm:gap-y-10 overflow-y-auto sm:pl-[30px]">
             {currentListings?.map((item: ItemProps) => (
               <ListedItemCard2
                 item={item}
@@ -183,7 +183,7 @@ export default function Listings() {
             ))}
           </div>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 hidden sm:block">
           <APIProvider apiKey={GOOGLE_PLACES_API_KEY!}>
             <Map
               style={{ width: "100%", height: "100%" }}

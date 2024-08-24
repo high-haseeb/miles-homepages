@@ -123,7 +123,7 @@ export function ListedItemCard2({
   }, [api]);
 
   return (
-    <div className="flex flex-col gap-y-[15px]">
+    <div className="flex flex-col gap-y-1.5 sm:gap-y-[15px]">
       <Carousel setApi={setApi} className="w-full max-w-xs relative">
         <CarouselContent>
           {item.item_images.map((imageItem: ItemImagesProps) => (
@@ -154,21 +154,27 @@ export function ListedItemCard2({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-5" />
-        <CarouselNext className="absolute right-5" />
+        <CarouselPrevious className="absolute left-5 hidden sm:block" />
+        <CarouselNext className="absolute right-5 hidden sm:block" />
       </Carousel>
 
       <div className="flex flex-col">
-        <p className="text-slate-900 text-sm mb-0.5 font-medium">
+        <p className="text-slate-900 text-xs sm:text-sm sm:mb-0.5 sm:font-medium">
           {item.product_name}
         </p>
-        <p className="text-slate-300 text-sm">Listed by {item.full_name}</p>
-        <p className="text-orange-600 text-sm">Lagos 1.5 km away</p>
-        <p className="text-slate-900 font-medium">
-          NGN {item.price_per_day}{" "}
-          <span className="text-sm text-slate-400 font-normal">per/day</span>
+        <p className="text-slate-300 text-xs sm:text-sm">
+          Listed by {item.full_name}
         </p>
-        <p className="text-slate-400 text-sm">2/2 Available for rent</p>
+        <p className="text-orange-600 text-xs sm:text-sm">Lagos 1.5 km away</p>
+        <p className="text-slate-900 text-sm sm:text-base font-medium">
+          NGN {item.price_per_day}{" "}
+          <span className="text-xs sm:text-sm text-slate-400 font-normal">
+            per/day
+          </span>
+        </p>
+        <p className="text-slate-400 text-xs sm:text-sm">
+          2/2 Available for rent
+        </p>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 "use client";
+import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import Backbtn from "@/components/Backbtn";
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
@@ -21,28 +23,61 @@ export default function Item({ params }: { params: { itemId: string } }) {
   return (
     <DashboardLayout2>
       <>
-        <div className="flex flex-col md:flex-row gap-x-[163px] px-[72px]">
+        <div className="flex flex-col md:flex-row gap-x-[163px] sm:px-[72px]">
           <div className="md:w-1/2 w-full flex flex-col">
             <Backbtn />
-            <div className="flex items-center gap-x-5 max-w-[382px] mt-[30px] mb-[50px]">
-              <Avatar className="w-[60px] h-[60px]">
+            <div className="flex items-center gap-x-[15px] sm:gap-x-5 max-w-[382px] mt-[30px] mb-[25px] sm:mb-[50px]">
+              <Avatar className="sm:w-[60px] w-[45px] sm:h-[60px] h-[45px]">
                 <AvatarImage
                   src="https://github.com/shadcn.png"
                   alt="@shadcn"
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <p className="font-medium text-lg text-slate-900">
+              <p className="font-medium sm:text-lg text-slate-900">
                 You received a booking request from {booking?.renter_name}.
               </p>
             </div>
-            <div className="flex flex-col gap-y-2.5">
+            <Image
+              src={
+                booking?.item_images[0].image_url || "/images/polaroid-card.png"
+              }
+              width={195}
+              height={195}
+              alt="polaroid"
+              className="rounded-[10px] object-cover sm:hidden w-full h-[300px] mb-[25px]"
+            />
+            <div className="sm:hidden">
+              <Tabs defaultValue="details" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 bg-slate-50 rounded-[30px] p-[5px] h-auto">
+                  <TabsTrigger
+                    value="details"
+                    className="rounded-[25px] h-auto py-2 px-[30px] font-medium text-sm data-[state=active]:text-green-500 text-slate-400"
+                  >
+                    Details
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="activity"
+                    className="rounded-[25px] h-auto py-2 px-[30px] font-medium text-sm data-[state=active]:text-green-500 text-slate-400"
+                  >
+                    Activity
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="details" className="mt-[25px]">
+                  <Chat status="renter" details={booking} />
+                </TabsContent>
+                <TabsContent value="activity" className="mt-[25px]">
+                  <RentalDetailsCard status="renter" details={booking} />
+                </TabsContent>
+              </Tabs>
+            </div>
+            <div className="flex flex-col gap-y-2.5 max-sm:hidden">
               <div className="w-full">
                 <Chat status="lister" details={booking} />
               </div>
             </div>
           </div>
-          <div className="md:w-1/2 w-full">
+          <div className="md:w-1/2 w-full max-sm:hidden">
             <RentalDetailsCard status="lister" details={booking} />
           </div>
         </div>

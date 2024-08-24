@@ -153,17 +153,17 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   // console.log(details);
 
   return (
-    <div className="rounded-xl border border-gray-4/35 bg-white p-5 flex flex-col overflow-x-hidden">
-      <div className="flex items-end gap-x-5 mb-[31px]">
+    <div className="rounded-xl sm:border border-gray-4/35 sm:bg-white sm:p-5 flex flex-col overflow-x-hidden">
+      <div className="flex flex-col sm:flex-row sm:items-end gap-x-5 mb-[31px]">
         <Image
           src={details?.item_images[0].image_url || "/images/polaroid-card.png"}
           width={195}
           height={195}
           alt="polaroid"
-          className="rounded-[10px] object-cover w-[195px] h-[195px]"
+          className="rounded-[10px] object-cover sm:w-[195px] hidden sm:block w-full sm:h-[195px] h-[300px]"
         />
         <div className="flex flex-col gap-y-5 flex-grow">
-          <div className="flex flex-col">
+          <div className="flex sm:flex-col flex-row-reverse max-sm:justify-end max-sm:gap-x-3.5">
             <Badge
               className={`rounded-[15px] py-[3px] px-[15px] text-xs w-fit mb-2.5`}
               style={{
@@ -175,7 +175,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
                 ? details?.listing_status
                 : details?.rental_status}
             </Badge>
-            <p className="text-sm text-slate-900 mb-0.5">
+            <p className="text-sm text-slate-900 mb-0.5 max-sm:hidden">
               {details?.product_name}
             </p>
             <p className="text-green-500 font-medium">

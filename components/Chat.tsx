@@ -57,22 +57,8 @@ export default function Chat({ status, details }: ChatProps) {
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col gap-y-[25px]">
-        {/* <div className="flex flex-col">
-          <div className="flex gap-x-2">
-            <Dot color="#232424" className="mt-1" />
-            <p className="text-slate-800">
-              {status === "renter"
-                ? `You have requested to book ${details?.renter_name}`
-                : "Lolu B. requested to book Polaroid SB-6A between"}{" "}
-              <span className="font-medium">
-                {startDate} - {endDate}
-              </span>
-            </p>
-          </div>
-          <p className="text-sm text-slate-400">Today 8:45 am</p>
-        </div> */}
         <div className="flex gap-x-2.5">
-          <Avatar className="w-[53px] h-[53px]">
+          <Avatar className="w-[35px] sm:w-[53px] h-[35px] sm:h-[53px]">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
@@ -83,11 +69,11 @@ export default function Chat({ status, details }: ChatProps) {
             <p className="text-sm text-slate-400">Today 8:45 am</p>
           </div>
         </div>
-        <div className="w-full flex flex-col gap-y-2.5 ml-16">
+        <div className="w-full flex flex-col gap-y-2.5 sm:ml-16">
           <Textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="bg-transparent py-[34px] px-[33px] bg-white border border-gray-2 rounded-[14px]"
+            className="bg-transparent py-[34px] px-[33px] bg-white border border-gray-2 rounded-[14px] ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Message Luis B..."
           />
           <button

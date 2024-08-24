@@ -180,9 +180,11 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <div className="flex flex-col gap-y-[7px]">
-              <p className="text-xl text-slate-900 font-bold">Account</p>
-              <p className="text-slate-300 text-sm">
+            <div className="flex flex-col gap-1 sm:gap-y-[7px]">
+              <p className="text-lg sm:text-xl text-slate-900 font-bold">
+                Account
+              </p>
+              <p className="text-slate-300 text-xs sm:text-sm">
                 Manage, edit and view your Account and change settings.
               </p>
             </div>
