@@ -7,9 +7,9 @@ export default function Chip({
 }) {
   return (
     <div
-      className={`py-[3px] capitalize px-[15px] rounded-[15px] w-fit text-sm ${className}`}
+      className={`py-[3px] px-[15px] rounded-[15px] w-fit text-[10px] sm:text-sm ${className}`}
     >
-      {text}
+      <p className="capitalize">{text}</p>
     </div>
   );
 }

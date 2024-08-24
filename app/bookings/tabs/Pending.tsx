@@ -60,15 +60,15 @@ export default function Pending() {
               }`}
               onClick={() => router.push(`/bookings/${detail.itemId}`)}
             >
-              <TableCell className="flex items-center gap-x-4.5">
-                <Avatar className="w-[50px] h-[50px]">
+              <TableCell className="flex items-center gap-x-2.5 sm:gap-x-4.5">
+                <Avatar className="sm:w-[50px] w-[35px] sm:h-[50px] h-[35px]">
                   <AvatarImage
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
                   />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <div className="flex flex-col gap-0.5">
+                <div className="flex flex-col gap-[3px] sm:gap-0.5">
                   <p className="text-slate-400 text-xs sm:text-base">
                     {detail.customer}
                   </p>
@@ -83,8 +83,8 @@ export default function Pending() {
               <TableCell className="text-slate-600">
                 <div className="max-sm:flex max-sm:flex-col max-sm:justify-end max-sm:gap-y-[3px] max-sm:text-right">
                   <Chip
-                    text={detail.status}
-                    className="bg-[#FFEDEC] self-end text-[#D33030] sm:text-sm text-[10px] capitalize"
+                    text={detail.status.toLowerCase()}
+                    className="bg-[#FFEDEC] self-end text-[#D33030]"
                   />
                   <p className="text-xs text-slate-900 sm:hidden">
                     {detail.duration}
