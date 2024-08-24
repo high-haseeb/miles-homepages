@@ -2,11 +2,8 @@
 import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
 import { io, Socket } from "socket.io-client";
 
-import Dot from "./vectors/Dot";
 import SendIcon from "./vectors/SendIcon";
 import { BookingDetails } from "@/types";
 import { PURE_API_URL } from "@/constants";
@@ -20,9 +17,6 @@ export default function Chat({ status, details }: ChatProps) {
   const [socketObj, setSocketObj] = useState<Socket | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState<string>("");
-  // const startDate = format(details?.start_date, "MMM d, yyyy");
-  // const endDate = format(details?.end_date, "MMM d, yyyy");
-  // console.log(details);
 
   const user =
     status === "lister" ? details?.lister_name : details?.renter_name;

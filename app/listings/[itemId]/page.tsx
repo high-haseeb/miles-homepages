@@ -58,22 +58,21 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   // console.log(listing);
   const item = listing?.data?.listing;
   const peopleAlsoViewed = listing?.data?.peopleAlsoViewed;
+  const mdateRange = item?.multiple_date_ranges
+    ? item?.multiple_date_ranges.split(",")
+    : null;
+  const startDate =
+    mdateRange?.[0] ?? item?.start_date ?? item?.recurring_start_date;
+  const endDate =
+    mdateRange?.[1] ?? item?.start_date ?? item?.recurring_end_date;
 
   useEffect(() => {
-    const mdateRange = item?.multiple_date_ranges
-      ? item?.multiple_date_ranges.split(",")
-      : null;
-    const startDate =
-      mdateRange?.[0] ?? item?.start_date ?? item?.recurring_start_date;
-    const endDate =
-      mdateRange?.[1] ?? item?.start_date ?? item?.recurring_end_date;
-
     setPrice(Number(item?.price_per_day));
     setDateRange({
       from: new Date(startDate),
       to: new Date(endDate),
     });
-  }, [item]);
+  }, [item, endDate, startDate]);
 
   useEffect(() => {
     if (dateRange) {
@@ -139,6 +138,9 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
       });
     }
   };
+
+  console.log(listing);
+
   if (isPending) {
     return <p>Pending..</p>;
   }
@@ -229,6 +231,10 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                   selected={dateRange}
                   onSelect={setDateRange}
                   numberOfMonths={1}
+                  disabled={[
+                    { before: new Date(startDate) },
+                    { after: new Date(endDate) },
+                  ]}
                 />
                 <div className="flex items-center justify-end gap-x-2 mt-4 border border-t p-3">
                   <PopoverClose asChild>
