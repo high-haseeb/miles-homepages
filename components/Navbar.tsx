@@ -1,5 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight, CircleX } from "lucide-react";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import MenuIcon from "@/components/vectors/MenuIcon";
 
@@ -11,18 +18,66 @@ export default function Navbar() {
         width={95}
         height={26}
         alt="logo"
-        className="object-contain hidden md:block"
+        className="object-contain hidden sm:block"
       />
       <Image
         src="/images/logo.svg"
         width={45}
         height={12.32}
         alt="logo"
-        className="object-contain md:hidden"
+        className="object-contain sm:hidden"
       />
-      <button className="p-0.5 border-none bg-transparent md:hidden">
-        <MenuIcon />
-      </button>
+      <Sheet>
+        <SheetTrigger asChild>
+          <button className="p-0.5 border-none bg-transparent sm:hidden">
+            <MenuIcon />
+          </button>
+        </SheetTrigger>
+        <SheetContent side="top" className="h-fit w-full rounded-b-[25px]">
+          <div className="mb-5 flex items-center justify-between">
+            <Image
+              src="/images/logo.svg"
+              width={45}
+              height={12.32}
+              alt="logo"
+              className="object-contain sm:hidden"
+            />
+            <SheetClose asChild>
+              <CircleX width={24} height={24} />
+            </SheetClose>
+          </div>
+          <div className="flex flex-col divide-y mb-9">
+            <Link
+              href="/manage-listings/list-item"
+              className="pb-5 font-medium text-slate-900 text-sm flex items-center justify-between py-5"
+            >
+              List an item
+              <ChevronRight width={20} height={20} />
+            </Link>
+            <Link
+              href="#how-it-works"
+              className="pb-5 font-medium text-slate-900 text-sm flex items-center justify-between py-5"
+            >
+              How it works
+              <ChevronRight width={20} height={20} />
+            </Link>
+          </div>
+          <div className="flex flex-col gap-y-5">
+            <Link
+              href="/signup"
+              className="py-3.5 px-10 text-white text-sm text-center bg-green-500 rounded-[38px] font-medium"
+            >
+              Sign up
+            </Link>
+            <Link
+              href="/login"
+              className="py-3.5 px-10 rounded-[38px] text-sm text-center font-medium text-slate-400"
+            >
+              Login
+            </Link>
+          </div>
+        </SheetContent>
+      </Sheet>
       <div className="hidden md:flex items-center gap-10 gap-x-6">
         <Link
           href="/manage-listings/list-item"
@@ -31,7 +86,7 @@ export default function Navbar() {
           List an item
         </Link>
         <Link
-          href="/how-it-works"
+          href="#how-it-works"
           className="font-medium text-slate-900 py-3 px-2"
         >
           How it works

@@ -137,7 +137,7 @@ export default function DashboardLayout({
               className="flex flex-col rounded-r-[60px] py-[127px]"
             >
               <nav className="grid gap-2.5 text-lg font-medium">
-                <Link href="#">
+                <Link href="/">
                   <Image
                     src="/images/logo.svg"
                     width={81}

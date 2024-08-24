@@ -78,7 +78,7 @@ export default function DashboardLayout2({
             className="flex flex-col rounded-r-[60px] py-[127px]"
           >
             <nav className="grid gap-2.5 text-lg font-medium">
-              <Link href="#">
+              <Link href="/">
                 <Image
                   src="/images/logo.svg"
                   width={81}
@@ -161,7 +161,10 @@ export default function DashboardLayout2({
           >
             List an item
           </Link>
-          <Link href="#" className="text-slate-900 hover:text-green-500">
+          <Link
+            href="#how-it-works"
+            className="text-slate-900 hover:text-green-500"
+          >
             How it works
           </Link>
         </div>
