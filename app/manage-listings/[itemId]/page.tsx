@@ -320,6 +320,7 @@ export default function MyListing({
         </div>
       </div>
       <EditAvailability
+        id={listedItem?.listing_id}
         openModal={openAvailability}
         handleOpenModal={setOpenEditAvailability}
       />

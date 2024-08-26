@@ -7,11 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import {
-  Dialog,
   DialogClose,
   DialogContent,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Popover,
@@ -22,7 +20,13 @@ import {
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
 
-export default function CalendarModal({ control }: { control: Control<any> }) {
+export default function CalendarModal({
+  control,
+  isUpdating = false,
+}: {
+  control: Control<any>;
+  isUpdating?: boolean;
+}) {
   const [activeTab, setActiveTab] = useState("date_range");
   const { watch, unregister } = useFormContext();
 
@@ -39,11 +43,12 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
   }, [activeTab, watchRecurringDays, watchDateRanges, unregister]);
 
   return (
-    <DialogContent className="sm:max-w-[670px] w-full px-6 h-screen sm:h-auto max-sm:py-[60px]">
+    <div className="sm:max-w-[670px] w-full px-6 h-screen sm:h-auto max-sm:py-[60px]">
       <DialogTitle className="hidden sr-only">Set Schedule Modal</DialogTitle>
       <div className="flex flex-col items-center">
         <div className="flex items-center gap-x-9 mb-[22px]">
           <Button
+            type="button"
             onClick={() => setActiveTab("date_range")}
             className={`py-[15px] px-4.5 ${
               activeTab === "date_range"
@@ -54,6 +59,7 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
             Select date range
           </Button>
           <Button
+            type="button"
             onClick={() => setActiveTab("schedule")}
             className={`py-[15px] px-4.5 ${
               activeTab === "schedule"
@@ -93,7 +99,12 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
               )}
             />
             <DialogClose className="w-full">
-              <Button className="mt-[100px] w-full bg-green-500 py-3 px-4 rounded-[38px] font-medium text-white">
+              <Button
+                type="button"
+                className={`mt-16 w-full bg-green-500 py-3 px-4 rounded-[38px] font-medium text-white ${
+                  isUpdating ? "hidden" : ""
+                }`}
+              >
                 Save
               </Button>
             </DialogClose>
@@ -138,7 +149,7 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
                 />
               </div>
             ))}
-            <div className="py-4 px-3.5 flex items-center gap-x-5 mt-[15px] mb-10">
+            <div className="py-4 px-3.5 flex items-center gap-x-2 mt-[15px] mb-10">
               <p className="text-black">Recurring schedule:</p>
               <CustomFormField
                 control={control}
@@ -149,7 +160,10 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button className="text-slate-300 bg-transparent font-normal">
+                        <Button
+                          type="button"
+                          className="text-slate-300 bg-transparent font-normal"
+                        >
                           {field.value ? (
                             <>
                               {format(field.value.from, "LLL dd, y")} -{" "}
@@ -186,14 +200,16 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
                 unregister("recurring_days_of_week");
                 unregister("recurring_end_date");
               }}
-              className="py-[15px] px-3.5 font-normal rounded-lg bg-slate-50 mb-[100px] text-lg text-slate-400"
+              className="py-[15px] px-3.5 font-normal rounded-lg bg-slate-50 mb-5 text-lg text-slate-400"
             >
               Clear All
             </Button>
             <DialogClose className="w-full">
               <Button
                 type="button"
-                className="w-full bg-green-500 py-3 px-4 rounded-[38px] font-medium text-white"
+                className={`w-full bg-green-500 py-3 px-4 rounded-[38px] font-medium text-white ${
+                  isUpdating ? "hidden" : ""
+                }`}
               >
                 Save
               </Button>
@@ -201,7 +217,7 @@ export default function CalendarModal({ control }: { control: Control<any> }) {
           </div>
         )}
       </div>
-    </DialogContent>
+    </div>
   );
 }
 

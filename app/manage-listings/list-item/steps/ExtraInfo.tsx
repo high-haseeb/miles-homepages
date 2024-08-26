@@ -1,6 +1,6 @@
 "use client";
 import { Control, useFormContext } from "react-hook-form";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { format } from "date-fns";
 
 import CustomFormField from "@/components/forms/CustomFormField";
@@ -63,7 +63,9 @@ export default function ExtraInfo({ control }: { control: Control<any> }) {
             </button>
           </div>
         </DialogTrigger>
-        <CalendarModal control={control} />
+        <DialogContent>
+          <CalendarModal control={control} />
+        </DialogContent>
       </Dialog>
     </div>
   );
