@@ -144,13 +144,17 @@ export default function Accounts({ clearTab }: { clearTab?: () => void }) {
             />
             <div className="flex items-center gap-1 w-full">
               <VerifiedIcon notVerified={!userData?.identity_verified} />
-              <p className="text-xs text-error font-medium">Not Verified</p>
-              <button
-                onClick={() => setOpenIDVerif(true)}
-                className="py-3 px-4 border-none text-xs text-slate9600 font-medium"
-              >
-                (Click to reverify)
-              </button>
+              <p className="text-xs text-error font-medium">
+                {userData?.identity_verified ? "Verified" : "Not Verified"}
+              </p>
+              {!userData?.identity_verified && (
+                <button
+                  onClick={() => setOpenIDVerif(true)}
+                  className="py-3 px-4 border-none text-xs text-slate9600 font-medium"
+                >
+                  (Click to reverify)
+                </button>
+              )}
             </div>
           </div>
         </div>

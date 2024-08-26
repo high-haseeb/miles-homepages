@@ -35,7 +35,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="">
+      <div className="w-full relative overflow-x-auto">
         <Table className="w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
