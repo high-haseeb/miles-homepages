@@ -26,7 +26,7 @@ export default function All() {
   const detailsList = bookings?.data?.rows;
 
   const details = detailsList?.map((detail: DetailListType) => ({
-    avatar: "",
+    avatar: detail?.lister_image_url || "",
     customer: detail?.lister_name,
     item: detail?.product_name,
     duration: `${formattedDate(detail?.start_date)} - ${formattedDate(

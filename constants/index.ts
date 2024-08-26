@@ -185,4 +185,10 @@ export const API_URL = IS_DEV_MODE
   ? `${process.env.NEXT_PUBLIC_API_URL}/v1`
   : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
 
+export const LOCATIONS_API_URL = IS_DEV_MODE
+  ? `${process.env.NEXT_PUBLIC_LOCATIONS_API_URL}/v1`
+  : `${process.env.NEXT_PUBLIC_LOCATIONS_API_URL}/v1`;
+
+export const LOCATIONS_API_KEY = process.env.NEXT_PUBLIC_LOCATIONS_API_KEY;
+
 export const PURE_API_URL = process.env.NEXT_PUBLIC_API_URL;

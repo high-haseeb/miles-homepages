@@ -30,8 +30,10 @@ export default function Pending() {
 
   const detailsList = pendingBookings?.data?.rows;
 
+  // console.log(detailsList);
+
   const details = detailsList?.map((detail: DetailListType) => ({
-    avatar: "",
+    avatar: detail?.renter_image_url || "",
     customer: detail?.lister_name,
     item: detail?.product_name,
     duration: `${formattedDate(detail?.start_date)} - ${formattedDate(

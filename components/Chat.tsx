@@ -3,50 +3,75 @@ import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import { io, Socket } from "socket.io-client";
+import { useQuery } from "@tanstack/react-query";
 
 import SendIcon from "./vectors/SendIcon";
 import { BookingDetails } from "@/types";
 import { PURE_API_URL } from "@/constants";
+import { getMessages } from "@/services/general.api";
 
 interface ChatProps {
   details: BookingDetails;
   status?: string;
 }
 
+interface Message {
+  senderId: string;
+  receiverId: string;
+  message: string;
+  timestamp: string;
+}
+
 export default function Chat({ status, details }: ChatProps) {
   const [socketObj, setSocketObj] = useState<Socket | null>(null);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState<string>("");
+  // console.log(details);
+  const userId = status === "lister" ? details?.lister_id : details?.renter_id;
+  const receiverId =
+    status === "lister" ? details?.renter_id : details?.lister_id;
 
-  const user =
-    status === "lister" ? details?.lister_name : details?.renter_name;
+  const { data: chatMessages, isPending } = useQuery({
+    queryKey: ["messages", userId, receiverId],
+    queryFn: () =>
+      getMessages({
+        userId,
+        receiverId,
+      }),
+  });
 
   useEffect(() => {
     const socket = io(PURE_API_URL!);
     setSocketObj(socket);
+
     socket.on("connect", () => {
-      console.log("socket connected");
+      console.log("Socket connected:", socket.id);
     });
+
+    socket.on("chat message", (newMessage: Message) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
+
+    setMessages(chatMessages);
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [chatMessages]);
 
   const handleSendMessage = () => {
     if (socketObj && message.trim()) {
-      socketObj.emit("message", { username: user, message });
-      setMessage(""); // Clear input field after sending
+      const newMessage = {
+        senderId: userId,
+        receiverId,
+        message: message.trim(),
+      };
+      socketObj.emit("message", newMessage);
+      setMessage("");
     }
   };
 
-  useEffect(() => {
-    if (socketObj) {
-      socketObj.on("message", (msg) => {
-        setMessages((prevMessages) => [...prevMessages, msg]);
-      });
-    }
-  }, [messages, socketObj]);
+  console.log(messages);
 
   return (
     <div className="flex flex-col w-full">

@@ -8,16 +8,27 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FormControl } from "@/components/ui/form";
 
 import CustomFormField from "@/components/forms/CustomFormField";
-import { FormFieldType } from "@/types";
+import { FormFieldType, StateProps } from "@/types";
 import { getCategories, getSubCategories } from "@/services/general.api";
+import { getStates, getCities } from "@/services/locations.api";
 import useLoadScript from "@/hooks";
 import { GOOGLE_PLACES_API_KEY } from "@/constants";
 
 export default function ItemInfo({ control }: { control: Control<any> }) {
   const { setValue, getValues, watch } = useFormContext();
   const categoryId = watch("category_id");
+  const state = watch("state");
 
   const { data: categories, isPending } = useQuery({
     queryKey: ["category"],
@@ -27,6 +38,21 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
     queryKey: ["sub-category", categoryId],
     queryFn: () => getSubCategories(categoryId),
   });
+
+  const { data: states, isPending: isStatesPending } = useQuery({
+    queryKey: ["location"],
+    queryFn: getStates,
+  });
+
+  const stateISO = states?.filter(
+    (item: StateProps) => item?.name?.toLowerCase() === state?.toLowerCase()
+  )[0]?.iso2;
+
+  const { data: cities, isPending: isCitiesPending } = useQuery({
+    queryKey: ["location", stateISO],
+    queryFn: () => getCities(stateISO),
+  });
+
   const [location, setLocation] = useState("");
 
   useEffect(() => {
@@ -99,26 +125,89 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
           className="py-3 px-4 rounded-lg border border-gray-3"
           label="Sub-category"
           selectItems={subcategories?.data}
-          disabled={isSubPending}
+          disabled={isPending || isSubPending}
         />
         <div className="flex flex-col sm:flex-row sm:gap-x-6 gap-y-[30px]">
           <CustomFormField
             control={control}
-            fieldType={FormFieldType.INPUT}
-            placeholder="Lagos"
+            fieldType={FormFieldType.SKELETON}
             name="state"
-            className="py-3 px-4 rounded-lg border border-gray-3"
+            className=""
             label="State"
             fullwidth
+            renderSkeleton={(field) => {
+              return (
+                <div>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    disabled={isStatesPending}
+                  >
+                    <FormControl>
+                      <SelectTrigger
+                        className={`py-3 px-4 rounded-lg border border-gray-3 h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
+                      >
+                        <SelectValue>
+                          {states?.find(
+                            (item: StateProps) => item.name == field.value
+                          )?.name || "Lagos"}
+                        </SelectValue>
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {states?.map((item: StateProps) => (
+                          <SelectItem key={item.id} value={item.name}>
+                            {item.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              );
+            }}
           />
           <CustomFormField
             control={control}
-            fieldType={FormFieldType.INPUT}
+            fieldType={FormFieldType.SKELETON}
             placeholder="Ikeja"
             name="city"
-            className="py-3 px-4 rounded-lg border border-gray-3"
+            className=""
             label="City"
             fullwidth
+            renderSkeleton={(field) => {
+              return (
+                <div>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    disabled={isStatesPending || isCitiesPending}
+                  >
+                    <FormControl>
+                      <SelectTrigger
+                        className={`py-3 px-4 rounded-lg border border-gray-3 h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
+                      >
+                        <SelectValue>
+                          {cities?.find(
+                            (item: StateProps) => item.name == field.value
+                          )?.name || "Ikeja"}
+                        </SelectValue>
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {cities?.map((item: StateProps) => (
+                          <SelectItem key={item.id} value={item.name}>
+                            {item.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              );
+            }}
           />
         </div>
         <CustomFormField

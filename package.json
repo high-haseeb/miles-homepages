@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@paystack/inline-js": "^2.20.2",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -26,6 +27,7 @@
     "@tanstack/react-query": "^5.51.1",
     "@tanstack/react-query-devtools": "^5.51.1",
     "@tanstack/react-table": "^8.20.1",
+    "@types/paystack": "^2.0.4",
     "@vis.gl/react-google-maps": "^1.1.0",
     "axios": "^1.7.2",
     "browser-image-compression": "^2.0.2",

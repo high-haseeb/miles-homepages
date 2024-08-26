@@ -71,8 +71,8 @@ export default function ListedItemCard({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-5" />
-        <CarouselNext className="absolute right-5" />
+        <CarouselPrevious className="left-5" />
+        <CarouselNext className="right-5" />
       </Carousel>
 
       <div className="flex flex-col">
@@ -154,8 +154,8 @@ export function ListedItemCard2({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-5 hidden sm:block" />
-        <CarouselNext className="absolute right-5 hidden sm:block" />
+        <CarouselPrevious className="left-5 hidden sm:block" />
+        <CarouselNext className="right-5 hidden sm:block" />
       </Carousel>
 
       <div className="flex flex-col">
@@ -179,21 +179,6 @@ export function ListedItemCard2({
     </div>
   );
 }
-
-const images = [
-  {
-    src: "/images/nikon-camera-2.png",
-  },
-  {
-    src: "/images/nikon-side.png",
-  },
-  {
-    src: "/images/polaroid-card.png",
-  },
-  {
-    src: "/images/speaker.png",
-  },
-];
 
 export function CarouselCard({ images }: { images: ItemImagesProps[] }) {
   const [api, setApi] = useState<CarouselApi>();
@@ -240,8 +225,8 @@ export function CarouselCard({ images }: { images: ItemImagesProps[] }) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-12" />
-      <CarouselNext className="absolute right-12" />
+      <CarouselPrevious className="left-12" />
+      <CarouselNext className="right-12" />
     </Carousel>
   );
 }

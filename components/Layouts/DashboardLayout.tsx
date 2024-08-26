@@ -237,7 +237,7 @@ export default function DashboardLayout({
                 className="flex flex-col gap-6 px-2 py-4"
               >
                 <DropdownMenuItem className="px-4 cursor-pointer">
-                  <Link href="/renting" className="flex items-center gap-x-2">
+                  <Link href="/bookings" className="flex items-center gap-x-2">
                     <RentalsIcon /> My Rentals
                   </Link>
                 </DropdownMenuItem>

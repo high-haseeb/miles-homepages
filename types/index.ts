@@ -236,6 +236,7 @@ export interface BookingDetails {
   booking_id: number;
   listing_id: number;
   renter_id: number;
+  lister_id: number;
   renter_name: string;
   price: string;
   service_charge: string;
@@ -268,6 +269,8 @@ export interface DetailListType {
   service_charge: string;
   start_date: string;
   vat: string;
+  renter_image_url?: string;
+  lister_image_url?: string;
 }
 
 export interface DetailsType {
@@ -305,4 +308,12 @@ export interface CategoryProps {
   category_id: number;
   category_name: string;
   subcategories: string[];
+}
+
+export interface StateProps {
+  id: number;
+  iso2?: string;
+  name: string;
+  longitude?: string;
+  latitude?: string;
 }

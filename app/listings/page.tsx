@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -23,12 +24,13 @@ import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { ListedItemCard2 } from "@/components/ListedItemCard";
 import { GOOGLE_PLACES_API_KEY } from "@/constants";
 import CustomMarker from "@/components/CustomMarker";
-import { ItemProps, CategoryProps } from "@/types";
+import { ItemProps, CategoryProps, StateProps } from "@/types";
 import {
   getListings,
   searchListings,
   getCategories,
 } from "@/services/general.api";
+import { getStates } from "@/services/locations.api";
 import { Button } from "@/components/ui/button";
 
 export default function Listings() {
@@ -41,6 +43,11 @@ export default function Listings() {
   const [date, setDate] = useState<DateRange | undefined>();
   const [confirmedDate, setConfirmedDate] = useState<DateRange | undefined>();
   const [openCalendar, setOpenCalendar] = useState(false);
+
+  const { data: states, isPending: isStatesPending } = useQuery({
+    queryKey: ["location"],
+    queryFn: getStates,
+  });
 
   const updateSearchParams = (keyword: string) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -63,13 +70,17 @@ export default function Listings() {
   };
 
   const { data: listings, isPending } = useQuery({
-    queryKey: ["listings", category?.category_id, confirmedDate],
+    queryKey: ["listings", category?.category_id, confirmedDate, location],
     queryFn: () =>
       getListings({
         category: category?.category_id || "",
-        location: "",
-        startDate: confirmedDate ? confirmedDate?.from : "",
-        endDate: confirmedDate ? confirmedDate?.to : "",
+        location: location || "",
+        startDate: confirmedDate
+          ? format(confirmedDate.from as Date, "yyyy-MM-dd HH:mm:ss")
+          : "",
+        endDate: confirmedDate
+          ? format(confirmedDate.to as Date, "yyyy-MM-dd HH:mm:ss")
+          : "",
       }),
   });
 
@@ -128,10 +139,23 @@ export default function Listings() {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-
-              <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
-                Location
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                    {location || "Location"}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="overflow-y-auto max-h-[400px]">
+                  {states?.map((state: StateProps) => (
+                    <DropdownMenuItem
+                      key={state.id}
+                      onClick={() => setLocation(state.name)}
+                    >
+                      {state.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Popover onOpenChange={setOpenCalendar} open={openCalendar}>
                 <PopoverTrigger asChild>
                   <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">

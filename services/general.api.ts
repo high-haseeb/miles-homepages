@@ -415,3 +415,25 @@ export const updateEmail = async (payload: { email: string }) => {
     throw error;
   }
 };
+
+// Chat
+
+interface GetMessagesParams {
+  userId: number;
+  receiverId: number;
+}
+
+export const getMessages = async (params: GetMessagesParams) => {
+  const { userId, receiverId } = params;
+  const token = getToken();
+  try {
+    const response = await apiService.get(`/messages/${userId}/${receiverId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};

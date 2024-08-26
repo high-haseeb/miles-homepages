@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Minus, Plus } from "lucide-react";
+import PaystackPop from "@paystack/inline-js";
 import { format } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
@@ -199,28 +199,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       </div>
       <div className="flex items-center justify-between mb-[15px]">
         <p className="text-sm text-green-500">QUANTITY</p>
-        <div className="flex items-center gap-x-5">
-          <button
-            disabled
-            onClick={() => {
-              if (quantity === 1) return;
-              else setQuantity((prev) => prev - 1);
-            }}
-            className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
-          >
-            <Minus className="w-3 h-3" />
-          </button>
-          {quantity}
-          <button
-            disabled
-            onClick={() => {
-              setQuantity((prev) => prev + 1);
-            }}
-            className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
-          >
-            <Plus className="w-3 h-3" />
-          </button>
-        </div>
+        <div className="flex items-center gap-x-5">{quantity}</div>
       </div>
       <div className="flex flex-col gap-y-2.5">
         <p className="text-sm text-green-500">PRICE BREAKDOWN</p>
@@ -274,7 +253,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
             onClick={handleListerCancel}
             disabled={listerCancel.isPending}
             variant="ghost"
-            className="rounded-[38px] py-3 px-4 bg-transparent border-none font-medium text-slate-400"
+            className="rounded-[38px] py-3 px-4 bg-transparent hover:bg-red-600 border-none font-medium text-slate-400"
           >
             Cancel booking
           </Button>
@@ -298,7 +277,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
             <Button
               onClick={handleCancelBooking}
               disabled={mutation.isPending}
-              className="rounded-[38px] py-3 px-4 bg-transparent border-none font-medium text-slate-400 w-full"
+              className="rounded-[38px] py-3 px-4 bg-transparent hover:bg-red-600 border-none font-medium text-slate-400 w-full"
             >
               Cancel booking
             </Button>

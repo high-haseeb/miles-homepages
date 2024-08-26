@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { useForm } from "react-hook-form";
+// import { z } from "zod";
+// import { Button } from "@/components/ui/button";
+// import { Form } from "@/components/ui/form";
 
 import VerifiedIcon from "@/components/vectors/VerifiedIcon";
 import UpdateEmail from "../modals/UpdateEmail";
@@ -19,15 +19,15 @@ import LeftArrow from "@/components/vectors/LeftArrow";
 import CustomFormField from "@/components/forms/CustomFormField";
 import { FormFieldType } from "@/types";
 
-const editProfileFormSchema = z.object({
-  firstName: z
-    .string()
-    .min(2, { message: "First name must be at least 2 characters." }),
-  lastName: z
-    .string()
-    .min(2, { message: "Last name must be at least 2 characters." }),
-  email: z.string().email("Invalid email format."),
-});
+// const editProfileFormSchema = z.object({
+//   firstName: z
+//     .string()
+//     .min(2, { message: "First name must be at least 2 characters." }),
+//   lastName: z
+//     .string()
+//     .min(2, { message: "Last name must be at least 2 characters." }),
+//   email: z.string().email("Invalid email format."),
+// });
 
 export default function Accounts({ clearTab }: { clearTab?: () => void }) {
   const [openPhoneVerif, setOpenPhoneVerif] = useState(false);
@@ -37,16 +37,16 @@ export default function Accounts({ clearTab }: { clearTab?: () => void }) {
   const [openUploadModal, setOpenUploadModal] = useState(false);
   const { userData } = useAppContext();
 
-  const form = useForm<z.infer<typeof editProfileFormSchema>>({
-    resolver: zodResolver(editProfileFormSchema),
-    defaultValues: {
-      email: userData?.email || "",
-      firstName: userData?.first_name || "",
-      lastName: userData?.last_name || "",
-    },
-  });
+  // const form = useForm<z.infer<typeof editProfileFormSchema>>({
+  //   resolver: zodResolver(editProfileFormSchema),
+  //   defaultValues: {
+  //     email: userData?.email || "",
+  //     firstName: userData?.first_name || "",
+  //     lastName: userData?.last_name || "",
+  //   },
+  // });
 
-  const onSubmit = async (values: z.infer<typeof editProfileFormSchema>) => {};
+  // const onSubmit = async (values: z.infer<typeof editProfileFormSchema>) => {};
 
   return (
     <>
@@ -84,12 +84,12 @@ export default function Accounts({ clearTab }: { clearTab?: () => void }) {
               value={userData?.last_name}
               disabled
             />
-            <button
+            {/* <button
               onClick={() => setOpenNameVerif(true)}
               className="py-3 px-4 border-none text-xs text-orange-600 font-medium underline"
             >
               (Edit)
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="h-[100px] flex items-center gap-x-[135px]">
@@ -181,12 +181,12 @@ export default function Accounts({ clearTab }: { clearTab?: () => void }) {
               </button>
             </div>
           </div>
-          <Form {...form}>
-            <form
-              className="flex flex-col gap-y-[15px]"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <CustomFormField
+          {/* <Form {...form}> */}
+          <div
+            className="flex flex-col gap-y-[15px]"
+            // onSubmit={form.handleSubmit(onSubmit)}
+          >
+            {/* <CustomFormField
                 control={form.control}
                 name="firstName"
                 fieldType={FormFieldType.INPUT}
@@ -206,40 +206,64 @@ export default function Accounts({ clearTab }: { clearTab?: () => void }) {
                 fieldType={FormFieldType.INPUT}
                 label="Email"
                 className="p-4 rounded-lg"
+              /> */}
+            <div className="flex flex-col">
+              <p className="text-black font-medium mb-2 text-sm">First name</p>
+              <Input
+                className="py-3 px-4 text-sm text-slate-900 mr-[25px] h-auto"
+                value={userData?.first_name}
+                disabled
               />
-            </form>
-            <div className="flex flex-col">
-              <p className="text-black font-medium mb-2 text-sm">
-                Phone Number
-              </p>
-              <button
-                type="button"
-                className="p-4 text-sm text-slate-900 bg-white rounded-lg border text-left"
-                onClick={() => setOpenPhoneVerif(true)}
-              >
-                {userData?.phone_number || ""}
-              </button>
             </div>
             <div className="flex flex-col">
-              <p className="text-black font-medium mb-2 text-sm">
-                Proof of Identity
-              </p>
-              <button
-                type="button"
-                className="p-4 text-sm text-slate-900 bg-white rounded-lg border text-left"
-                onClick={() => setOpenIDVerif(true)}
-              >
-                NIN
-              </button>
+              <p className="text-black font-medium mb-2 text-sm">Last name</p>
+              <Input
+                className="py-3 px-4 text-sm text-slate-900 mr-2.5 h-auto"
+                value={userData?.last_name}
+                disabled
+              />
             </div>
-            <Button
+          </div>
+          <div className="flex flex-col">
+            <p className="text-black font-medium mb-2 text-sm">Email</p>
+            <button
+              type="button"
+              className="p-4 text-sm text-slate-900 bg-white rounded-lg border text-left"
+              onClick={() => setOpenEmailVerif(true)}
+            >
+              {userData?.email || ""}
+            </button>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-black font-medium mb-2 text-sm">Phone Number</p>
+            <button
+              type="button"
+              className="p-4 text-sm text-slate-900 bg-white rounded-lg border text-left"
+              onClick={() => setOpenPhoneVerif(true)}
+            >
+              {userData?.phone_number || ""}
+            </button>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-black font-medium mb-2 text-sm">
+              Proof of Identity
+            </p>
+            <button
+              type="button"
+              className="p-4 text-sm text-slate-900 bg-white rounded-lg border text-left"
+              onClick={() => setOpenIDVerif(true)}
+            >
+              NIN
+            </button>
+          </div>
+          {/* <Button
               type="submit"
               // disabled={mutation.isPending}
               className="mt-[37px] w-full disabled:bg-green-200 text-teal-50 font-medium bg-green-500 py-3 px-4 rounded-[38px]"
             >
               Update
-            </Button>
-          </Form>
+            </Button> */}
+          {/* </Form> */}
         </div>
       </div>
       <UpdateEmail
