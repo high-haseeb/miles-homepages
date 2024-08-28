@@ -252,6 +252,8 @@ export interface BookingDetails {
   price_per_day: string;
   lister_name: string;
   item_images: ItemImagesProps[];
+  no_of_days: string;
+  quantity: number;
 }
 
 export interface DetailListType {

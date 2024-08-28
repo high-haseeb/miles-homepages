@@ -118,6 +118,8 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
         start_date: format(dateRange?.from as Date, "MM/dd/yyyy"),
         end_date: format(dateRange?.to as Date, "MM/dd/yyyy"),
         description: desc,
+        quantity,
+        no_of_days: String(calculateDaysInRange(dateRange)),
       };
       const res = await mutation.mutateAsync(values);
 
@@ -139,7 +141,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     }
   };
 
-  console.log(listing);
+  // console.log(listing);
 
   if (isPending) {
     return <p>Pending..</p>;

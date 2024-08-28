@@ -61,10 +61,7 @@ export default function Pending() {
             >
               <TableCell className="flex items-center gap-x-2.5 sm:gap-x-4.5">
                 <Avatar className="sm:w-[50px] w-[35px] sm:h-[50px] h-[35px]">
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                  />
+                  <AvatarImage src={detail.avatar} alt="@shadcn" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col gap-[3px] sm:gap-0.5">

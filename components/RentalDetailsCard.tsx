@@ -24,7 +24,6 @@ interface ChatProps {
 export default function RentalDetailsCard({ status, details }: ChatProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [quantity, setQuantity] = useState(1);
 
   const mutation = useMutation({
     mutationFn: () => cancelBooking(details.listing_id),
@@ -60,7 +59,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   });
   const priceBreakdown = [
     {
-      title: `NGN ${details?.price_per_day} * (x) Days`,
+      title: `NGN ${details?.price_per_day} * ${details?.no_of_days} Day(s) * ${details?.quantity} items`,
       value: `NGN ${details?.price_per_day}x`,
     },
     {
@@ -199,7 +198,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       </div>
       <div className="flex items-center justify-between mb-[15px]">
         <p className="text-sm text-green-500">QUANTITY</p>
-        <div className="flex items-center gap-x-5">{quantity}</div>
+        <div className="flex items-center gap-x-5">{details?.quantity}</div>
       </div>
       <div className="flex flex-col gap-y-2.5">
         <p className="text-sm text-green-500">PRICE BREAKDOWN</p>

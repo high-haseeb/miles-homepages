@@ -12,11 +12,11 @@ import { getSingleBooking } from "@/services/general.api";
 
 export default function Item({ params }: { params: { itemId: string } }) {
   const { itemId } = params;
-  const { data: upcomingBooking, isPending } = useQuery({
+  const { data: singleBooking, isPending } = useQuery({
     queryKey: ["bookings", "rental", itemId],
     queryFn: () => getSingleBooking(itemId),
   });
-  const booking = upcomingBooking?.data;
+  const booking = singleBooking?.data;
   if (isPending) {
     return <p>Loading...</p>;
   }
