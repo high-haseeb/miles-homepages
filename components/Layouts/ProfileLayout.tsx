@@ -108,7 +108,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-screen max-sm:w-screen">
         <header className="flex h-14 items-center gap-2 border-b bg-white px-4 lg:h-[86px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>

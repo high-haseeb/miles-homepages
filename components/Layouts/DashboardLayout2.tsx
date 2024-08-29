@@ -34,6 +34,7 @@ import { DashboardLayoutProps } from "@/types";
 
 interface DashboardLayout2Props extends DashboardLayoutProps {
   noPaddingY?: boolean;
+  noPaddingX?: boolean;
 }
 
 export default function DashboardLayout2({
@@ -42,6 +43,7 @@ export default function DashboardLayout2({
   handleSearchSubmit,
   handleSearchChange,
   searchValue,
+  noPaddingX,
 }: DashboardLayout2Props) {
   const pathname = usePathname();
   const router = useRouter();
@@ -238,7 +240,9 @@ export default function DashboardLayout2({
         </div>
       </header>
       <main
-        className={`flex flex-1 flex-col gap-[25px] p-5 sm:p-6 lg:gap-[30px] ${
+        className={`flex flex-1 flex-col gap-[25px] py-5 sm:p-6 lg:gap-[30px] ${
+          noPaddingX ? "px-0" : "px-[25px]"
+        } ${
           noPaddingY ? "lg:py-0" : "lg:py-[25px]"
         } lg:px-[30px] bg-pearl-400 overflow-y-auto overflow-x-hidden`}
       >

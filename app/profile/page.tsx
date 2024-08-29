@@ -19,8 +19,8 @@ export default function Profile() {
     [key: string]: ReactElement;
   } = {
     account: <Accounts clearTab={() => setTab("")} />,
-    payments: <Payments />,
-    payouts: <Payouts />,
+    payments: <Payments clearTab={() => setTab("")} />,
+    payouts: <Payouts clearTab={() => setTab("")} />,
     settings: <Settings clearTab={() => setTab("")} />,
     notifications: <Notifications clearTab={() => setTab("")} />,
   };

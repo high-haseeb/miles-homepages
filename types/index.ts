@@ -215,6 +215,17 @@ export interface PaymentDetailsProps {
   arrId: string;
 }
 
+export interface PaymentDetailsPropsMobile {
+  "product-datetime": {
+    product: string;
+    datetime: string;
+  };
+  "price-id": {
+    price: string;
+    id: string;
+  };
+}
+
 export interface CreateBookingPayload {
   listing_id: number;
   price: string;

@@ -20,11 +20,13 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  className: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  className,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -34,10 +36,10 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
-      <div className="w-full relative overflow-x-auto">
+    <div className={className}>
+      <div>
         <Table className="w-full">
-          <TableHeader>
+          <TableHeader className="hidden sm:block">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -62,14 +64,22 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell, index) => {
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        className={`${
+                          row?.getVisibleCells().length - 1 === index &&
+                          "text-right"
+                        }`}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             ) : (
