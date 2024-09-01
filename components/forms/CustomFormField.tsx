@@ -49,6 +49,7 @@ const RenderField = ({
               type="text"
               placeholder={placeholder}
               {...field}
+              {...props}
               className={`${className} h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
             />
           </FormControl>
@@ -62,6 +63,7 @@ const RenderField = ({
               type="number"
               placeholder={placeholder}
               {...field}
+              {...props}
               onChange={(e) =>
                 field.onChange(
                   e.target.value === "" ? undefined : Number(e.target.value)
@@ -80,6 +82,7 @@ const RenderField = ({
               type={viewPassword ? "text" : "password"}
               placeholder={placeholder}
               {...field}
+              {...props}
               className={`${className} h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
             />
           </FormControl>
@@ -88,7 +91,7 @@ const RenderField = ({
             onClick={() => setViewPassword((prev) => !prev)}
             className="text-sm text-black underline absolute z-10 right-4 top-1/2 -translate-y-1/2"
           >
-            Show
+            {viewPassword ? "Hide" : "Show"}
           </button>
         </div>
       );
@@ -140,6 +143,7 @@ const RenderField = ({
               multiple
               accept="image/*"
               {...field}
+              {...props}
               className={`${className} h-auto outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
               onChange={(e) => {
                 const files = e.target.files;
@@ -160,6 +164,7 @@ const RenderField = ({
               type="text"
               placeholder={placeholder}
               {...field}
+              {...props}
               className={`${className} outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0`}
             />
           </FormControl>

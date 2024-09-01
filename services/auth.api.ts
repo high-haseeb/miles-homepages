@@ -89,3 +89,23 @@ export const verifySMSOTP = async (payload: VerifySMSOTPPayload) => {
     throw error;
   }
 };
+
+// Profile
+
+interface ChangePasswordType {
+  oldPassword: string;
+  newPassword: string;
+}
+
+export const changePassword = async (payload: ChangePasswordType) => {
+  const token = getToken();
+  try {
+    const response = await apiService.patch(
+      `/forgot-password?token=${token}`,
+      payload
+    );
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};

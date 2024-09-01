@@ -15,8 +15,9 @@ import { FormFieldType } from "@/types";
 import { passwordSchema } from "@/constants/schemas";
 import LeftArrow from "@/components/vectors/LeftArrow";
 import { minLengthRegex, specialCharRegex } from "@/constants";
-import { resetPassword } from "@/services/auth.api";
+import { changePassword } from "@/services/auth.api";
 import { useAppContext } from "@/context/AppContext";
+import ChangePassword from "../modals/ChangePassword";
 
 const updatePasswordFormSchema = z.object({
   password: passwordSchema,
@@ -24,6 +25,7 @@ const updatePasswordFormSchema = z.object({
 
 export default function Settings({ clearTab }: { clearTab?: () => void }) {
   const [tab, setTab] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const stepComponents: {
     [key: string]: ReactElement;
@@ -44,89 +46,103 @@ export default function Settings({ clearTab }: { clearTab?: () => void }) {
   };
 
   return (
-    <div className="flex flex-col sm:mt-[30px] sm:gap-y-[30px] sm:divide-y">
-      {tab === "" ? (
-        <div className="sm:hidden">
-          <div
-            className="pb-5 mb-5 flex items-center gap-x-4.5"
-            onClick={clearTab}
-          >
-            <LeftArrow />
-            <span className="text-slate-900 text-sm font-bold">Settings</span>
-          </div>
+    <>
+      <div className="flex flex-col sm:mt-[30px] sm:gap-y-[30px] sm:divide-y">
+        {tab === "" ? (
+          <div className="sm:hidden">
+            <div
+              className="pb-5 mb-5 flex items-center gap-x-4.5"
+              onClick={clearTab}
+            >
+              <LeftArrow />
+              <span className="text-slate-900 text-sm font-bold">Settings</span>
+            </div>
 
-          <div className="flex flex-col gap-y-10">
-            <div
-              className="flex gap-x-[42px] justify-between cursor-pointer"
-              onClick={() => setTab("password")}
-            >
-              <div className="'flex flex-col">
-                <p className="text-slate-900 text-sm">Password Management</p>
-                <p className="text-slate-300 text-xs">Change your password</p>
+            <div className="flex flex-col gap-y-10">
+              <div
+                className="flex gap-x-[42px] justify-between cursor-pointer"
+                onClick={() => setTab("password")}
+              >
+                <div className="'flex flex-col">
+                  <p className="text-slate-900 text-sm">Password Management</p>
+                  <p className="text-slate-300 text-xs">Change your password</p>
+                </div>
+                <ChevronRight
+                  width={16}
+                  height={16}
+                  className="flex-shrink-0"
+                />
               </div>
-              <ChevronRight width={16} height={16} className="flex-shrink-0" />
-            </div>
-            <div
-              className="flex gap-x-[42px] justify-between cursor-pointer"
-              onClick={() => setTab("delete")}
-            >
-              <div className="'flex flex-col">
-                <p className="text-slate-900 text-sm">Delete account</p>
-                <p className="text-slate-300 text-xs">
-                  Permanently delete your data and everything associated with
-                  your account
-                </p>
+              <div
+                className="flex gap-x-[42px] justify-between cursor-pointer"
+                onClick={() => setTab("delete")}
+              >
+                <div className="'flex flex-col">
+                  <p className="text-slate-900 text-sm">Delete account</p>
+                  <p className="text-slate-300 text-xs">
+                    Permanently delete your data and everything associated with
+                    your account
+                  </p>
+                </div>
+                <ChevronRight
+                  width={16}
+                  height={16}
+                  className="flex-shrink-0"
+                />
               </div>
-              <ChevronRight width={16} height={16} className="flex-shrink-0" />
             </div>
           </div>
-        </div>
-      ) : (
-        stepComponents[tab]
-      )}
-      <div className="hidden sm:flex flex-col gap-y-10 pb-[78px] border-none">
-        <div className="flex flex-col">
-          <p className="font-medium text-slate-900">Password Management</p>
-          <p className="text-sm text-slate-300">Change your password</p>
-        </div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex items-center gap-x-[30px] max-w-[541px] w-full"
-          >
-            <CustomFormField
-              control={form.control}
-              name="password"
-              fieldType={FormFieldType.PASSWORD}
-              placeholder="Password"
-              className="p-4 rounded-xl"
-              fullwidth
-            />
-            <Button
-              className="h-auto py-3 px-5 rounded-[38px] w-fit"
-              variant="secondary"
+        ) : (
+          stepComponents[tab]
+        )}
+        <div className="hidden sm:flex flex-col gap-y-10 pb-[78px] border-none">
+          <div className="flex flex-col">
+            <p className="font-medium text-slate-900">Password Management</p>
+            <p className="text-sm text-slate-300">Change your password</p>
+          </div>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex items-center gap-x-[30px] max-w-[541px] w-full"
             >
-              Change
-            </Button>
-          </form>
-        </Form>
-      </div>
-      <div className="hidden sm:flex flex-col pt-[30px] gap-y-[30px]">
-        <div className="flex flex-col">
-          <p className="font-medium text-slate-900">Delete your Account</p>
-          <p className="text-sm text-slate-300">
-            Permanently delete your data and everything associated with your
-            account
-          </p>
+              <CustomFormField
+                control={form.control}
+                name="password"
+                fieldType={FormFieldType.PASSWORD}
+                placeholder="Password"
+                className="p-4 rounded-xl"
+                fullwidth
+                disabled
+              />
+              <Button
+                className="h-auto py-3 px-5 rounded-[38px] w-fit"
+                variant="secondary"
+                type="button"
+                onClick={() => setOpenModal(true)}
+              >
+                Change
+              </Button>
+            </form>
+          </Form>
         </div>
-        <Button
-          className="h-auto py-3 px-5 rounded-[38px] w-fit"
-          variant="secondary"
-        >
-          Delete account
-        </Button>
+        <div className="hidden sm:flex flex-col pt-[30px] gap-y-[30px]">
+          <div className="flex flex-col">
+            <p className="font-medium text-slate-900">Delete your Account</p>
+            <p className="text-sm text-slate-300">
+              Permanently delete your data and everything associated with your
+              account
+            </p>
+          </div>
+          <Button
+            className="h-auto py-3 px-5 rounded-[38px] w-fit"
+            variant="secondary"
+          >
+            Delete account
+          </Button>
+        </div>
       </div>
-    </div>
+      <ChangePassword openModal={openModal} handleOpenModal={setOpenModal} />
+    </>
   );
 }
 
@@ -147,7 +163,7 @@ function PasswordManagement({ setTab }: { setTab: () => void }) {
   const { setUserData } = useAppContext();
 
   const mutation = useMutation({
-    mutationFn: resetPassword,
+    mutationFn: changePassword,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth"] });
     },
