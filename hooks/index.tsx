@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAppContext } from "@/context/AppContext";
 
 const useLoadScript = (src: string) => {
   const [loaded, setLoaded] = useState(false);
@@ -26,3 +27,12 @@ const useLoadScript = (src: string) => {
 };
 
 export default useLoadScript;
+
+export function useAuth() {
+  const { token, isLoggedIn } = useAppContext();
+  const isAuthenticated = () => {
+    return !!token && isLoggedIn;
+  };
+
+  return { isAuthenticated };
+}

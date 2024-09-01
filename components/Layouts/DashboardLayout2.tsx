@@ -48,7 +48,7 @@ export default function DashboardLayout2({
   const pathname = usePathname();
   const router = useRouter();
 
-  const { handleLogout, isVerified, userData } = useAppContext();
+  const { handleLogout, isVerified, userData, isLoggedIn } = useAppContext();
   const [openVerifModal, setOpenVerifModal] = useState(false);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function DashboardLayout2({
     <div className="flex flex-col h-screen w-screen">
       <header className="flex h-14 items-center gap-2 border-b bg-white px-4 lg:h-[86px] lg:px-6">
         <Sheet>
-          <SheetTrigger asChild>
+          <SheetTrigger asChild className={`${isLoggedIn ? "" : "hidden"}`}>
             <Button
               variant="outline"
               size="icon"
@@ -170,7 +170,9 @@ export default function DashboardLayout2({
             How it works
           </Link>
         </div>
-        <div className="flex items-center gap-x-11">
+        <div
+          className={`flex items-center gap-x-11 ${isLoggedIn ? "" : "hidden"}`}
+        >
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
