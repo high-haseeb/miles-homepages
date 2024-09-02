@@ -27,6 +27,14 @@ import { useAppContext } from "@/context/AppContext";
 import VerificationModal from "@/components/Modals/VerificationModal";
 import Backbtn from "@/components/Backbtn";
 import { toCurrency, calculateDaysInRange } from "@/utils";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import DrawerUp from "@/components/vectors/DrawerUp";
+import DrawerDown from "@/components/vectors/DrawerDown";
 
 export default function ListedItem({ params }: { params: { itemId: string } }) {
   const { itemId } = params;
@@ -141,7 +149,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     }
   };
 
-  // console.log(listing);
+  console.log(listing);
 
   if (isPending) {
     return <p>Pending..</p>;
@@ -192,7 +200,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
             </div>
           </div>
 
-          <div className="border border-slate-100 rounded-[14px] py-4.5 px-6 sm:flex flex-col gap-y-[15px] w-full md:basis-[40%]">
+          <div className="hidden border border-slate-100 rounded-[14px] py-4.5 px-6 sm:flex flex-col gap-y-[15px] w-full md:basis-[40%]">
             <div className="flex flex-col">
               <p className="text-sm text-slate-900">{item?.product_name}</p>
               <p className="text-green-500 font-medium mb-4">
@@ -318,7 +326,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                 <Button
                   onClick={handleBookingRequest}
                   disabled={mutation.isPending}
-                  className="rounded-[38px] w-full py-3 px-4 bg-green-500 font-medium text-white border-none"
+                  className="rounded-[38px] w-full py-3 px-4 bg-green-500 font-medium text-white border-none h-auto"
                 >
                   Request to book
                 </Button>
@@ -339,7 +347,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
             People also viewed
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-[70px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-[70px] mb-[124px] sm:mb-0">
             {peopleAlsoViewed?.map((item: ItemProps) => (
               <Link href={`/listings/${item.listing_id}`} key={item.listing_id}>
                 <div className="flex flex-col gap-y-[15px]">
@@ -377,6 +385,179 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
               </Link>
             ))}
           </div>
+        </div>
+        <div className="sm:hidden fixed w-full bottom-0 left-0 bg-white rounded-t-[25px] px-[25px] py-[31px]">
+          <Drawer>
+            <DrawerTrigger asChild>
+              <div className="relative">
+                <div className="absolute h-[70px] w-[70px] left-10 bg-white rounded-full -top-1/2 -translate-y-1/2 flex justify-center items-center">
+                  <DrawerUp />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-y-[2.5px] flex-1 z-10">
+                    <p className="text-slate-900 font-medium">
+                      NGN {item?.price_per_day}{" "}
+                      <span className="text-sm text-slate-400 font-normal">
+                        per/day
+                      </span>
+                    </p>
+                    <p className="text-slate-900 text-xs font-medium">
+                      Nov 01 - Nov 15, 2020
+                    </p>
+                  </div>
+                  <Button className="rounded-[38px] w-full py-3 px-4 bg-green-500 font-medium text-white border-none flex-1 h-auto">
+                    Request to book
+                  </Button>
+                </div>
+              </div>
+            </DrawerTrigger>
+            <DrawerContent className="rounded-t-[25px] border-none">
+              <div className="relative">
+                <DrawerClose className="absolute z-10 h-[70px] w-[70px] left-10 bg-white rounded-full -top-8 flex justify-center items-center">
+                  <DrawerDown />
+                </DrawerClose>
+                <div className="py-[31px] px-[25px] relative">
+                  <div className="flex flex-col">
+                    <p className="text-green-500 font-medium mb-4">
+                      {toCurrency(price)}{" "}
+                      <span className="text-sm text-slate-500">per/day</span>
+                    </p>
+                  </div>
+                  <Popover onOpenChange={setOpenCalendar} open={openCalendar}>
+                    <PopoverTrigger asChild>
+                      <div className="flex border border-gray-4/50 rounded-[15px] divide-x w-full cursor-pointer">
+                        <div className="py-2 px-6 flex-1">
+                          <p className="text-sm text-slate-400 mb-[7px]">
+                            START DATE
+                          </p>
+                          <p className="text-slate-800 font-medium text-sm">
+                            {dateRange?.from instanceof Date &&
+                            !isNaN(dateRange.from.getTime())
+                              ? format(dateRange.from, "MM/dd/yyyy")
+                              : item?.start_date}
+                          </p>
+                        </div>
+                        <div className="py-2 px-6 flex-1">
+                          <p className="text-sm text-slate-400 mb-[7px]">
+                            END DATE
+                          </p>
+                          <p className="text-slate-800 font-medium text-sm">
+                            {dateRange?.to instanceof Date &&
+                            !isNaN(dateRange.to.getTime())
+                              ? format(dateRange.to, "MM/dd/yyyy")
+                              : item?.end_date}
+                          </p>
+                        </div>
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={setDateRange}
+                        numberOfMonths={1}
+                        disabled={[
+                          { before: new Date(startDate) },
+                          { after: new Date(endDate) },
+                        ]}
+                      />
+                      <div className="flex items-center justify-end gap-x-2 mt-4 border border-t p-3">
+                        <PopoverClose asChild>
+                          <Button
+                            className="text-sm text-black py-1 px-3 rounded-lg"
+                            variant="ghost"
+                          >
+                            Cancel
+                          </Button>
+                        </PopoverClose>
+                        <Button
+                          onClick={() => {
+                            setOpenCalendar(false);
+                          }}
+                          className="text-sm text-white bg-green-500 py-1 px-3 rounded-lg"
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                  <div className="flex items-center gap-x-10 my-[21px]">
+                    <p className="text-sm text-green-500">QUANTITY</p>
+                    <div className="flex items-center gap-x-5">
+                      <button
+                        onClick={() => {
+                          if (quantity === 1) return;
+                          setQuantity((prev) => prev - 1);
+                          setPrice(
+                            (prev) => prev - Number(item?.price_per_day)
+                          );
+                        }}
+                        className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
+                      >
+                        <Minus className="w-3 h-3" />
+                      </button>
+                      {quantity}
+                      <button
+                        onClick={() => {
+                          if (quantity === Number(item?.quantity_available))
+                            return;
+                          setQuantity((prev) => prev + 1);
+                          setPrice(
+                            (prev) => prev + Number(item?.price_per_day)
+                          );
+                        }}
+                        className="h-7 w-7 rounded-full flex items-center justify-center bg-slate-50 text-slate-400"
+                      >
+                        <Plus className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-y-2.5">
+                    <p className="text-sm text-green-500">PRICE BREAKDOWN</p>
+                    <div className="flex flex-col border-b pb-[15px] gap-y-[5px]">
+                      {priceBreakdown.map((item, index) => (
+                        <div
+                          key={`itemId-${index + 1}`}
+                          className="flex items-center justify-between"
+                        >
+                          <p className="text-slate-900 text-sm">{item.title}</p>
+                          <p className="text-slate-900 text-sm">{item.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between mb-5">
+                      <p className="text-green-500 font-bold text-sm">Total</p>
+                      <p className="text-green-500 font-bold text-sm">
+                        {toCurrency(totalPrice)}
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-y-2.5">
+                      <p className="text-slate-300 text-sm">
+                        Is there something the listing owner should know
+                      </p>
+                      <Textarea
+                        value={desc}
+                        onChange={(e) => setDesc(e.target.value)}
+                        className="rounded-[14px] border-slate-100 pl-6 p-4 text-slate-200 text-sm bg-transparent outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        placeholder="Send any other details about your request"
+                      />
+                    </div>
+                    <div className="flex w-full my-8">
+                      <Button
+                        onClick={handleBookingRequest}
+                        disabled={mutation.isPending}
+                        className="rounded-[38px] w-full py-3 px-4 bg-green-500 font-medium text-white border-none h-auto"
+                      >
+                        Request to book
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
       <VerificationModal
