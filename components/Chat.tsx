@@ -27,16 +27,15 @@ export default function Chat({ status, details }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState<string>("");
   // console.log(details);
-  const userId = status === "lister" ? details?.lister_id : details?.renter_id;
-  const receiverId =
-    status === "lister" ? details?.renter_id : details?.lister_id;
+  const bookingId = details?.booking_id;
+  const roomId = 1;
 
   const { data: chatMessages, isPending } = useQuery({
-    queryKey: ["messages", userId, receiverId],
+    queryKey: ["messages", bookingId, roomId],
     queryFn: () =>
       getMessages({
-        userId,
-        receiverId,
+        bookingId,
+        roomId,
       }),
   });
 
@@ -62,8 +61,8 @@ export default function Chat({ status, details }: ChatProps) {
   const handleSendMessage = () => {
     if (socketObj && message.trim()) {
       const newMessage = {
-        senderId: userId,
-        receiverId,
+        // senderId: userId,
+        // receiverId,
         message: message.trim(),
       };
       socketObj.emit("message", newMessage);
@@ -88,7 +87,7 @@ export default function Chat({ status, details }: ChatProps) {
             <p className="text-sm text-slate-400">Today 8:45 am</p>
           </div>
         </div>
-        <div className="w-full flex flex-col gap-y-2.5 sm:ml-16">
+        <div className="w-full flex flex-col gap-y-2.5 xl:ml-16">
           <Textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}

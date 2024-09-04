@@ -129,6 +129,7 @@ export interface ItemProps {
   price_per_day: string;
   product_name: string;
   quantity_available: string;
+  quantity_listed: string;
   recurring_days_of_week: string | null;
   recurring_end_date: string | null;
   recurring_start_date: string | null;

@@ -13,6 +13,7 @@ import {
 import { ItemProps, ItemImagesProps } from "@/types";
 
 import Chip from "./Chip";
+import { toCurrency } from "@/utils";
 
 export default function ListedItemCard({
   item,
@@ -84,14 +85,13 @@ export default function ListedItemCard({
           {item.product_name || "Nikon SB-6A"}
         </p>
         <p className="text-slate-900 text-sm sm:text-base font-medium">
-          NGN {item.price_per_day || "40,000"}{" "}
+          {toCurrency(Number(item.price_per_day)) || "40,000"}{" "}
           <span className="text-xs sm:text-sm text-slate-400 font-normal">
             per/day
           </span>
         </p>
         <p className="text-slate-300 text-xs sm:text-sm">
-          Quantity Available: {item.quantity_available}/
-          {item.quantity_available}
+          Quantity Available: {item.quantity_available}/{item.quantity_listed}
         </p>
       </div>
     </div>
@@ -167,7 +167,7 @@ export function ListedItemCard2({
         </p>
         <p className="text-orange-600 text-xs sm:text-sm">Lagos 1.5 km away</p>
         <p className="text-slate-900 text-sm sm:text-base font-medium">
-          NGN {item.price_per_day}{" "}
+          {toCurrency(Number(item.price_per_day))}{" "}
           <span className="text-xs sm:text-sm text-slate-400 font-normal">
             per/day
           </span>

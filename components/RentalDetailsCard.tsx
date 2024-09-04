@@ -15,7 +15,7 @@ import {
   acceptBooking,
   declineBooking,
 } from "@/services/general.api";
-import { formattedStatus } from "@/utils";
+import { formattedStatus, toCurrency } from "@/utils";
 
 interface ChatProps {
   details: BookingDetails;
@@ -57,23 +57,33 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       });
     },
   });
+
+  const calculatedPrice =
+    Number(details?.price_per_day) *
+    Number(details?.no_of_days) *
+    details?.quantity;
+
+  const totalPrice =
+    calculatedPrice + Number(details?.service_charge) + Number(details?.vat);
   const priceBreakdown = [
     {
-      title: `NGN ${details?.price_per_day} * ${details?.no_of_days} Day(s) * ${details?.quantity} items`,
-      value: `NGN ${details?.price_per_day}x`,
+      title: `${toCurrency(Number(details?.price_per_day))} * ${
+        details?.no_of_days
+      } Day(s) * ${details?.quantity} items`,
+      value: toCurrency(calculatedPrice),
     },
     {
       title: "Service Charge",
-      value: "xxxx",
+      value: toCurrency(Number(details?.service_charge)),
     },
     {
       title: "VAT",
-      value: "xxxx",
+      value: toCurrency(Number(details?.vat)),
     },
   ];
   const startDate = format(details?.start_date, "dd/MM/yyyy");
   const endDate = format(details?.end_date, "dd/MM/yyyy");
-  // console.log(details);
+
   const handleCancelBooking = async () => {
     try {
       await mutation.mutateAsync();
@@ -152,7 +162,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   // console.log(details);
 
   return (
-    <div className="rounded-xl sm:border border-gray-4/35 sm:bg-white sm:p-5 flex flex-col overflow-x-hidden">
+    <div className="rounded-xl sm:border border-gray-4/35 sm:bg-white sm:p-5 flex flex-col">
       <div className="flex flex-col sm:flex-row sm:items-end gap-x-5 mb-[31px]">
         <Image
           src={details?.item_images[0].image_url || "/images/polaroid-card.png"}
@@ -178,18 +188,18 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
               {details?.product_name}
             </p>
             <p className="text-green-500 font-medium">
-              NGN {details?.price_per_day}{" "}
+              {toCurrency(Number(details?.price_per_day))}{" "}
               <span className="text-sm text-slate-500 font-normal">
                 per/day
               </span>
             </p>
           </div>
           <div className="flex border border-gray-4/50 bg-white rounded-[15px] divide-x w-full">
-            <div className="py-[9px] px-2 flex-1 pl-[25px]">
+            <div className="py-[9px] px-2 flex-1 xl:pl-[25px]">
               <p className="text-sm text-slate-400 mb-[7px]">START DATE</p>
               <p className="text-slate-800 font-medium text-sm">{startDate}</p>
             </div>
-            <div className="py-[9px] px-2 flex-1 pl-[25px]">
+            <div className="py-[9px] px-2 flex-1 xl:pl-[25px]">
               <p className="text-sm text-slate-400 mb-[7px]">END DATE</p>
               <p className="text-slate-800 font-medium text-sm">{endDate}</p>
             </div>
@@ -215,7 +225,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         </div>
         <div className="flex items-center justify-between mb-10">
           <p className="text-green-500 font-medium">Total</p>
-          <p className="text-green-500 font-medium">NGN {details?.price}</p>
+          <p className="text-green-500 font-medium">{toCurrency(totalPrice)}</p>
         </div>
         <div
           className={`${

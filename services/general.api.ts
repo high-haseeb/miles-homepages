@@ -419,19 +419,22 @@ export const updateEmail = async (payload: { email: string }) => {
 // Chat
 
 interface GetMessagesParams {
-  userId: number;
-  receiverId: number;
+  bookingId: number;
+  roomId: number;
 }
 
 export const getMessages = async (params: GetMessagesParams) => {
-  const { userId, receiverId } = params;
+  const { bookingId, roomId } = params;
   const token = getToken();
   try {
-    const response = await apiService.get(`/messages/${userId}/${receiverId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await apiService.get(
+      `/bookings/${bookingId}/rooms/${roomId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response?.data;
   } catch (error: any) {
     throw error;

@@ -25,6 +25,7 @@ import { GreenCalendarIcon } from "@/components/vectors/CalendarIcon";
 import { ItemProps } from "@/types";
 import EditAvailability from "./modals/EditAvailability";
 import ConfirmDelete from "./modals/ConfirmDelete";
+import { toCurrency } from "@/utils";
 
 export default function MyListing({
   params: { itemId },
@@ -197,7 +198,7 @@ export default function MyListing({
                   </Badge>
                 </div>
                 <p className="text-slate-900 font-medium">
-                  NGN {listedItem?.price_per_day}{" "}
+                  {toCurrency(Number(listedItem?.price_per_day))}{" "}
                   <span className="text-sm text-slate-400">per/day</span>
                 </p>
                 <p className="text-slate-400 text-sm">
@@ -302,13 +303,13 @@ export default function MyListing({
                         {item?.product_name}
                       </p>
                       <p className="text-slate-900 font-medium">
-                        NGN {item?.price_per_day}{" "}
+                        {toCurrency(Number(item?.price_per_day))}{" "}
                         <span className="text-sm text-slate-400 font-normal">
                           per/day
                         </span>
                       </p>
                       <p className="text-slate-400">
-                        {item?.quantity_available}/{item?.quantity_available}{" "}
+                        {item?.quantity_available}/{item?.quantity_listed}{" "}
                         Available for rent
                       </p>
                     </div>

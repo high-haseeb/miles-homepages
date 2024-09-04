@@ -34,7 +34,7 @@ export const listItemFormSchema = z.object({
   sub_category_id: z.string().min(1, "Sub-category is required"),
   item_location: z.string().min(1, "Item location is required"),
   description: z.string().min(1, "Description is required"),
-  quantity_available: z.number().int().min(1, "Quantity available is required"),
+  quantity_listed: z.number().int().min(1, "Quantity available is required"),
   estimated_value: z.number().min(1, "Estimated value is required"),
   price_per_day: z.number().min(1, "Price per day is required"),
   multiple_date_ranges: z.any().optional(),

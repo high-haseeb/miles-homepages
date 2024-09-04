@@ -17,7 +17,7 @@ export default function ExtraInfo({ control }: { control: Control<any> }) {
         control={control}
         fieldType={FormFieldType.NUMBER}
         placeholder="This input is quite long"
-        name="quantity_available"
+        name="quantity_listed"
         className="py-3 px-4 rounded-lg border border-gray-3"
         label="Quantity/Inventory Available"
       />

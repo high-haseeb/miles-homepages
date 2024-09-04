@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -78,7 +77,7 @@ export default function ListItem({
       image: [],
       category_id: "",
       sub_category_id: "",
-      quantity_available: undefined,
+      quantity_listed: undefined,
       estimated_value: undefined,
       price_per_day: undefined,
       recurring_days_of_week: [],

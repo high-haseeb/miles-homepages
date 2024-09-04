@@ -149,8 +149,6 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     }
   };
 
-  console.log(listing);
-
   if (isPending) {
     return <p>Pending..</p>;
   }
@@ -396,7 +394,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col gap-y-[2.5px] flex-1 z-10">
                     <p className="text-slate-900 font-medium">
-                      NGN {item?.price_per_day}{" "}
+                      {toCurrency(Number(item?.price_per_day))}{" "}
                       <span className="text-sm text-slate-400 font-normal">
                         per/day
                       </span>
@@ -501,7 +499,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                       {quantity}
                       <button
                         onClick={() => {
-                          if (quantity === Number(item?.quantity_available))
+                          if (quantity === Number(item?.quantity_listed))
                             return;
                           setQuantity((prev) => prev + 1);
                           setPrice(
