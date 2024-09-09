@@ -122,7 +122,7 @@ export default function Chat({ status, details }: ChatProps) {
             </div>
           ))}
         </div>
-        <div className="w-full flex flex-col gap-y-2.5 xl:ml-16">
+        <div className="w-full flex flex-col gap-y-2.5">
           <Textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}

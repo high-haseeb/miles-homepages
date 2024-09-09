@@ -24,8 +24,8 @@ export default function Item({ params }: { params: { itemId: string } }) {
   return (
     <DashboardLayout2>
       <>
-        <div className="flex flex-col sm:flex-row sm:gap-x-10 xl:gap-x-[163px] xl:px-[72px]">
-          <div className="w-full flex flex-col basis-1/2">
+        <div className="flex flex-col sm:flex-row sm:gap-x-10 xl:gap-x-[163px] xl:px-[72px] sm:h-[calc(100dvh_-111px)] sm:overflow-hidden">
+          <div className="w-full flex flex-col basis-1/2 h-full">
             <Backbtn />
             <div className="flex items-center gap-x-[15px] sm:gap-x-5 max-w-[382px] mt-[30px] mb-[25px] sm:mb-[50px]">
               <Avatar className="sm:w-[60px] w-[45px] sm:h-[60px] h-[45px]">
@@ -72,7 +72,7 @@ export default function Item({ params }: { params: { itemId: string } }) {
                 </TabsContent>
               </Tabs>
             </div>
-            <div className="flex flex-col gap-y-2.5 max-sm:hidden">
+            <div className="flex flex-col gap-y-2.5 max-sm:hidden overflow-y-auto">
               <div className="w-full">
                 <Chat status="renter" details={booking} />
               </div>
