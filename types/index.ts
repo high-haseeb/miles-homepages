@@ -124,6 +124,7 @@ export interface ItemProps {
   latitude: string;
   listing_created_at: string;
   listing_id: number;
+  lister_id: number;
   longitude: string;
   multiple_date_ranges: string;
   price_per_day: string;
@@ -266,6 +267,7 @@ export interface BookingDetails {
   item_images: ItemImagesProps[];
   no_of_days: string;
   quantity: number;
+  room_ids?: number[];
 }
 
 export interface DetailListType {

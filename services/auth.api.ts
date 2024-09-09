@@ -42,9 +42,19 @@ export const forgotPassword = async (payload: { email: string }) => {
   }
 };
 
-export const resetPassword = async (payload: { newPassword: string }) => {
+export const resetPassword = async ({
+  params,
+  payload,
+}: {
+  params: { token: string };
+  payload: { newPassword: string };
+}) => {
+  const { token } = params;
   try {
-    const response = await apiService.patch("/reset-password", payload);
+    const response = await apiService.patch(
+      `/forgot-password?token=${token}`,
+      payload
+    );
     return response?.data;
   } catch (error: any) {
     throw error;

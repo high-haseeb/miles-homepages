@@ -51,7 +51,7 @@ export default function ListedItemCard({
                     src={imageItem.image_url}
                     width={195}
                     height={195}
-                    className="object-cover rounded-lg border border-gray-2"
+                    className="object-cover rounded-lg border border-gray-2 w-full h-full"
                     alt="card"
                   />
                 </div>
@@ -134,7 +134,7 @@ export function ListedItemCard2({
                     src={imageItem.image_url}
                     width={195}
                     height={195}
-                    className="object-cover rounded-lg border border-gray-2"
+                    className="object-cover rounded-lg border border-gray-2 w-full h-full"
                     alt="card"
                   />
                 </div>

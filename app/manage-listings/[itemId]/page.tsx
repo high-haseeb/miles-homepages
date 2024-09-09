@@ -128,7 +128,7 @@ export default function MyListing({
           [
             "estimated_value",
             "price_per_day",
-            "quantity_available",
+            "quantity_listed",
             "latitude",
             "longitude",
           ].includes(key)

@@ -81,8 +81,8 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       value: toCurrency(Number(details?.vat)),
     },
   ];
-  const startDate = format(details?.start_date, "dd/MM/yyyy");
-  const endDate = format(details?.end_date, "dd/MM/yyyy");
+  // const startDate = format(details?.start_date, "dd/MM/yyyy");
+  // const endDate = format(details?.end_date, "dd/MM/yyyy");
 
   const handleCancelBooking = async () => {
     try {
@@ -159,7 +159,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
   const statusTextStyles = statusColor[formatStatus].text;
   const statusBgStyles = statusColor[formatStatus].bg;
 
-  // console.log(details);
+  console.log(details);
 
   return (
     <div className="rounded-xl sm:border border-gray-4/35 sm:bg-white sm:p-5 flex flex-col">
@@ -197,11 +197,11 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
           <div className="flex border border-gray-4/50 bg-white rounded-[15px] divide-x w-full">
             <div className="py-[9px] px-2 flex-1 xl:pl-[25px]">
               <p className="text-sm text-slate-400 mb-[7px]">START DATE</p>
-              <p className="text-slate-800 font-medium text-sm">{startDate}</p>
+              <p className="text-slate-800 font-medium text-sm"></p>
             </div>
             <div className="py-[9px] px-2 flex-1 xl:pl-[25px]">
               <p className="text-sm text-slate-400 mb-[7px]">END DATE</p>
-              <p className="text-slate-800 font-medium text-sm">{endDate}</p>
+              <p className="text-slate-800 font-medium text-sm"></p>
             </div>
           </div>
         </div>

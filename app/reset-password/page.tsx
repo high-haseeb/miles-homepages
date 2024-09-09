@@ -19,7 +19,6 @@ import { useAppContext } from "@/context/AppContext";
 
 const resetPasswordFormSchema = z
   .object({
-    oldPassword: passwordSchema,
     newPassword: passwordSchema,
     confirmPassword: passwordSchema,
   })
@@ -28,7 +27,12 @@ const resetPasswordFormSchema = z
     path: ["confirmPassword"],
   });
 
-export default function ResetPassword() {
+export default function ResetPassword({
+  searchParams,
+}: {
+  searchParams: { token: string };
+}) {
+  const token = searchParams?.token;
   const queryClient = useQueryClient();
   const router = useRouter();
   const { toast } = useToast();
@@ -44,7 +48,6 @@ export default function ResetPassword() {
   const form = useForm<z.infer<typeof resetPasswordFormSchema>>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
-      oldPassword: "",
       newPassword: "",
       confirmPassword: "",
     },
@@ -52,11 +55,12 @@ export default function ResetPassword() {
   const passwordWatch = form.watch("newPassword");
   async function onSubmit(values: z.infer<typeof resetPasswordFormSchema>) {
     try {
-      const newValue = {
-        oldPassword: values.oldPassword,
+      const payload = {
         newPassword: values.newPassword,
       };
-      const res = await mutation.mutateAsync(newValue);
+      const params = { token };
+
+      const res = await mutation.mutateAsync({ params, payload });
       toast({
         variant: "success",
         title: "Success",
@@ -90,13 +94,6 @@ export default function ResetPassword() {
             </p>
           </div>
           <div className="flex flex-col gap-y-[5px]">
-            <CustomFormField
-              control={form.control}
-              name="oldPassword"
-              fieldType={FormFieldType.PASSWORD}
-              placeholder="Old password"
-              className="p-4 rounded-xl "
-            />
             <CustomFormField
               control={form.control}
               name="newPassword"

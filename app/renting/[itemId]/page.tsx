@@ -12,6 +12,7 @@ import { getSingleBooking } from "@/services/general.api";
 
 export default function Item({ params }: { params: { itemId: string } }) {
   const { itemId } = params;
+  console.log(itemId);
   const { data: singleBooking, isPending } = useQuery({
     queryKey: ["bookings", "rental", itemId],
     queryFn: () => getSingleBooking(itemId),
@@ -35,7 +36,7 @@ export default function Item({ params }: { params: { itemId: string } }) {
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <p className="font-medium sm:text-lg text-slate-900">
-                You have initiated a booking request to {booking?.renter_name}.
+                You have initiated a booking request to {booking?.lister_name}.
               </p>
             </div>
             <Image

@@ -316,7 +316,7 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
                 <Textarea
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
-                  className="rounded-[14px] border-slate-100 pl-6 p-4 text-slate-200 text-sm bg-transparent outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="rounded-[14px] border-slate-100 pl-6 p-4 text-slate-400 text-sm bg-transparent outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Send any other details about your request"
                 />
               </div>

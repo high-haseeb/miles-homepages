@@ -32,6 +32,7 @@ import {
 } from "@/services/general.api";
 import { getStates } from "@/services/locations.api";
 import { Button } from "@/components/ui/button";
+import { useAppContext } from "@/context/AppContext";
 
 export default function Listings() {
   const router = useRouter();
@@ -43,6 +44,8 @@ export default function Listings() {
   const [date, setDate] = useState<DateRange | undefined>();
   const [confirmedDate, setConfirmedDate] = useState<DateRange | undefined>();
   const [openCalendar, setOpenCalendar] = useState(false);
+
+  const { userData } = useAppContext();
 
   const { data: states, isPending: isStatesPending } = useQuery({
     queryKey: ["location"],
@@ -96,9 +99,15 @@ export default function Listings() {
 
   useEffect(() => {
     if (searchKeyword) {
-      setCurrentListings(searchResult?.data);
+      const allListings = searchResult?.data?.filter(
+        (listing: ItemProps) => listing?.lister_id !== userData?.id
+      );
+      setCurrentListings(allListings);
     } else {
-      setCurrentListings(listings?.data);
+      const allListings = listings?.data?.filter(
+        (listing: ItemProps) => listing?.lister_id !== userData?.id
+      );
+      setCurrentListings(allListings);
     }
   }, [listings, searchKeyword, searchResult]);
 
@@ -106,10 +115,6 @@ export default function Listings() {
     lat: 6.5244,
     lng: 3.3792,
   };
-
-  // if (isPending) {
-  //   return <p>Loading...</p>;
-  // }
 
   return (
     <DashboardLayout2

@@ -23,8 +23,8 @@ export default function Item({ params }: { params: { itemId: string } }) {
   return (
     <DashboardLayout2>
       <>
-        <div className="flex flex-col md:flex-row gap-x-[163px] sm:px-[72px]">
-          <div className="md:w-1/2 w-full flex flex-col">
+        <div className="flex flex-col sm:flex-row sm:gap-x-10 xl:gap-x-[163px] xl:px-[72px]">
+          <div className="w-full flex flex-col basis-1/2">
             <Backbtn />
             <div className="flex items-center gap-x-[15px] sm:gap-x-5 max-w-[382px] mt-[30px] mb-[25px] sm:mb-[50px]">
               <Avatar className="sm:w-[60px] w-[45px] sm:h-[60px] h-[45px]">
@@ -77,7 +77,7 @@ export default function Item({ params }: { params: { itemId: string } }) {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2 w-full max-sm:hidden">
+          <div className="w-full max-sm:hidden basis-1/2">
             <RentalDetailsCard status="lister" details={booking} />
           </div>
         </div>

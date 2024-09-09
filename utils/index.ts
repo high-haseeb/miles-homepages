@@ -1,5 +1,5 @@
 import { DateRange } from "react-day-picker";
-import { format } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 
 export function calculateDaysInRange(
   dateRange: DateRange | undefined
@@ -147,3 +147,13 @@ export const formattedStatus = (status: string): string => {
     return "progress";
   }
 };
+
+export function formatCustomDate(date: Date) {
+  if (isToday(date)) {
+    return `Today ${format(date, "h:mm a")}`;
+  } else if (isYesterday(date)) {
+    return `Yesterday ${format(date, "h:mm a")}`;
+  } else {
+    return `${format(date, "EEEE h:mm a")}`;
+  }
+}

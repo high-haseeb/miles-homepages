@@ -377,10 +377,9 @@ export const changePassword = async (payload: { newPassword: string }) => {
   }
 };
 
-export const resetPassword = async (payload: { newPassword: string }) => {
-  const token = getToken();
+export const updatePassword = async (payload: { newPassword: string }) => {
   try {
-    const response = await apiService.patch(`/reset-password`, payload);
+    const response = await apiService.patch(`update-password`, payload);
     return response?.data;
   } catch (error: any) {
     throw error;
@@ -419,22 +418,18 @@ export const updateEmail = async (payload: { email: string }) => {
 // Chat
 
 interface GetMessagesParams {
-  bookingId: number;
-  roomId: number;
+  roomId?: number;
 }
 
 export const getMessages = async (params: GetMessagesParams) => {
-  const { bookingId, roomId } = params;
+  const { roomId } = params;
   const token = getToken();
   try {
-    const response = await apiService.get(
-      `/bookings/${bookingId}/rooms/${roomId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await apiService.get(`/messages/${roomId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response?.data;
   } catch (error: any) {
     throw error;

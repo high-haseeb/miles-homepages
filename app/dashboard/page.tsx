@@ -62,7 +62,7 @@ export default function Dashboard() {
             )}
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[15px] sm:gap-[15.33px]">
+        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-[15px] sm:gap-[15.33px]">
           <StatsCard
             src="/icons/star-badge.svg"
             title="LENDER RATING"

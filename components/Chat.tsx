@@ -9,32 +9,36 @@ import SendIcon from "./vectors/SendIcon";
 import { BookingDetails } from "@/types";
 import { PURE_API_URL } from "@/constants";
 import { getMessages } from "@/services/general.api";
+import { formatCustomDate } from "@/utils";
 
 interface ChatProps {
   details: BookingDetails;
   status?: string;
 }
 
-interface Message {
-  senderId: string;
-  receiverId: string;
-  message: string;
-  timestamp: string;
+interface MessageProps {
+  message_content: string;
+  message_created_at: Date;
+  message_id: number;
+  sender_full_name: string;
 }
 
 export default function Chat({ status, details }: ChatProps) {
   const [socketObj, setSocketObj] = useState<Socket | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageProps[]>([]);
   const [message, setMessage] = useState<string>("");
-  // console.log(details);
+
   const bookingId = details?.booking_id;
-  const roomId = 1;
+  const renterId = details?.renter_id;
+  const listerId = details?.lister_id;
+  const currentUserId = status === "lister" ? listerId : renterId;
+
+  const roomId = details?.room_ids?.[0];
 
   const { data: chatMessages, isPending } = useQuery({
     queryKey: ["messages", bookingId, roomId],
     queryFn: () =>
       getMessages({
-        bookingId,
         roomId,
       }),
   });
@@ -45,13 +49,24 @@ export default function Chat({ status, details }: ChatProps) {
 
     socket.on("connect", () => {
       console.log("Socket connected:", socket.id);
+
+      // Join the room if roomId is available
+      if (roomId) {
+        socket.emit("joinRoom", roomId);
+      }
     });
 
-    socket.on("chat message", (newMessage: Message) => {
+    socket.on("error", (error) => {
+      console.error("Socket error:", error.message);
+    });
+
+    socket.on("chat message", (newMessage: MessageProps) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    setMessages(chatMessages);
+    if (chatMessages) {
+      setMessages(chatMessages?.data);
+    }
 
     return () => {
       socket.disconnect();
@@ -59,33 +74,53 @@ export default function Chat({ status, details }: ChatProps) {
   }, [chatMessages]);
 
   const handleSendMessage = () => {
-    if (socketObj && message.trim()) {
-      const newMessage = {
-        // senderId: userId,
-        // receiverId,
-        message: message.trim(),
-      };
-      socketObj.emit("message", newMessage);
+    if (socketObj && message.trim() && roomId) {
+      socketObj.emit("message", roomId, currentUserId, message.trim());
       setMessage("");
     }
   };
 
   console.log(messages);
+  console.log(details);
 
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col gap-y-[25px]">
-        <div className="flex gap-x-2.5">
-          <Avatar className="w-[35px] sm:w-[53px] h-[35px] sm:h-[53px]">
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col gap-y-0.5">
-            <div className="rounded-xl bg-white border border-slate-50 py-4.5 px-5 text-slate-800">
-              {details?.description}
+        <div className="flex flex-col gap-y-5">
+          {messages?.map((message: MessageProps) => (
+            <div
+              className={`flex gap-x-2.5 ${
+                message?.sender_full_name.toLowerCase() ===
+                details?.lister_name.toLowerCase()
+                  ? "self-end flex-row-reverse"
+                  : ""
+              }`}
+              key={message?.message_id}
+            >
+              <Avatar className="w-[35px] sm:w-[53px] h-[35px] sm:h-[53px]">
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col gap-y-0.5">
+                <div className="rounded-xl bg-white border border-slate-50 py-3 px-4 text-slate-800">
+                  {message?.message_content}
+                </div>
+                <p
+                  className={`text-sm text-slate-400 ${
+                    message?.sender_full_name.toLowerCase() ===
+                    details?.lister_name.toLowerCase()
+                      ? "self-end"
+                      : ""
+                  }`}
+                >
+                  {formatCustomDate(message?.message_created_at)}
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-slate-400">Today 8:45 am</p>
-          </div>
+          ))}
         </div>
         <div className="w-full flex flex-col gap-y-2.5 xl:ml-16">
           <Textarea

@@ -107,7 +107,7 @@ export default function Settings({ clearTab }: { clearTab?: () => void }) {
             >
               <CustomFormField
                 control={form.control}
-                name="password"
+                name="newPassword"
                 fieldType={FormFieldType.PASSWORD}
                 placeholder="Password"
                 className="p-4 rounded-xl"
