@@ -71,7 +71,7 @@ export default function Chat({ status, details }: ChatProps) {
     return () => {
       socket.disconnect();
     };
-  }, [chatMessages]);
+  }, [chatMessages, roomId]);
 
   const handleSendMessage = () => {
     if (socketObj && message.trim() && roomId) {

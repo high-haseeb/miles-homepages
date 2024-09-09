@@ -109,7 +109,7 @@ export default function Listings() {
       );
       setCurrentListings(allListings);
     }
-  }, [listings, searchKeyword, searchResult]);
+  }, [listings, searchKeyword, searchResult, userData?.id]);
 
   const defaultCenter = {
     lat: 6.5244,
