@@ -80,9 +80,6 @@ export default function Chat({ status, details }: ChatProps) {
     }
   };
 
-  console.log(messages);
-  console.log(details);
-
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col gap-y-[25px]">

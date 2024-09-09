@@ -1,10 +1,8 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PaystackPop from "@paystack/inline-js";
-import { format } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 
@@ -14,6 +12,7 @@ import {
   cancelBooking,
   acceptBooking,
   declineBooking,
+  initiatePayment,
 } from "@/services/general.api";
 import { formattedStatus, toCurrency } from "@/utils";
 
@@ -57,6 +56,14 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       });
     },
   });
+  const paymentMutation = useMutation({
+    mutationFn: initiatePayment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["listing", details.booking_id],
+      });
+    },
+  });
 
   const calculatedPrice =
     Number(details?.price_per_day) *
@@ -81,8 +88,6 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       value: toCurrency(Number(details?.vat)),
     },
   ];
-  // const startDate = format(details?.start_date, "dd/MM/yyyy");
-  // const endDate = format(details?.end_date, "dd/MM/yyyy");
 
   const handleCancelBooking = async () => {
     try {
@@ -152,14 +157,53 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
       });
     }
   };
+  const handleBookingPayment = async () => {
+    try {
+      const payload = {
+        email: "drprime010@gmail.com",
+        amount: totalPrice,
+        bookingId: details?.booking_id,
+      };
+      const res = await paymentMutation.mutateAsync(payload);
+      const accessCode = res?.data?.authorization_url.split("/").pop();
+
+      const popup = new PaystackPop({
+        email: "drprime010@gmail.com",
+        amount: totalPrice * 100,
+        ref: res?.data?.reference,
+        callback: (response: any) => {
+          console.log("Payment successful", response);
+          toast({
+            variant: "success",
+            title: "Payment Successful",
+            description: `Transaction ref: ${res.data.reference}`,
+          });
+        },
+        onClose: () => {
+          toast({
+            variant: "destructive",
+            title: "Payment Cancelled",
+            description: "Payment window was closed",
+          });
+        },
+      });
+
+      popup.resumeTransaction(accessCode);
+    } catch (err: any) {
+      const errorMsg = mutation?.error?.message || err?.response?.data?.message;
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: errorMsg,
+      });
+    }
+  };
 
   const formatStatus = formattedStatus(
     details?.listing_status ?? details?.rental_status
   );
   const statusTextStyles = statusColor[formatStatus].text;
   const statusBgStyles = statusColor[formatStatus].bg;
-
-  console.log(details);
 
   return (
     <div className="rounded-xl sm:border border-gray-4/35 sm:bg-white sm:p-5 flex flex-col">
@@ -262,7 +306,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
             onClick={handleListerCancel}
             disabled={listerCancel.isPending}
             variant="ghost"
-            className="rounded-[38px] py-3 px-4 bg-transparent hover:bg-red-600 border-none font-medium text-slate-400"
+            className="rounded-[38px] py-3 px-4 bg-transparent hover:bg-red-600 hover:text-white border-none font-medium text-slate-400"
           >
             Cancel booking
           </Button>
@@ -286,13 +330,17 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
             <Button
               onClick={handleCancelBooking}
               disabled={mutation.isPending}
-              className="rounded-[38px] py-3 px-4 bg-transparent hover:bg-red-600 border-none font-medium text-slate-400 w-full"
+              className="rounded-[38px] py-3 px-4 bg-transparent hover:bg-red-600 hover:text-white border-none font-medium text-slate-400 w-full"
             >
               Cancel booking
             </Button>
           )}
           {details?.listing_status.toLowerCase() === "awaiting payment" && (
-            <Button className="rounded-[38px] py-3 px-4 bg-green-500 font-medium text-white border-none w-full">
+            <Button
+              onClick={handleBookingPayment}
+              disabled={paymentMutation.isPending}
+              className="rounded-[38px] py-3 px-4 bg-green-500 font-medium text-white border-none w-full"
+            >
               Pay now
             </Button>
           )}
@@ -301,18 +349,3 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
     </div>
   );
 }
-
-const priceBreakdown = [
-  {
-    title: "NGN 50,000 X 2 Days",
-    value: "NGN 100,000",
-  },
-  {
-    title: "Service Charge",
-    value: "xxxx",
-  },
-  {
-    title: "VAT",
-    value: "xxxx",
-  },
-];

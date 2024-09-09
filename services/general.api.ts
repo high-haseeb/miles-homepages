@@ -7,6 +7,7 @@ import {
   CreateBookingPayload,
   PageLimitParams,
   UpdateScheduleProps,
+  InitiatePaymentProps,
 } from "@/types";
 
 const getToken = () => {
@@ -426,6 +427,20 @@ export const getMessages = async (params: GetMessagesParams) => {
   const token = getToken();
   try {
     const response = await apiService.get(`/messages/${roomId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const initiatePayment = async (payload: InitiatePaymentProps) => {
+  const token = getToken();
+  try {
+    const response = await apiService.post(`/transactions`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

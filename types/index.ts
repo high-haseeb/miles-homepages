@@ -333,3 +333,9 @@ export interface StateProps {
   longitude?: string;
   latitude?: string;
 }
+
+export interface InitiatePaymentProps {
+  email: string;
+  amount: number;
+  bookingId: number;
+}
