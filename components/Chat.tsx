@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import { io, Socket } from "socket.io-client";
@@ -21,6 +21,8 @@ interface MessageProps {
   message_created_at: Date;
   message_id: number;
   sender_full_name: string;
+  sender_id: number;
+  image_url: string;
 }
 
 export default function Chat({ status, details }: ChatProps) {
@@ -50,7 +52,6 @@ export default function Chat({ status, details }: ChatProps) {
     socket.on("connect", () => {
       console.log("Socket connected:", socket.id);
 
-      // Join the room if roomId is available
       if (roomId) {
         socket.emit("joinRoom", roomId);
       }
@@ -80,44 +81,62 @@ export default function Chat({ status, details }: ChatProps) {
     }
   };
 
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex flex-col gap-y-[25px]">
-        <div className="flex flex-col gap-y-5">
-          {messages?.map((message: MessageProps) => (
-            <div
-              className={`flex gap-x-2.5 ${
-                message?.sender_full_name.toLowerCase() ===
-                details?.lister_name.toLowerCase()
-                  ? "self-end flex-row-reverse"
-                  : ""
-              }`}
-              key={message?.message_id}
-            >
-              <Avatar className="w-[35px] sm:w-[53px] h-[35px] sm:h-[53px]">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-y-0.5">
-                <div className="rounded-xl bg-white border border-slate-50 py-3 px-4 text-slate-800">
-                  {message?.message_content}
-                </div>
-                <p
-                  className={`text-sm text-slate-400 ${
-                    message?.sender_full_name.toLowerCase() ===
-                    details?.lister_name.toLowerCase()
-                      ? "self-end"
-                      : ""
+    <div className="flex flex-col w-full h-full">
+      <div className="flex flex-col gap-y-[25px] h-full">
+        <div className="flex-grow overflow-y-auto pb-4 noScrollBar">
+          <div className="flex flex-col gap-y-5">
+            {messages?.map((message: MessageProps) => {
+              const isCurrentUserSender =
+                (status === "lister" &&
+                  message?.sender_id === details?.lister_id) ||
+                (status === "renter" &&
+                  message?.sender_id === details?.renter_id);
+
+              return (
+                <div
+                  className={`flex gap-x-2.5 ${
+                    isCurrentUserSender ? "self-end flex-row-reverse" : ""
                   }`}
+                  key={message?.message_id}
                 >
-                  {formatCustomDate(message?.message_created_at)}
-                </p>
-              </div>
-            </div>
-          ))}
+                  <Avatar className="w-[35px] sm:w-[53px] h-[35px] sm:h-[53px]">
+                    <AvatarImage src={message?.image_url} alt="profile" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div
+                    className={`flex flex-col gap-y-0.5 ${
+                      isCurrentUserSender ? "items-end" : "items-start"
+                    }`}
+                  >
+                    <div
+                      className={`rounded-xl py-3 px-4 ${
+                        isCurrentUserSender
+                          ? "bg-green-500 text-white"
+                          : "bg-white border border-slate-50 text-slate-800"
+                      }`}
+                    >
+                      {message?.message_content}
+                    </div>
+                    <p className="text-sm text-slate-400">
+                      {formatCustomDate(message?.message_created_at)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+            <div ref={messagesEndRef} />
+          </div>
         </div>
         <div className="w-full flex flex-col gap-y-2.5">
           <Textarea

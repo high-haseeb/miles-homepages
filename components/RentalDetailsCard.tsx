@@ -165,7 +165,7 @@ export default function RentalDetailsCard({ status, details }: ChatProps) {
         bookingId: details?.booking_id,
       };
       const res = await paymentMutation.mutateAsync(payload);
-      const accessCode = res?.data?.authorization_url.split("/").pop();
+      const accessCode = res?.data?.access_code;
 
       const popup = new PaystackPop({
         email: "drprime010@gmail.com",

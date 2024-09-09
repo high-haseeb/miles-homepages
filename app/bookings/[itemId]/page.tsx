@@ -71,10 +71,8 @@ export default function Item({ params }: { params: { itemId: string } }) {
                 </TabsContent>
               </Tabs>
             </div>
-            <div className="flex flex-col gap-y-2.5 max-sm:hidden overflow-y-auto">
-              <div className="w-full">
-                <Chat status="lister" details={booking} />
-              </div>
+            <div className="flex-grow flex flex-col max-sm:hidden sm:overflow-hidden h-full">
+              <Chat status="lister" details={booking} />
             </div>
           </div>
           <div className="w-full max-sm:hidden basis-1/2">

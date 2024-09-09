@@ -99,30 +99,3 @@ export default function Completed() {
     </Table>
   );
 }
-
-const details = [
-  {
-    avatar: "",
-    customer: "Lolu B.",
-    item: "Polaroid SB-6A",
-    duration: "Jan 1, 2020 - Mar 15, 2020",
-    status: "Completed",
-    itemId: "1a2b3c",
-  },
-  {
-    avatar: "",
-    customer: "Abolaji B.",
-    item: "Cannon XB-FG",
-    duration: "Feb 5, 2020 ",
-    status: "Completed",
-    itemId: "4d5e6f",
-  },
-  {
-    avatar: "",
-    customer: "Gifty Ogechukwu",
-    item: "HoverAir X1",
-    duration: "Nov 18, 2020",
-    status: "Completed",
-    itemId: "7g8h9i",
-  },
-];
