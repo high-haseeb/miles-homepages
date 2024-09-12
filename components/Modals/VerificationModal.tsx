@@ -27,14 +27,13 @@ import {
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
 import { useToast } from "@/components/ui/use-toast";
 
 import Stepper from "../Stepper";
 import { StepProps } from "@/types";
 import InfoIcon from "../vectors/InfoIcon";
 import { sendSMSOTP, verifySMSOTP } from "@/services/auth.api";
-import { uploadProfilePic } from "@/services/general.api";
+import { fetchSmileToken, uploadProfilePic } from "@/services/general.api";
 import { useAppContext, UserDataType } from "@/context/AppContext";
 import WriteIcon from "../vectors/WriteIcon";
 import GalleryIcon from "../vectors/GalleryIcon";
@@ -298,6 +297,40 @@ export function VerifyIdentity({
   const handleSkip = () => {
     if (setCurrentStep) setCurrentStep((prev) => prev + 1);
   };
+
+  const configureSmileIdentityWebIntegration = (token: string) => {
+    SmileIdentity({
+      token,
+      product: "biometric_kyc",
+      callback_url: "https://webhook.site/ddecc1c1-2c66-4d6c-ade2-2f64e58ac5ba",
+      environment: "sandbox",
+      partner_details: {
+        partner_id: "7093",
+        name: `Miles Rental`,
+        logo_url: `https://ibb.co/g9VbZ0J`,
+        policy_url: `https://www.termsfeed.com/live/b9380166-57ac-4e08-9ec5-3b6f21867cf0`,
+        theme_color: "#01AC4C",
+      },
+      onSuccess: (res: any) => {
+        console.log(res);
+        console.log("success");
+      },
+      onClose: () => {},
+      onError: (err: any) => {
+        console.log(err);
+      },
+    });
+  };
+
+  const handleVerifyIdentity = async () => {
+    try {
+      const res = await fetchSmileToken();
+      const smileToken = res?.data?.result?.token;
+      configureSmileIdentityWebIntegration(smileToken);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex flex-col gap-y-10">
       <div className="flex flex-col gap-y-[5px]">
@@ -350,7 +383,10 @@ export function VerifyIdentity({
         >
           Skip
         </button>
-        <button className="py-3 px-4 text-center w-full rounded-[38px] text-white bg-green-500 font-medium disabled:bg-green-200">
+        <button
+          onClick={handleVerifyIdentity}
+          className="py-3 px-4 text-center w-full rounded-[38px] text-white bg-green-500 font-medium disabled:bg-green-200"
+        >
           Proceed
         </button>
       </div>
@@ -561,3 +597,21 @@ export function UploadPhoto({
     </div>
   );
 }
+// function SmileIdentity(arg0: {
+//   token: string;
+//   product: string;
+//   callback_url: string;
+//   environment: string;
+//   partner_details: {
+//     partner_id: number;
+//     name: string;
+//     logo_url: string;
+//     policy_url: string;
+//     theme_color: string;
+//   };
+//   onSuccess: () => void;
+//   onClose: () => void;
+//   onError: () => void;
+// }) {
+//   throw new Error("Function not implemented.");
+// }

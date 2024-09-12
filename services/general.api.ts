@@ -450,3 +450,17 @@ export const initiatePayment = async (payload: InitiatePaymentProps) => {
     throw error;
   }
 };
+
+export const fetchSmileToken = async () => {
+  const token = getToken();
+  try {
+    const response = await apiService.get(`/token`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response?.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
