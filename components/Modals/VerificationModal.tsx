@@ -311,8 +311,8 @@ export function VerifyIdentity({
         policy_url: `https://www.termsfeed.com/live/b9380166-57ac-4e08-9ec5-3b6f21867cf0`,
         theme_color: "#01AC4C",
       },
-      onSuccess: (res: any) => {
-        console.log(res);
+      onSuccess: () => {
+        console.log();
         console.log("success");
       },
       onClose: () => {},

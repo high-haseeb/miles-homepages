@@ -38,14 +38,24 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
   const [openVerifModal, setOpenVerifModal] = useState(false);
 
   useEffect(() => {
+    if (isVerified) {
+      setOpenVerifModal(false);
+      sessionStorage.removeItem("showVerifModal");
+      return;
+    }
+
     const showVerifModal = sessionStorage.getItem("showVerifModal");
-    if (!showVerifModal && !isVerified) {
-      setTimeout(() => {
+
+    if (!showVerifModal) {
+      const timer = setTimeout(() => {
         setOpenVerifModal(true);
+        sessionStorage.setItem("showVerifModal", "show");
       }, 5000);
-      sessionStorage.setItem("showVerifModal", "show");
+
+      return () => clearTimeout(timer);
     }
   }, [isVerified]);
+
   return (
     <PrivateRoute>
       <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] h-screen w-screen">

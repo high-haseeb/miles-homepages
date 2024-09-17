@@ -52,12 +52,21 @@ export default function DashboardLayout2({
   const [openVerifModal, setOpenVerifModal] = useState(false);
 
   useEffect(() => {
+    if (isVerified) {
+      setOpenVerifModal(false);
+      sessionStorage.removeItem("showVerifModal");
+      return;
+    }
+
     const showVerifModal = sessionStorage.getItem("showVerifModal");
-    if (!showVerifModal && !isVerified) {
-      setTimeout(() => {
+
+    if (!showVerifModal) {
+      const timer = setTimeout(() => {
         setOpenVerifModal(true);
+        sessionStorage.setItem("showVerifModal", "show");
       }, 5000);
-      sessionStorage.setItem("showVerifModal", "show");
+
+      return () => clearTimeout(timer);
     }
   }, [isVerified]);
 

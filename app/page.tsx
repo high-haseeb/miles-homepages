@@ -60,241 +60,153 @@ export default function Home() {
         </div>
         <HomepageAnimation />
       </header>
-      <main className="flex flex-col">
-        <section className="bg-white flex flex-col max-md:gap-y-[50px] py-10 px-[25px] md:pt-14 mb:pb-[88px] mb:px-[105px]">
-          <div className="flex flex-col gap-y-[7px] md:gap-y-5 md:self-center md:items-center md:text-center md:mb-[108px]">
-            <div className="md:bg-slate-50 md:py-[5px] font-medium w-fit md:px-2.5 rounded-[30px] uppercase text-sm text-dark_2">
-              EVERYTHING YOU NEED
-            </div>
-            <h4 className="font-bold text-xl md:text-[2rem] md:leading-[40px] text-black">
-              Why List your stuff on Miles?
-            </h4>
-            <p className="md:hidden text-xs text-slate-900">
-              Buying stuff is easy. But what if there was a way to make renting
-              out the things you already own just as simple and rewarding?.
-            </p>
+      <main className="flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
+        <section className="bg-white flex flex-col py-10 max-sm:px-[25px] md:pt-14 mb:pb-[88px]">
+          <div className="flex mb-[34px] md:mb-[60.5px] lg:mb-16 justify-center">
+            <div className="desc-chip">WHY LIST ON MILES?</div>
           </div>
-          <div className="flex flex-col md:flex-row items-stretch justify-between max-md:gap-y-[50px]">
-            <MilesCard
-              bgColor="md:bg-teal-50 bg-transparent"
-              titleColor="text-teal-500"
-              title="Extra Cash"
-              desc="Turn your idle possessions into a steady stream of revenue by renting them out on Miles"
-              src="/icons/cash.svg"
-              width="md:w-[157.67px] w-[76px]"
-              height="md:h-[140.8px] h-[68px]"
-              alt="cash"
-            />
-            <MilesCard
-              bgColor="md:bg-orange-50 bg-transparent"
-              titleColor="text-orange-500"
-              title="Hassle-Free"
-              desc="You control your capacity and availability. Miles takes care of everything, from notifications."
-              src="/icons/box.svg"
-              width="md:w-[161.91px] w-[78px]"
-              height="md:h-[114.72px] h-[55px]"
-              alt="box"
-            />
-            <MilesCard
-              bgColor="md:bg-green-50 bg-transparent"
-              titleColor="text-green-500"
-              title="Trusted Community"
-              desc="Join a vibrant community of listers and renters, built on transparency and trust"
-              src="/icons/community.svg"
-              width="md:w-[126.8px] w-[61px]"
-              height="md:h-[160.07px] h-[77px]"
-              alt="community"
-            />
-          </div>
+          <div></div>
         </section>
         <section
           id="how-it-works"
-          className="bg-white flex flex-col max-md:gap-y-[53px] py-10 px-[25px] md:pt-[71px] md:pb-[123px] md:px-[105px]"
+          className="bg-white flex flex-col py-10 px-[25px] md:pt-[71px] md:pb-[123px]"
         >
-          <div className="flex flex-col gap-y-[7px] md:gap-y-5 md:self-center md:items-center md:text-center md:mb-[108px]">
-            <div className="md:bg-slate-50 md:py-[5px] font-medium w-fit md:px-2.5 rounded-[30px] uppercase text-sm text-dark_2">
-              EVERYTHING YOU NEED
-            </div>
-            <h4 className="font-bold text-xl md:text-[2rem] md:leading-[40px] text-black">
-              How it works
-            </h4>
-            <p className="md:hidden text-xs text-slate-900">
-              Buying stuff is easy. But what if there was a way to make renting
-              out the things you already own just as simple and rewarding?.
-            </p>
+          <div className="desc-chip sm:hidden mb-[34px]">
+            HOW TO LIST ON MILES
           </div>
-          <div className="flex flex-col gap-y-[53px] md:gap-y-[120px]">
-            <div className="flex flex-col md:flex-row md:items-center gap-x-5 md:mx-[68px]">
-              <Image
-                src="/images/nikon-camera.jpg"
-                width={510}
-                height={463}
-                alt="nikon-camera"
-                className="object-contain rounded-[5.84px] md:rounded-3xl max-md:mb-5"
-              />
-              <div className="flex md:justify-center md:ml-[120px] md:items-end">
-                <div className="flex flex-col">
-                  <p className="font-bold text-slate-900 md:text-4xl mb-2.5 md:mb-[26px]">
-                    List your Item
-                  </p>
-                  <p className="text-xs md:text-xl text-slate-800 mb-1 md:mb-14">
-                    Tell us about your item and how much you would like to earn
-                    from it
-                  </p>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-x-2.5 md:gap-x-3.5 text-xs md:text-2xl text-orange-500"
-                  >
-                    Explore Product
-                    <LongRightArrow />
-                  </Link>
+          <div className="flex flex-col sm:flex-row flex-start md:gap-x-[96.95px] xl:gap-x-[178.9px]">
+            <Image
+              src="/images/iphone-15-pro.png"
+              alt="iphone15 pro mockup"
+              height={609.29}
+              width={298.1}
+              className="object-contain md:h-[420px] md:w-[204.9px] xl:w-[298.1px] xl:h-[609.29px]"
+            />
+            <div className="flex flex-col gap-y-5 md:gap-y-[38px] xl:gap-y-[54px]">
+              <div className="desc-chip">HOW TO LIST ON MILES</div>
+              <div className="flex flex-col gap-y-[25px] xl:gap-y-[46px] xl:max-w-[569.65px]">
+                <div className="flex gap-x-[30px] md:gap-x-10">
+                  <Image
+                    src="/icons/icon-one.svg"
+                    alt="one"
+                    width={102.65}
+                    height={94.02}
+                    className="object-contain w-[61.14px] h-[55.99px] md:w-[73.35px] md:h-[67.17px] xl:w-[102.65px] xl:h-[94.02px]"
+                  />
+                  <div className="flex flex-col gap-y-1.5 md:gap-y-2.5">
+                    <h5 className="heading-bold-20">List your Item</h5>
+                    <p className="body-regular-16">
+                      Tell us about your item and how much you would like to
+                      earn from it
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-x-[30px] md:gap-x-10">
+                  <Image
+                    src="/icons/icon-two.svg"
+                    alt="two"
+                    width={102.65}
+                    height={94.02}
+                    className="object-contain w-[61.14px] h-[55.99px] md:w-[73.35px] md:h-[67.17px] xl:w-[102.65px] xl:h-[94.02px]"
+                  />
+                  <div className="flex flex-col gap-y-1.5 md:gap-y-2.5">
+                    <h5 className="heading-bold-20"> Approve who rents it</h5>
+                    <p className="body-regular-16">
+                      Tell us about your item and how much you would like to
+                      earn from it.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-x-[30px] md:gap-x-10">
+                  <Image
+                    src="/icons/icon-three.svg"
+                    alt="three"
+                    width={102.65}
+                    height={94.02}
+                    className="object-contain w-[61.14px] h-[55.99px] md:w-[73.35px] md:h-[67.17px] xl:w-[102.65px] xl:h-[94.02px]"
+                  />
+                  <div className="flex flex-col gap-y-1.5 md:gap-y-2.5">
+                    <h5 className="heading-bold-20">Start earning</h5>
+                    <p className="body-regular-16">
+                      Tell us about your item and how much you would like to
+                      earn from it
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-col md:flex-row-reverse md:items-center gap-x-5 md:mx-[68px]">
-              <Image
-                src="/images/handshake.jpg"
-                width={510}
-                height={463}
-                alt="handshake"
-                className="object-contain rounded-[5.84px] md:rounded-3xl max-md:mb-5"
-              />
-              <div className="flex md:justify-center md:mr-[120px] md:items-end">
-                <div className="flex flex-col">
-                  <p className="font-bold text-slate-900 md:text-4xl mb-2.5 md:mb-[26px]">
-                    Approve who rents it
-                  </p>
-                  <p className="text-xs md:text-xl text-slate-800 mb-1 md:mb-14">
-                    Tell us about your item and how much you would like to earn
-                    from it
-                  </p>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-x-2.5 md:gap-x-3.5 text-xs md:text-2xl text-orange-500"
-                  >
-                    Explore Product
-                    <LongRightArrow />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row md:items-center gap-x-5 md:mx-[68px]">
-              <Image
-                src="/images/money-display.jpg"
-                width={510}
-                height={463}
-                alt="money-display"
-                className="object-contain rounded-[5.84px] md:rounded-3xl max-md:mb-5"
-              />
-              <div className="flex md:justify-center md:ml-[120px] md:items-end">
-                <div className="flex flex-col">
-                  <p className="font-bold text-slate-900 md:text-4xl mb-2.5 md:mb-[26px]">
-                    Start earning
-                  </p>
-                  <p className="text-xs md:text-xl text-slate-800 mb-1 md:mb-14">
-                    Tell us about your item and how much you would like to earn
-                    from it
-                  </p>
-                  <Link
-                    href="#"
-                    className="md:hidden mb-[30px] flex items-center gap-x-2.5 md:gap-x-3.5 text-xs md:text-2xl text-orange-500"
-                  >
-                    Explore Product
-                    <LongRightArrow />
-                  </Link>
-                  <Link
-                    href="#"
-                    className="max-md:self-center flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 p-4 pl-6 w-fit"
-                  >
-                    Get started <PlayIcon className="md:hidden" />
-                    <ShortRightArrow className="hidden md:block" />
-                  </Link>
-                </div>
-              </div>
+              <Link
+                href="#"
+                className="flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 p-4 pl-6 w-fit"
+              >
+                Get started
+                <PlayIcon className="md:hidden" />
+                <ShortRightArrow className="hidden md:block" />
+              </Link>
             </div>
           </div>
         </section>
-        <section className="bg-white flex flex-col py-10 px-[25px] md:py-14 md:px-[226px]">
-          <div className="flex flex-col gap-y-[7px] md:gap-y-5 self-center items-center text-center mb-[50px] md:mb-[70px]">
-            <div className="md:bg-slate-50 md:py-[5px] font-medium w-fit md:px-2.5 rounded-[30px] uppercase text-sm text-dark_2">
-              EVERYTHING YOU NEED
-            </div>
-            <h4 className="font-bold text-xl md:text-[2rem] md:leading-[40px] text-black">
-              We&apos;ve thought of everything
-            </h4>
-            <p className="md:hidden text-xs text-slate-900">
-              Buying stuff is easy. But what if there was a way to make renting
-              out the things you already own just as simple and rewarding?.
+        <section className="bg-white flex flex-col py-10 px-[25px] md:py-14">
+          <div className="flex flex-col gap-y-[7px] md:gap-y-5 self-center items-center text-center mb-[50px] md:mb-[70px] max-w-[650px]">
+            <h4 className="header-3">We&apos;ve thought of everything</h4>
+            <p className="desc">
+              We’re focused on first, but we’re expanding our catalog to a more
+              diverse range of items soon. Please check back often to see what
+              we offer
             </p>
           </div>
-          <div className="flex flex-col gap-y-[30px] md:gap-y-9">
-            <div className="flex flex-col max-md:gap-y-9 md:flex-row items-center justify-between">
-              <div className="flex flex-col items-center gap-y-[7px] md:gap-y-2.5 text-center max-w-[294px]">
-                <p className="md:text-2xl text-slate-900 font-medium">
-                  Verified Community
-                </p>
-                <div className="w-[66px] h-[66px] md:w-[100px] md:h-[100px] relative">
-                  <Image
-                    src="/icons/verified-badge.svg"
-                    alt="verified-badge"
-                    layout="fill"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <p className="text-slate-900 text-xs md:text-base">
-                  All renters on Miles undergo a rigorous verification process,
-                  fostering a trustworthy and reliable community
-                </p>
-              </div>
-              <div className="flex flex-col items-center gap-y-[7px] md:gap-y-2.5 text-center max-w-[294px]">
-                <p className="md:text-2xl text-slate-900 font-medium">
-                  Peace of mind
-                </p>
-                <div className="w-[66px] h-[66px] md:w-[100px] md:h-[100px] relative">
-                  <Image
-                    src="/icons/peace-badge.svg"
-                    alt="peace-badge"
-                    layout="fill"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <p className="text-slate-900 text-xs md:text-base">
-                  Every item that you accept a renal request for is insured for
-                  its full value from the moment it leaves your hand.
-                </p>
-              </div>
-            </div>
-            <div className="flex self-center flex-col items-center gap-y-[7px] md:gap-y-2.5 text-center max-w-[294px]">
-              <p className="md:text-2xl text-slate-900 font-medium">
-                Instant Payments
+          <div className="flex flex-col gap-y-[30px] sm:flex-row sm:justify-between">
+            <div className="flex flex-col sm:max-w-[220.26px] xl:max-w-[310px]">
+              <Image
+                src="/images/verified-community.png"
+                alt="verified-community"
+                width={310}
+                height={257}
+                className="object-cover rounded-t-[14.20px] lg:rounded-t-[20px] mb-4.5 lg:mb-[25px]"
+              />
+              <h5 className="heading-bold-20 mb-2 lg:mb-2.5">
+                Verified Community
+              </h5>
+              <p className="body-regular-16">
+                All renters on Miles undergo a rigorous verification process,
+                fostering a trustworthy and reliable community
               </p>
-              <div className="w-[66px] h-[66px] md:w-[100px] md:h-[100px] relative">
-                <Image
-                  src="/icons/payment-badge.svg"
-                  alt="payment-badge"
-                  layout="fill"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <p className="text-slate-900 text-xs md:text-base">
+            </div>
+            <div className="flex flex-col sm:max-w-[220.26px] xl:max-w-[310px]">
+              <Image
+                src="/images/instant-payment.png"
+                alt="instant-payment"
+                width={310}
+                height={257}
+                className="object-cover rounded-t-[20px] mb-[25px]"
+              />
+              <h5 className="heading-bold-20 mb-2 lg:mb-2.5">
+                Instant Payments
+              </h5>
+              <p className="body-regular-16">
+                Every item that you accept a renal request for is insured for
+                its full value from the moment it leaves your hand.
+              </p>
+            </div>
+            <div className="flex flex-col sm:max-w-[220.26px] xl:max-w-[310px]">
+              <Image
+                src="/images/peace-of-mind.png"
+                alt="peace-of-mind"
+                width={310}
+                height={257}
+                className="object-cover rounded-t-[20px] mb-[25px]"
+              />
+              <h5 className="heading-bold-20 mb-2 lg:mb-2.5">Peace of mind</h5>
+              <p className="body-regular-16">
                 Every item that you accept a renal request for is insured for
                 its full value from the moment it leaves your hand.
               </p>
             </div>
           </div>
         </section>
-        <section className="bg-white flex flex-col md:pt-[140px] md:pb-[232px] md:px-[200px] px-[25px] py-10 relative">
-          <div className="flex flex-col gap-y-[7px] md:gap-y-5 self-center items-center text-center mb-[50px] md:mb-[70px]">
-            <div className="md:bg-slate-50 md:py-[5px] font-medium w-fit md:px-2.5 rounded-[30px] uppercase text-sm text-dark_2">
-              EVERYTHING YOU NEED
-            </div>
-            <h4 className="font-bold text-xl md:text-[2rem] md:leading-[40px] text-black">
-              Explore our categories
-            </h4>
-            <p className="text-xs md:text-lg text-dark_2 md:-mt-[5px] mb-5 md:mb-[33px]">
+        <section className="bg-white flex flex-col md:pt-[140px] md:pb-[232px] px-[25px] py-10 relative">
+          <div className="flex flex-col gap-y-[7px] max-w-[650px] md:gap-y-5 self-center items-center text-center mb-[50px] md:mb-[70px]">
+            <h4 className="header-3">Explore our categories</h4>
+            <p className="desc md:-mt-[5px] mb-5 md:mb-[33px]">
               We’re focused on first, but we’re expanding our catalog to a more
               diverse range of items soon. Please check back often to see what
               we offer
@@ -308,7 +220,7 @@ export default function Home() {
               <ShortRightArrow className="hidden md:block" />
             </Link>
           </div>
-          <div className="flex items-center gap-x-2 md:gap-5 mb-[20.83px] md:mb-[55px]">
+          <div className="flex items-center justify-center gap-x-2 md:gap-5 mb-[20.83px] md:mb-[55px]">
             <div className="md:pb-[30px] pb-2.5 md:px-6 px-[7.75px] flex items-end justify-center w-[100px] h-[121px] md:w-[312px] md:h-[375px] rounded-[8.28px] md:rounded-[21.31px] bg-[url('/images/film.jpg')] bg-center bg-cover bg-no-repeat">
               <div className="rounded-[5.82px] md:rounded-[18px] bg-white max-w-[264px] w-full max-md:py-[5.3px] md:h-[71px] flex items-center justify-center">
                 <p className="font-normal md:font-medium text-black text-[10px] md:text-base">

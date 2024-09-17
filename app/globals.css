@@ -135,6 +135,26 @@ input {
   @apply data-[state=active]:!bg-transparent data-[state=active]:border-b-[3px] data-[state=active]:border-green-500 data-[state=active]:text-green-500 data-[state=active]:!shadow-none text-xs sm:text-base;
 }
 
+.desc-chip {
+  @apply md:bg-slate-50 md:py-[5px] font-medium w-fit md:px-2.5 rounded-[30px] uppercase text-sm text-dark_2;
+}
+
+.header-3 {
+  @apply font-bold text-lg sm:text-xl lg:text-[2rem] md:leading-[40px] text-black;
+}
+
+.desc {
+  @apply text-xs sm:text-sm lg:text-lg text-dark_2;
+}
+
+.heading-bold-20 {
+  @apply font-bold text-gray-900 text-sm lg:text-xl;
+}
+
+.body-regular-16 {
+  @apply text-slate-900 text-xs lg:text-base;
+}
+
 .noScrollBar {
   -ms-overflow-style: none;
   scrollbar-width: none;
