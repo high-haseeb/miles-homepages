@@ -19,6 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
+import { X } from "lucide-react";
 
 import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { ListedItemCard2 } from "@/components/ListedItemCard";
@@ -237,8 +238,15 @@ export default function Listings() {
                     lng: Number(selectedItem.longitude),
                   }}
                   onCloseClick={() => setSelectedItem(null)}
+                  headerDisabled
                 >
-                  <div className="flex items-center gap-x-4">
+                  <div className="flex items-center gap-x-4 relative">
+                    <button
+                      className="absolute top-0 right-0"
+                      onClick={() => setSelectedItem(null)}
+                    >
+                      <X className="size-4" />
+                    </button>
                     <div>
                       <Image
                         src={selectedItem?.item_images?.[0]?.image_url}
