@@ -123,7 +123,7 @@ export default function DashboardLayout({
             <div className="mt-4 ml-6 py-3.5 px-2.5">
               <Link
                 href={pathname === "/renting" ? "/bookings" : "/renting"}
-                className="py-1 px-5 rounded-[38px] bg-green-500 w-fit text-white"
+                className="py-3 px-9 rounded-[38px] bg-green-500 w-fit text-white"
               >
                 Switch to {pathname === "/renting" ? "Lister" : "Renter"}
               </Link>
@@ -194,7 +194,7 @@ export default function DashboardLayout({
                 <div className="mt-4 py-3.5 px-2.5">
                   <Link
                     href={pathname === "/renting" ? "/bookings" : "/renting"}
-                    className="py-3 px-5 rounded-[38px] bg-green-500 w-full sm:w-fit text-white"
+                    className="py-3 px-9 rounded-[38px] bg-green-500 w-full sm:w-fit text-white"
                   >
                     Switch to {pathname === "/renting" ? "Lister" : "Renter"}
                   </Link>
@@ -240,7 +240,9 @@ export default function DashboardLayout({
                         src={userData?.image_url || ""}
                         alt="photo"
                       />
-                      <AvatarFallback>CN</AvatarFallback>
+                      <AvatarFallback>
+                        <ProfileIcon />
+                      </AvatarFallback>
                     </Avatar>
                     <p className="font-bold ml-3.5 text-slate-800 hidden sm:block">
                       {userData?.first_name || ""}
@@ -250,10 +252,10 @@ export default function DashboardLayout({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  align="end"
-                  className="flex flex-col gap-6 px-2 py-4"
+                  align="center"
+                  className="flex flex-col gap-6 px-10 py-[30px] rounded-[20px] mr-3"
                 >
-                  <DropdownMenuItem className="px-4 cursor-pointer">
+                  <DropdownMenuItem className="w-full justify-center cursor-pointer">
                     <Link
                       href="/bookings"
                       className="flex items-center gap-x-2"
@@ -261,7 +263,7 @@ export default function DashboardLayout({
                       <RentalsIcon /> My Rentals
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="px-4 cursor-pointer">
+                  <DropdownMenuItem className="w-full justify-center cursor-pointer">
                     <Link
                       href="/dashboard"
                       className="flex items-center gap-x-2"
@@ -269,14 +271,14 @@ export default function DashboardLayout({
                       <DashboardIcon /> Dashboard
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="px-4 cursor-pointer">
+                  <DropdownMenuItem className="w-full justify-center cursor-pointer">
                     <Link href="/profile" className="flex items-center gap-x-2">
                       <ProfileIcon />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="flex items-center gap-x-2 px-4 cursor-pointer"
+                    className="w-full justify-center cursor-pointer gap-x-2"
                     onClick={() => {
                       handleLogout();
                       router.push("/");
@@ -284,10 +286,10 @@ export default function DashboardLayout({
                   >
                     <LogoutIcon /> Logout
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="hover:bg-transparent">
+                  <DropdownMenuItem className="hover:!bg-transparent">
                     <Link
                       href={pathname === "/renting" ? "/bookings" : "/renting"}
-                      className="py-1 px-4 rounded-[38px] bg-green-500 w-fit text-white"
+                      className="py-3 px-9 rounded-[38px] bg-green-500 w-fit text-white"
                     >
                       Switch to {pathname === "/renting" ? "Lister" : "Renter"}
                     </Link>
@@ -299,7 +301,7 @@ export default function DashboardLayout({
           <main
             className={`flex flex-1 flex-col gap-[25px] p-[25px] lg:gap-[30px] ${
               noPaddingX ? "px-0" : "px-[25px]"
-            } lg:px-[30px] bg-pearl-400 overflow-y-auto overflow-x-hidden`}
+            } lg:px-[30px] bg-white overflow-y-auto overflow-x-hidden`}
           >
             {children}
           </main>

@@ -302,7 +302,7 @@ export function VerifyIdentity({
     SmileIdentity({
       token,
       product: "biometric_kyc",
-      callback_url: "https://webhook.site/ddecc1c1-2c66-4d6c-ade2-2f64e58ac5ba",
+      callback_url: "https://webhook.site/11e11024-6fd6-4b75-a415-647cede7d5df",
       environment: "sandbox",
       partner_details: {
         partner_id: "7093",
@@ -310,6 +310,9 @@ export function VerifyIdentity({
         logo_url: `https://ibb.co/g9VbZ0J`,
         policy_url: `https://www.termsfeed.com/live/b9380166-57ac-4e08-9ec5-3b6f21867cf0`,
         theme_color: "#01AC4C",
+      },
+      id_selection: {
+        NG: ["BVN", "NIN_V2"],
       },
       onSuccess: () => {
         console.log();

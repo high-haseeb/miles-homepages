@@ -238,22 +238,29 @@ export default function Listings() {
                   }}
                   onCloseClick={() => setSelectedItem(null)}
                 >
-                  <div className="p-4 flex items-center gap-x-4">
+                  <div className="flex items-center gap-x-4">
                     <div>
                       <Image
                         src={selectedItem?.item_images?.[0]?.image_url}
                         alt="item"
                         width={100}
                         height={100}
-                        className="object-cover rounded-full"
+                        className="object-cover rounded-full h-[100px] w-[100px]"
                       />
                     </div>
-                    <div>
-                      <h4 className="text-sm text-slate-800">
+                    <div className="flex flex-col gap-y-3">
+                      <h4 className="!body-medium-14">
                         {selectedItem.product_name}
                       </h4>
-                      <p>NGN {selectedItem.price_per_day} per day</p>
-                      <p>{selectedItem.item_location}</p>
+                      <p className="!body-medium-14 !text-orange-500">
+                        Listed by {selectedItem.full_name}
+                      </p>
+                      <p className="!body-regular-16 !text-slate-400">
+                        <span className="!text-slate-900 !font-bold">
+                          NGN {selectedItem.price_per_day}
+                        </span>{" "}
+                        per/day
+                      </p>
                     </div>
                   </div>
                 </InfoWindow>

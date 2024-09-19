@@ -155,6 +155,10 @@ input {
   @apply text-slate-900 text-xs lg:text-base;
 }
 
+.body-medium-14 {
+  @apply text-slate-900 text-xs lg:text-sm;
+}
+
 .noScrollBar {
   -ms-overflow-style: none;
   scrollbar-width: none;

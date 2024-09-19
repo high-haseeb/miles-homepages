@@ -112,7 +112,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
             <div className="mt-4 ml-6 py-3.5 px-2.5">
               <Link
                 href={pathname === "/renting" ? "/bookings" : "/renting"}
-                className="py-1 px-5 rounded-[38px] bg-green-500 w-fit text-white"
+                className="py-3 px-9 rounded-[38px] bg-green-500 w-fit text-white"
               >
                 Switch to {pathname === "/renting" ? "Lister" : "Renter"}
               </Link>
@@ -200,7 +200,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-x-11">
+            <div className="flex items-center gap-x-11 flex-shrink-0">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -215,17 +215,16 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                 <Notifications />
               </DropdownMenu>
               <DropdownMenu>
-                <DropdownMenuTrigger
-                  asChild
-                  className="flex items-center gap-1"
-                >
-                  <Button className="bg-transparent hover:bg-transparent text-slate-800">
+                <DropdownMenuTrigger asChild>
+                  <Button className="bg-transparent hover:bg-transparent text-slate-800 border-none outline-none">
                     <Avatar className="w-[42px] h-[42px] rounded-full">
                       <AvatarImage
                         src={userData?.image_url || ""}
                         alt="photo"
                       />
-                      <AvatarFallback>CN</AvatarFallback>
+                      <AvatarFallback>
+                        <ProfileIcon />
+                      </AvatarFallback>
                     </Avatar>
                     <p className="font-bold ml-3.5 text-slate-800 hidden sm:block">
                       {userData?.first_name || ""}
@@ -235,10 +234,10 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  align="end"
-                  className="flex flex-col gap-6 px-2 py-4"
+                  align="center"
+                  className="flex flex-col gap-6 px-10 py-[30px] rounded-[20px] mr-3"
                 >
-                  <DropdownMenuItem className="px-4 cursor-pointer">
+                  <DropdownMenuItem className="w-full justify-center cursor-pointer">
                     <Link
                       href="/bookings"
                       className="flex items-center gap-x-2"
@@ -246,7 +245,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                       <RentalsIcon /> My Rentals
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="px-4 cursor-pointer">
+                  <DropdownMenuItem className="w-full justify-center cursor-pointer">
                     <Link
                       href="/dashboard"
                       className="flex items-center gap-x-2"
@@ -254,14 +253,14 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                       <DashboardIcon /> Dashboard
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="px-4 cursor-pointer">
+                  <DropdownMenuItem className="w-full justify-center cursor-pointer">
                     <Link href="/profile" className="flex items-center gap-x-2">
                       <ProfileIcon />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="flex items-center gap-x-2 px-4 cursor-pointer"
+                    className="w-full justify-center cursor-pointer gap-x-2"
                     onClick={() => {
                       handleLogout();
                       router.push("/");
@@ -269,10 +268,10 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
                   >
                     <LogoutIcon /> Logout
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="hover:bg-transparent">
+                  <DropdownMenuItem className="hover:!bg-transparent">
                     <Link
                       href={pathname === "/renting" ? "/bookings" : "/renting"}
-                      className="py-1 px-4 rounded-[38px] bg-green-500 w-fit text-white"
+                      className="py-3 px-9 rounded-[38px] bg-green-500 w-fit text-white"
                     >
                       Switch to {pathname === "/renting" ? "Lister" : "Renter"}
                     </Link>
@@ -281,7 +280,7 @@ export default function ProfileLayout({ children }: DashboardLayoutProps) {
               </DropdownMenu>
             </div>
           </header>
-          <main className="flex flex-1 flex-col gap-[25px] p-[24px] lg:gap-[30px] lg:p-[25px] lg:px-[30px] bg-pearl-400 overflow-y-auto overflow-x-hidden">
+          <main className="flex flex-1 flex-col gap-[25px] p-[24px] lg:gap-[30px] lg:p-[25px] lg:px-[30px] bg-white overflow-y-auto overflow-x-hidden">
             {children}
           </main>
         </div>
