@@ -33,7 +33,7 @@ const chartConfig = {
 
 export default function DashboardChart() {
   return (
-    <Card className="p-[30px] rounded-[25px]">
+    <Card className="p-[30px] rounded-[25px] border-[0.8px] border-border">
       <CardContent className="p-0">
         <ChartContainer config={chartConfig} className="p-0">
           <BarChart accessibilityLayer data={chartData}>

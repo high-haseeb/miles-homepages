@@ -10,7 +10,7 @@ export default function StatsCard({
   iconEnd,
 }: StatsCardProps) {
   return (
-    <div className="bg-white max-w-[270px] md:max-h-[120px] w-full h-full py-[25px] px-[22px] max-sm:gap-y-2.5 rounded-[25px] flex flex-col sm:flex-row items-center sm:gap-x-[15px]">
+    <div className="bg-white border-[0.8px] border-border max-w-[270px] md:max-h-[120px] w-full h-full py-[25px] px-[22px] max-sm:gap-y-2.5 rounded-[25px] flex flex-col sm:flex-row items-center sm:gap-x-[15px]">
       <Image
         src={src}
         width={70}

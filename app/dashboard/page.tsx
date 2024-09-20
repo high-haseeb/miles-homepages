@@ -38,7 +38,7 @@ export default function Dashboard() {
     !user?.is_phone_number_verified ||
     !user?.is_email_verified;
   return (
-    <DashboardLayout>
+    <DashboardLayout className="bg-[#F8F8F8]">
       <>
         <div className="flex flex-col gap-[5px]">
           <h3 className="text-2xl text-slate-900 font-bold">
@@ -94,35 +94,37 @@ export default function Dashboard() {
                 See All
               </Link>
             </div>
-            <Table className="w-full bg-white p-[25px] rounded-[25px]">
-              <TableBody>
-                {items.map((item) => (
-                  <TableRow key={item.name} className="border-none">
-                    <TableCell className="flex items-center gap-x-[25px]">
-                      <Image
-                        src={item.src}
-                        width={55}
-                        height={55}
-                        alt={item.name}
-                        className="rounded-[20px] object-cover"
-                      />
-                      <div className="flex flex-col gap-0.5">
-                        <p className="text-sm text-slate-900">{item.name}</p>
-                        <p className="hidden sm:block text-sm text-orange-500">
-                          {item.pricePerDay} per day
-                        </p>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-sm text-teal-500">
-                      {item.duration}
-                    </TableCell>
-                    <TableCell className="text-sm text-slate-800 text-right">
-                      {item.quantity} X
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <div className="overflow-hidden rounded-[25px] border-[0.8px] border-border">
+              <Table className="w-full bg-white p-[25px]">
+                <TableBody>
+                  {items.map((item) => (
+                    <TableRow key={item.name} className="border-none">
+                      <TableCell className="flex items-center gap-x-[25px]">
+                        <Image
+                          src={item.src}
+                          width={55}
+                          height={55}
+                          alt={item.name}
+                          className="rounded-[20px] object-cover"
+                        />
+                        <div className="flex flex-col gap-0.5">
+                          <p className="text-sm text-slate-900">{item.name}</p>
+                          <p className="hidden sm:block text-sm text-orange-500">
+                            {item.pricePerDay} per day
+                          </p>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm text-teal-500">
+                        {item.duration}
+                      </TableCell>
+                      <TableCell className="text-sm text-slate-800 text-right">
+                        {item.quantity} X
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
           <div className="hidden sm:flex flex-col gap-y-[18px] p-6 rounded-[10px] bg-cover bg-center bg-no-repeat bg-[url('/images/go-green-bg.png')]">
             <h4 className="font-bold text-[22px] text-white leading-[28.64px]">
@@ -156,42 +158,44 @@ export default function Dashboard() {
                 See All
               </Link>
             </div>
-            <Table className="w-full bg-white py-[27px] px-[30px] rounded-[25px]">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-teal-500 text-sm font-medium">
-                    SL No
-                  </TableHead>
-                  <TableHead className="text-teal-500 text-sm font-medium">
-                    Name
-                  </TableHead>
-                  <TableHead className="text-teal-500 text-sm font-medium">
-                    O.Price
-                  </TableHead>
-                  <TableHead className="text-teal-500 text-sm font-medium">
-                    Rental
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {priceStats.map((stat) => (
-                  <TableRow key={stat.name} className="border-none">
-                    <TableCell className="text-slate-600 text-sm">
-                      {stat.no}
-                    </TableCell>
-                    <TableCell className="text-slate-600 text-sm">
-                      {stat.name}
-                    </TableCell>
-                    <TableCell className="text-slate-600 text-sm">
-                      {stat.price}
-                    </TableCell>
-                    <TableCell className="text-slate-600 text-sm">
-                      {stat.rental}
-                    </TableCell>
+            <div className="overflow-hidden rounded-[25px] border-[0.8px] border-border">
+              <Table className="w-full bg-white py-[27px] px-[30px]">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-teal-500 text-sm font-medium">
+                      SL No
+                    </TableHead>
+                    <TableHead className="text-teal-500 text-sm font-medium">
+                      Name
+                    </TableHead>
+                    <TableHead className="text-teal-500 text-sm font-medium">
+                      O.Price
+                    </TableHead>
+                    <TableHead className="text-teal-500 text-sm font-medium">
+                      Rental
+                    </TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {priceStats.map((stat) => (
+                    <TableRow key={stat.name} className="border-none">
+                      <TableCell className="text-slate-600 text-sm">
+                        {stat.no}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-sm">
+                        {stat.name}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-sm">
+                        {stat.price}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-sm">
+                        {stat.rental}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         </div>
       </>

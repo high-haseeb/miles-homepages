@@ -35,6 +35,7 @@ import PrivateRoute from "../custom-routes/PrivateRoute";
 
 interface DashboardLayout2Props extends DashboardLayoutProps {
   noPaddingX?: boolean;
+  className?: string;
 }
 
 export default function DashboardLayout({
@@ -43,6 +44,7 @@ export default function DashboardLayout({
   handleSearchChange,
   searchValue,
   noPaddingX,
+  className,
 }: DashboardLayout2Props) {
   const pathname = usePathname();
   const router = useRouter();
@@ -301,7 +303,7 @@ export default function DashboardLayout({
           <main
             className={`flex flex-1 flex-col gap-[25px] p-[25px] lg:gap-[30px] ${
               noPaddingX ? "px-0" : "px-[25px]"
-            } lg:px-[30px] bg-white overflow-y-auto overflow-x-hidden`}
+            } lg:px-[30px] ${className} overflow-y-auto overflow-x-hidden`}
           >
             {children}
           </main>
