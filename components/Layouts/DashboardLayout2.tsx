@@ -142,7 +142,7 @@ export default function DashboardLayout2({
             </div>
           </SheetContent>
         </Sheet>
-        <div className="flex items-center sm:gap-x-[50px] w-full flex-1">
+        <div className="flex items-center xl:space-x-[50px] sm:space-x-6 w-full flex-1 sm:basis-[40%]">
           <Link href="/">
             <Image
               src="/images/logo.svg"
@@ -160,27 +160,29 @@ export default function DashboardLayout2({
                 value={searchValue}
                 onChange={handleSearchChange}
                 placeholder="Search products..."
-                className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none md:w-2/3 max-w-[346px] outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="w-full appearance-none rounded-[39px] bg-background pl-8 shadow-none xl:w-2/3 max-w-[346px] outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
               />
             </Link>
           </form>
         </div>
-        <div className="hidden sm:flex items-center gap-x-9 mr-[176px]">
+        <div className="hidden sm:flex justify-center items-center space-x-5 xl:space-x-9 xl:mr-[176px] basis-[30%]">
           <Link
             href="/manage-listings/list-item"
-            className="text-slate-900 hover:text-green-500"
+            className="text-slate-900 hover:text-green-500 text-sm xl:text-base"
           >
             List an item
           </Link>
           <Link
             href="#how-it-works"
-            className="text-slate-900 hover:text-green-500"
+            className="text-slate-900 hover:text-green-500 text-sm xl:text-base"
           >
             How it works
           </Link>
         </div>
         <div
-          className={`flex items-center gap-x-11 ${isLoggedIn ? "" : "hidden"}`}
+          className={`flex items-center xl:space-x-11 sm:basis-[30%] ${
+            isLoggedIn ? "" : "hidden"
+          }`}
         >
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -189,7 +191,7 @@ export default function DashboardLayout2({
                 variant="ghost"
                 className="ml-auto hidden sm:block text-[#394455] p-2 bg-transparent"
               >
-                <Bell className="h-6 w-6" />
+                <Bell className="xl:size-6 size-5" />
                 <span className="sr-only">Toggle notifications</span>
               </Button>
             </DropdownMenuTrigger>

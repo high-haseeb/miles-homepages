@@ -74,7 +74,13 @@ export default function Listings() {
   };
 
   const { data: listings, isPending } = useQuery({
-    queryKey: ["listings", category?.category_id, confirmedDate, location],
+    queryKey: [
+      "listings",
+      category?.category_id,
+      confirmedDate,
+      location,
+      clearFilter,
+    ],
     queryFn: () =>
       getListings({
         category: category?.category_id || "",
@@ -117,6 +123,12 @@ export default function Listings() {
     lng: 3.3792,
   };
 
+  function clearFilter() {
+    setLocation("");
+    setCategory(undefined);
+    setDate(undefined);
+  }
+
   return (
     <DashboardLayout2
       noPaddingY
@@ -124,13 +136,17 @@ export default function Listings() {
       handleSearchChange={(e) => setSearchKeyword(e.target.value)}
       handleSearchSubmit={handleSearchSubmit}
     >
-      <div className="flex flex-col sm:flex-row gap-[30px] h-full max-h-screen overflow-hidden sm:-mx-[30px]">
+      <div className="flex flex-col sm:flex-row h-full max-h-screen overflow-hidden sm:-mx-[30px]">
         <div className="flex flex-col flex-1 pb-[25px]">
-          <div className="sm:px-[30px] sm:py-[23px] max-sm:mb-[30px] flex flex-col sm:flex-row gap-[5px] sm:items-center justify-between">
-            <div className="flex items-center gap-x-[5px] sm:gap-x-2.5">
+          <div className="xl:px-[30px] sm:p-6 max-sm:mb-[30px] flex space-[5px] sm:items-center justify-between">
+            <div className="flex items-center space-x-[5px] xl:gap-x-2.5">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                  <Button
+                    className={`xl:py-2 py-1.5 px-2.5 xl:px-[15px] text-xs sm:text-sm xl:text-base hover:bg-green-500 hover:border-green-500 hover:text-white ${
+                      category && "!bg-green-500 !border-green-500 !text-white"
+                    } bg-white text-slate-900 border border-gray-4 rounded-[22px]`}
+                  >
                     {category?.category_name || "Category"}
                   </Button>
                 </DropdownMenuTrigger>
@@ -147,7 +163,11 @@ export default function Listings() {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                  <Button
+                    className={`xl:py-2 py-1.5 px-2.5 xl:px-[15px] text-xs sm:text-sm xl:text-base ${
+                      location && "!bg-green-500 !border-green-500 !text-white"
+                    } hover:bg-green-500 hover:border-green-500 hover:text-white bg-white text-slate-900 border border-gray-4 rounded-[22px]`}
+                  >
                     {location || "Location"}
                   </Button>
                 </DropdownMenuTrigger>
@@ -164,7 +184,11 @@ export default function Listings() {
               </DropdownMenu>
               <Popover onOpenChange={setOpenCalendar} open={openCalendar}>
                 <PopoverTrigger asChild>
-                  <Button className="py-2 px-[15px] max-sm:text-xs hover:bg-hover-color text-slate-900 active:text-white bg-transparent active:bg-green-500 border border-gray-4 active:border-none rounded-[22px]">
+                  <Button
+                    className={`xl:py-2 py-1.5 px-2.5 xl:px-[15px] text-xs sm:text-sm xl:text-base ${
+                      date && "!bg-green-500 !border-green-500 !text-white"
+                    } hover:bg-green-500 hover:border-green-500 hover:text-white bg-white text-slate-900 border border-gray-4 rounded-[22px]`}
+                  >
                     Dates
                   </Button>
                 </PopoverTrigger>
@@ -199,11 +223,21 @@ export default function Listings() {
                 </PopoverContent>
               </Popover>
             </div>
-            <p className="text-[10px] sm:text-sm text-slate-900">
-              {currentListings?.length} result(s)
-            </p>
+            <div className="flex items-center space-x-1.5 xl:space-x-3">
+              <p className="text-[10px] sm:text-xs xl:text-sm text-slate-900">
+                {currentListings?.length} result(s)
+              </p>
+              {(location || category || date) && (
+                <Button
+                  onClick={clearFilter}
+                  className="p-1 bg-white text-xs sm:text-sm xl:text-base text-slate-900 hover:text-green-500 rounded-[22px]"
+                >
+                  Clear filter
+                </Button>
+              )}
+            </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-[15px] sm:gap-x-[30px] gap-y-6 sm:gap-y-10 overflow-y-auto sm:pl-[30px]">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-[15px] xl:px-[30px] sm:px-6 gap-y-6 sm:gap-y-10 overflow-y-auto sm:pl-[30px]">
             {currentListings?.map((item: ItemProps) => (
               <ListedItemCard2
                 item={item}

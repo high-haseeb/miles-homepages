@@ -120,10 +120,10 @@ export default function DashboardLayout({
                 </Link>
               </nav>
             </div>
-            <div className="mt-4 ml-6 py-3.5 px-2.5">
+            <div className="grid gap-2 px-2 lg:px-4 mt-4">
               <Link
                 href={pathname === "/renting" ? "/bookings" : "/renting"}
-                className="py-3 px-9 rounded-[38px] bg-green-500 w-fit text-white"
+                className="py-3 px-9 rounded-[38px] bg-green-500 w-fit text-white my-3.5"
               >
                 Switch to {pathname === "/renting" ? "Lister" : "Renter"}
               </Link>
