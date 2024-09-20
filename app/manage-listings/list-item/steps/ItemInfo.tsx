@@ -101,7 +101,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
       <div className="flex flex-col gap-y-[25px]">
         <CustomFormField
           control={control}
-          fieldType={FormFieldType.INPUT}
+          fieldtype={FormFieldType.INPUT}
           placeholder="Nikon SB"
           name="product_name"
           className="py-3 px-4 rounded-lg border border-gray-3"
@@ -109,7 +109,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
         />
         <CustomFormField
           control={control}
-          fieldType={FormFieldType.SELECT}
+          fieldtype={FormFieldType.SELECT}
           placeholder="Film and Photography"
           name="category_id"
           className="py-3 px-4 rounded-lg border border-gray-3"
@@ -119,7 +119,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
         />
         <CustomFormField
           control={control}
-          fieldType={FormFieldType.SELECT}
+          fieldtype={FormFieldType.SELECT}
           placeholder="DSLR Camera"
           name="sub_category_id"
           className="py-3 px-4 rounded-lg border border-gray-3"
@@ -130,7 +130,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
         <div className="flex flex-col sm:flex-row sm:gap-x-6 gap-y-[30px]">
           <CustomFormField
             control={control}
-            fieldType={FormFieldType.SKELETON}
+            fieldtype={FormFieldType.SKELETON}
             name="state"
             className=""
             label="State"
@@ -170,7 +170,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
           />
           <CustomFormField
             control={control}
-            fieldType={FormFieldType.SKELETON}
+            fieldtype={FormFieldType.SKELETON}
             placeholder="Ikeja"
             name="city"
             className=""
@@ -212,7 +212,7 @@ export default function ItemInfo({ control }: { control: Control<any> }) {
         </div>
         <CustomFormField
           control={control}
-          fieldType={FormFieldType.SKELETON}
+          fieldtype={FormFieldType.SKELETON}
           placeholder="Select location"
           name="item_location"
           className="py-3 px-4 rounded-lg border border-gray-3 outline-none ring-0 ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"

@@ -97,7 +97,7 @@ export default function ResetPassword({
             <CustomFormField
               control={form.control}
               name="newPassword"
-              fieldType={FormFieldType.PASSWORD}
+              fieldtype={FormFieldType.PASSWORD}
               placeholder="New password"
               className="p-4 rounded-xl "
             />
@@ -135,7 +135,7 @@ export default function ResetPassword({
           <CustomFormField
             control={form.control}
             name="confirmPassword"
-            fieldType={FormFieldType.PASSWORD}
+            fieldtype={FormFieldType.PASSWORD}
             placeholder="Confirm password"
             className="p-4 rounded-xl "
           />

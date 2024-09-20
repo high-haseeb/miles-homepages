@@ -36,11 +36,11 @@ const RenderField = ({
   field: any;
   props: CustomFormFieldProps;
 }) => {
-  const { fieldType, placeholder, className, selectItems, renderSkeleton } =
+  const { fieldtype, placeholder, className, selectItems, renderSkeleton } =
     props;
   const [viewPassword, setViewPassword] = useState(false);
 
-  switch (fieldType) {
+  switch (fieldtype) {
     case FormFieldType.INPUT:
       return (
         <div>

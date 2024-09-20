@@ -135,14 +135,14 @@ export default function LoginPage({
             <CustomFormField
               control={form.control}
               name="email"
-              fieldType={FormFieldType.INPUT}
+              fieldtype={FormFieldType.INPUT}
               placeholder="E-mail address"
               className="p-4 rounded-xl"
             />
             <CustomFormField
               control={form.control}
               name="password"
-              fieldType={FormFieldType.PASSWORD}
+              fieldtype={FormFieldType.PASSWORD}
               placeholder="Password"
               className="p-4 rounded-xl"
             />

@@ -15,7 +15,7 @@ export default function ExtraInfo({ control }: { control: Control<any> }) {
     <div className="flex flex-col gap-y-[25px]">
       <CustomFormField
         control={control}
-        fieldType={FormFieldType.NUMBER}
+        fieldtype={FormFieldType.NUMBER}
         placeholder="This input is quite long"
         name="quantity_listed"
         className="py-3 px-4 rounded-lg border border-gray-3"
@@ -23,7 +23,7 @@ export default function ExtraInfo({ control }: { control: Control<any> }) {
       />
       <CustomFormField
         control={control}
-        fieldType={FormFieldType.NUMBER}
+        fieldtype={FormFieldType.NUMBER}
         placeholder="This input is quite long"
         name="estimated_value"
         className="py-3 px-4 rounded-lg border border-gray-3"
@@ -31,7 +31,7 @@ export default function ExtraInfo({ control }: { control: Control<any> }) {
       />
       <CustomFormField
         control={control}
-        fieldType={FormFieldType.NUMBER}
+        fieldtype={FormFieldType.NUMBER}
         placeholder="This input is quite long"
         name="price_per_day"
         className="py-3 px-4 rounded-lg border border-gray-3"

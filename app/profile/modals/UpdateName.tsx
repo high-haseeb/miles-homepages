@@ -83,14 +83,14 @@ export default function UpdateName({
               <CustomFormField
                 control={form.control}
                 name="firstName"
-                fieldType={FormFieldType.INPUT}
+                fieldtype={FormFieldType.INPUT}
                 placeholder="First name"
                 className="p-4 rounded-xl"
               />
               <CustomFormField
                 control={form.control}
                 name="lastName"
-                fieldType={FormFieldType.INPUT}
+                fieldtype={FormFieldType.INPUT}
                 placeholder="Last name"
                 className="p-4 rounded-xl"
               />

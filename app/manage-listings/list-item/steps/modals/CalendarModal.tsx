@@ -77,7 +77,7 @@ export default function CalendarModal({
             </p>
             <CustomFormField
               control={control}
-              fieldType={FormFieldType.SKELETON}
+              fieldtype={FormFieldType.SKELETON}
               name="multiple_date_ranges"
               className=""
               renderSkeleton={(field) => (
@@ -123,7 +123,7 @@ export default function CalendarModal({
                 <CustomFormField
                   key={day}
                   control={control}
-                  fieldType={FormFieldType.SKELETON}
+                  fieldtype={FormFieldType.SKELETON}
                   name="recurring_days_of_week"
                   className=""
                   renderSkeleton={(field) => (
@@ -153,7 +153,7 @@ export default function CalendarModal({
               <p className="text-black">Recurring schedule:</p>
               <CustomFormField
                 control={control}
-                fieldType={FormFieldType.SKELETON}
+                fieldtype={FormFieldType.SKELETON}
                 name="recurring_date"
                 className=""
                 renderSkeleton={(field) => (

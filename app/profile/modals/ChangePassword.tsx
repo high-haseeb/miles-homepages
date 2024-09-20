@@ -90,14 +90,14 @@ export default function ChangePassword({
               <CustomFormField
                 control={form.control}
                 name="oldPassword"
-                fieldType={FormFieldType.PASSWORD}
+                fieldtype={FormFieldType.PASSWORD}
                 className="p-4 rounded-xl"
                 label="Old Password"
               />
               <CustomFormField
                 control={form.control}
                 name="newPassword"
-                fieldType={FormFieldType.PASSWORD}
+                fieldtype={FormFieldType.PASSWORD}
                 className="p-4 rounded-xl"
                 label="New Password"
               />
@@ -135,7 +135,7 @@ export default function ChangePassword({
             <CustomFormField
               control={form.control}
               name="confirmPassword"
-              fieldType={FormFieldType.PASSWORD}
+              fieldtype={FormFieldType.PASSWORD}
               label="Confirm password"
               className="p-4 rounded-xl "
             />

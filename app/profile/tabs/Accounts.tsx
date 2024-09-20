@@ -193,21 +193,21 @@ export default function Accounts({ clearTab }: { clearTab?: () => void }) {
             {/* <CustomFormField
                 control={form.control}
                 name="firstName"
-                fieldType={FormFieldType.INPUT}
+                fieldtype={FormFieldType.INPUT}
                 label="First name"
                 className="p-4 rounded-lg"
               />
               <CustomFormField
                 control={form.control}
                 name="lastName"
-                fieldType={FormFieldType.INPUT}
+                fieldtype={FormFieldType.INPUT}
                 label="Last name"
                 className="p-4 rounded-lg"
               />
               <CustomFormField
                 control={form.control}
                 name="email"
-                fieldType={FormFieldType.INPUT}
+                fieldtype={FormFieldType.INPUT}
                 label="Email"
                 className="p-4 rounded-lg"
               /> */}

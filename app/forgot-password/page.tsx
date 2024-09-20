@@ -95,7 +95,7 @@ export default function ForgotPassword({
           <CustomFormField
             control={form.control}
             name="email"
-            fieldType={FormFieldType.INPUT}
+            fieldtype={FormFieldType.INPUT}
             placeholder="E-mail address"
             className="p-4 rounded-xl"
           />

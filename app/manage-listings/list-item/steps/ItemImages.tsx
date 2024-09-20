@@ -112,7 +112,7 @@ export default function ItemImages({ control }: { control: Control<any> }) {
         <p className="text-slate-800 font-medium">Upload Product Images</p>
         <CustomFormField
           control={control}
-          fieldType={FormFieldType.SKELETON}
+          fieldtype={FormFieldType.SKELETON}
           name="image"
           className="py-3 px-4 rounded-lg border border-gray-3"
           renderSkeleton={(field) => (
@@ -222,7 +222,7 @@ export default function ItemImages({ control }: { control: Control<any> }) {
       </div>
       <CustomFormField
         control={control}
-        fieldType={FormFieldType.TEXTAREA}
+        fieldtype={FormFieldType.TEXTAREA}
         placeholder="This item..."
         name="description"
         className="py-3 px-4 rounded-lg border border-gray-3"

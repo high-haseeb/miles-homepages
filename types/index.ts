@@ -15,7 +15,7 @@ export interface DashboardLayoutProps {
 
 export interface CustomFormFieldProps {
   control: Control<any>;
-  fieldType: FormFieldType;
+  fieldtype: FormFieldType;
   label?: string;
   placeholder?: string;
   name: string;

@@ -134,14 +134,14 @@ export default function OnboardingPage({
             <CustomFormField
               control={form.control}
               name="firstName"
-              fieldType={FormFieldType.INPUT}
+              fieldtype={FormFieldType.INPUT}
               placeholder="First name"
               className="p-4 rounded-t-xl rounded-b-none"
             />
             <CustomFormField
               control={form.control}
               name="lastName"
-              fieldType={FormFieldType.INPUT}
+              fieldtype={FormFieldType.INPUT}
               placeholder="Last name"
               className="p-4 rounded-b-xl rounded-t-none"
             />
@@ -153,7 +153,7 @@ export default function OnboardingPage({
             <CustomFormField
               control={form.control}
               name="password"
-              fieldType={FormFieldType.PASSWORD}
+              fieldtype={FormFieldType.PASSWORD}
               placeholder="Password"
               className="p-4 rounded-xl "
             />
@@ -191,7 +191,7 @@ export default function OnboardingPage({
           <CustomFormField
             control={form.control}
             name="confirmPassword"
-            fieldType={FormFieldType.PASSWORD}
+            fieldtype={FormFieldType.PASSWORD}
             placeholder="Confirm password"
             className="p-4 rounded-xl "
           />
