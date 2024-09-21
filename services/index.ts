@@ -1,10 +1,14 @@
 import axios from "axios";
+import { parse } from "cookie";
 
 import { API_URL } from "@/constants";
 
-const getToken = () => {
+const getToken = (req?: Request) => {
   if (typeof window !== "undefined") {
     return localStorage.getItem("token");
+  } else if (req) {
+    const cookies = parse(req.headers.get("cookie") || "");
+    return cookies.token || null;
   }
   return null;
 };

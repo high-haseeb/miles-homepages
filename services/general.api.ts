@@ -157,9 +157,16 @@ export const updateSchedule = async ({
 // Get all listings and filter by category, date, and location
 export const getListings = async (params: GetListingsParamsProps) => {
   const { category, startDate, endDate, location } = params;
+  const queryParams = new URLSearchParams();
+
+  if (category) queryParams.append("category", category as string);
+  if (location) queryParams.append("location", location);
+  if (startDate) queryParams.append("startDate", startDate as string);
+  if (endDate) queryParams.append("endDate", endDate as string);
+
   try {
     const response = await apiService.get(
-      `/listings?category=${category}&location=${location}&startDate=${startDate}&endDate=${endDate}`
+      `/listings?${queryParams.toString()}`
     );
     return response?.data;
   } catch (error: any) {

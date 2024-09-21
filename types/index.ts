@@ -239,8 +239,8 @@ export interface CreateBookingPayload {
 }
 
 export interface PageLimitParams {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   rental_status?: string;
   lister_status?: string;
 }
