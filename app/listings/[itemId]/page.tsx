@@ -22,7 +22,7 @@ import DashboardLayout2 from "@/components/Layouts/DashboardLayout2";
 import { CarouselCard } from "@/components/ListedItemCard";
 import { ItemProps } from "@/types";
 import Review from "@/components/Review";
-import { getListing, createBooking } from "@/services/general.api";
+import { getListing, createBooking, getListings } from "@/services/general.api";
 import { useAppContext } from "@/context/AppContext";
 import VerificationModal from "@/components/Modals/VerificationModal";
 import Backbtn from "@/components/Backbtn";
