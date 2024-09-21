@@ -26,9 +26,11 @@ import { ItemProps } from "@/types";
 import EditAvailability from "./modals/EditAvailability";
 import ConfirmDelete from "./modals/ConfirmDelete";
 import { toCurrency } from "@/utils";
+import { getToken } from "@/services";
 
 export default function MyListingItem({ itemId }: { itemId: string }) {
   const router = useRouter();
+  const token = getToken();
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [availability, setAvailability] = useState(false);
@@ -48,7 +50,7 @@ export default function MyListingItem({ itemId }: { itemId: string }) {
 
   const { data: allListings } = useQuery({
     queryKey: ["my-listings"],
-    queryFn: () => myListings(),
+    queryFn: () => myListings(token!),
   });
   const userListings = allListings?.data?.userListings;
   const filteredUserListings = userListings?.filter(
