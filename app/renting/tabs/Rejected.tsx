@@ -15,18 +15,13 @@ import Chip from "@/components/Chip";
 import { getRenterBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
-import { getToken } from "@/services";
 
 export default function Rejected() {
   const router = useRouter();
-  const token = getToken();
   const { data: rejectedBookings, isPending } = useQuery({
     queryKey: ["bookings", "renter", "rejected"],
     queryFn: () =>
-      getRenterBookings(
-        { rental_status: "REJECTED", page: 1, limit: 10 },
-        token!
-      ),
+      getRenterBookings({ rental_status: "REJECTED", page: 1, limit: 10 }),
   });
 
   const detailsList = rejectedBookings?.data?.rows;

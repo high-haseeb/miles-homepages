@@ -15,14 +15,12 @@ import Chip from "@/components/Chip";
 import { getListerBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
-import { getToken } from "@/services";
 
 export default function All() {
   const router = useRouter();
-  const token = getToken();
   const { data: bookings, isPending } = useQuery({
     queryKey: ["bookings", "lister", "all"],
-    queryFn: () => getListerBookings({}, token!),
+    queryFn: () => getListerBookings({}),
   });
 
   const detailsList = bookings?.data?.rows;

@@ -1,4 +1,4 @@
-import { createApiService, getToken } from ".";
+import { apiService } from ".";
 import {
   ListItemPayload,
   GetListingsParamsProps,
@@ -10,11 +10,17 @@ import {
   InitiatePaymentProps,
 } from "@/types";
 
+const getToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+  return null;
+};
+
 // categories
 
 export const getCategories = async () => {
   try {
-    const apiService = createApiService();
     const response = await apiService.get("/categories");
     return response?.data;
   } catch (error: any) {
@@ -24,7 +30,6 @@ export const getCategories = async () => {
 
 export const getSubCategories = async (id: string) => {
   try {
-    const apiService = createApiService();
     const response = await apiService.get(`/sub_categories/${id}`);
     return response?.data;
   } catch (error: any) {
@@ -36,7 +41,6 @@ export const getSubCategories = async (id: string) => {
 export const createListing = async (payload: ListItemPayload) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.post("/listings", payload, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -59,7 +63,6 @@ export const updateListing = async ({
   const token = getToken();
   const { id } = params;
   try {
-    const apiService = createApiService();
     const response = await apiService.put(`/me/listings/${id}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,9 +74,8 @@ export const updateListing = async ({
   }
 };
 
-export const myListings = async (token?: string, page?: number) => {
+export const myListings = async (page?: number) => {
   try {
-    const apiService = createApiService(token);
     const response = await apiService.get(`/me/listings?page=${page || 1}`);
     return response?.data;
   } catch (error: any) {
@@ -84,7 +86,6 @@ export const myListings = async (token?: string, page?: number) => {
 // get single user listing
 export const myListing = async (id: string) => {
   try {
-    const apiService = createApiService();
     const response = await apiService.get(`/listings/${id}`);
     return response?.data;
   } catch (error: any) {
@@ -96,7 +97,6 @@ export const myListing = async (id: string) => {
 export const delMyListing = async (id: string) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.delete(`/me/listings/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -118,7 +118,6 @@ export const updateListingAvailability = async ({
   const token = getToken();
   const { id } = params;
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(
       `/listing_availability/${id}`,
       payload,
@@ -144,7 +143,6 @@ export const updateSchedule = async ({
   const token = getToken();
   const { id } = params;
   try {
-    const apiService = createApiService();
     const response = await apiService.put(`/schedules/${id}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -167,7 +165,6 @@ export const getListings = async (params: GetListingsParamsProps) => {
   if (endDate) queryParams.append("endDate", endDate as string);
 
   try {
-    const apiService = createApiService();
     const response = await apiService.get(
       `/listings?${queryParams.toString()}`
     );
@@ -182,7 +179,6 @@ export const getListingsByDateRange = async (
 ) => {
   const { startDate, endDate } = params;
   try {
-    const apiService = createApiService();
     const response = await apiService.get(
       `/listings?startDate=${startDate}&endDate=${endDate}`
     );
@@ -195,7 +191,6 @@ export const getListingsByDateRange = async (
 // Get a single listing
 export const getListing = async (id: string) => {
   try {
-    const apiService = createApiService();
     const response = await apiService.get(`/listings/${id}`);
     return response?.data;
   } catch (error: any) {
@@ -205,7 +200,6 @@ export const getListing = async (id: string) => {
 
 export const searchListings = async (searchKeyword: string) => {
   try {
-    const apiService = createApiService();
     const response = await apiService.get(`/search?search=${searchKeyword}`);
     return response?.data;
   } catch (error: any) {
@@ -217,7 +211,6 @@ export const searchListings = async (searchKeyword: string) => {
 export const createBooking = async (payload: CreateBookingPayload) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.post(`/bookings`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -232,7 +225,6 @@ export const createBooking = async (payload: CreateBookingPayload) => {
 export const cancelBooking = async (id: number) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/bookings/${id}/cancel`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -247,7 +239,6 @@ export const cancelBooking = async (id: number) => {
 export const acceptBooking = async (id: number) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/bookings/${id}/accept`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -262,7 +253,6 @@ export const acceptBooking = async (id: number) => {
 export const declineBooking = async (id: number) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/bookings/${id}/decline`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -277,7 +267,6 @@ export const declineBooking = async (id: number) => {
 export const confirmBookingPayment = async (id: string) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/bookings/${id}/confirm-payment`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -292,7 +281,6 @@ export const confirmBookingPayment = async (id: string) => {
 export const confirmBookingPickup = async (id: string) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/bookings/${id}/confirm-pickup`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -307,7 +295,6 @@ export const confirmBookingPickup = async (id: string) => {
 export const confirmBookingReturn = async (id: string) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/bookings/${id}/confirm-return`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -319,18 +306,15 @@ export const confirmBookingReturn = async (id: string) => {
   }
 };
 
-export const getRenterBookings = async (
-  params: PageLimitParams,
-  token?: string
-) => {
+export const getRenterBookings = async (params: PageLimitParams) => {
   const { rental_status, page, limit } = params;
+  const token = getToken();
   const queryParams = new URLSearchParams();
 
   if (rental_status) queryParams.append("rental_status", rental_status);
   if (page) queryParams.append("page", page.toString());
   if (limit) queryParams.append("limit", limit.toString());
   try {
-    const apiService = createApiService(token);
     const response = await apiService.get(
       `/bookings/renter?${queryParams.toString()}`,
       {
@@ -345,11 +329,9 @@ export const getRenterBookings = async (
   }
 };
 
-export const getListerBookings = async (
-  params: PageLimitParams,
-  token?: string
-) => {
+export const getListerBookings = async (params: PageLimitParams) => {
   const { lister_status, page, limit } = params;
+  const token = getToken();
   const queryParams = new URLSearchParams();
 
   if (lister_status) queryParams.append("lister_status", lister_status);
@@ -357,7 +339,6 @@ export const getListerBookings = async (
   if (limit) queryParams.append("limit", limit.toString());
 
   try {
-    const apiService = createApiService(token);
     const response = await apiService.get(
       `/bookings/lister?${queryParams.toString()}`,
       {
@@ -375,7 +356,6 @@ export const getListerBookings = async (
 export const getSingleBooking = async (id: string) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.get(`/bookings/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -392,7 +372,6 @@ export const getSingleBooking = async (id: string) => {
 export const sendForgotPassword = async (payload: { email: string }) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/send-forgot-password`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -407,7 +386,6 @@ export const sendForgotPassword = async (payload: { email: string }) => {
 export const changePassword = async (payload: { newPassword: string }) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(
       `/forgot-password?token=${token}`,
       payload
@@ -420,7 +398,6 @@ export const changePassword = async (payload: { newPassword: string }) => {
 
 export const updatePassword = async (payload: { newPassword: string }) => {
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`update-password`, payload);
     return response?.data;
   } catch (error: any) {
@@ -431,7 +408,6 @@ export const updatePassword = async (payload: { newPassword: string }) => {
 export const uploadProfilePic = async (payload: { image: File }) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/uploads`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -447,7 +423,6 @@ export const uploadProfilePic = async (payload: { image: File }) => {
 export const updateEmail = async (payload: { email: string }) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.patch(`/update-email`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -469,7 +444,6 @@ export const getMessages = async (params: GetMessagesParams) => {
   const { roomId } = params;
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.get(`/messages/${roomId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -484,7 +458,6 @@ export const getMessages = async (params: GetMessagesParams) => {
 export const initiatePayment = async (payload: InitiatePaymentProps) => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.post(`/transactions`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -499,7 +472,6 @@ export const initiatePayment = async (payload: InitiatePaymentProps) => {
 export const fetchSmileToken = async () => {
   const token = getToken();
   try {
-    const apiService = createApiService();
     const response = await apiService.get(`/token`, {
       headers: {
         Authorization: `Bearer ${token}`,

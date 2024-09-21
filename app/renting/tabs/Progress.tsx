@@ -15,22 +15,17 @@ import Chip from "@/components/Chip";
 import { getRenterBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
-import { getToken } from "@/services";
 
 export default function Progress() {
   const router = useRouter();
-  const token = getToken();
   const { data: progressBookings, isPending } = useQuery({
     queryKey: ["bookings", "renter", "progress"],
     queryFn: () =>
-      getRenterBookings(
-        {
-          rental_status: "CURRENTLY IN USE",
-          page: 1,
-          limit: 10,
-        },
-        token!
-      ),
+      getRenterBookings({
+        rental_status: "CURRENTLY IN USE",
+        page: 1,
+        limit: 10,
+      }),
   });
 
   const detailsList = progressBookings?.data?.rows;
