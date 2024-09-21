@@ -309,9 +309,14 @@ export const confirmBookingReturn = async (id: string) => {
 export const getRenterBookings = async (params: PageLimitParams) => {
   const { rental_status, page, limit } = params;
   const token = getToken();
+  const queryParams = new URLSearchParams();
+
+  if (rental_status) queryParams.append("rental_status", rental_status);
+  if (page) queryParams.append("page", page.toString());
+  if (limit) queryParams.append("limit", limit.toString());
   try {
     const response = await apiService.get(
-      `/bookings/renter?rental_status=${rental_status}&page=${page}&limit=${limit}`,
+      `/bookings/renter?${queryParams.toString()}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -327,9 +332,15 @@ export const getRenterBookings = async (params: PageLimitParams) => {
 export const getListerBookings = async (params: PageLimitParams) => {
   const { lister_status, page, limit } = params;
   const token = getToken();
+  const queryParams = new URLSearchParams();
+
+  if (lister_status) queryParams.append("lister_status", lister_status);
+  if (page) queryParams.append("page", page.toString());
+  if (limit) queryParams.append("limit", limit.toString());
+
   try {
     const response = await apiService.get(
-      `/bookings/lister?lister_status=${lister_status}&page=${page}&limit=${limit}`,
+      `/bookings/lister?${queryParams.toString()}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
