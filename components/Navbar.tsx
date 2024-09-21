@@ -81,13 +81,13 @@ export default function Navbar() {
       <div className="hidden md:flex items-center gap-10 gap-x-6">
         <Link
           href="/manage-listings/list-item"
-          className="font-medium text-slate-900 py-3 px-2"
+          className="font-medium text-slate-900 hover:text-green-500 py-3 px-2"
         >
           List an item
         </Link>
         <Link
           href="#how-it-works"
-          className="font-medium text-slate-900 py-3 px-2"
+          className="font-medium text-slate-900 hover:text-green-500 py-3 px-2"
         >
           How it works
         </Link>
@@ -95,13 +95,13 @@ export default function Navbar() {
       <div className="hidden md:flex items-center gap-x-[5px]">
         <Link
           href="/login"
-          className="py-3 px-10 rounded-[38px] font-medium text-slate-900"
+          className="py-3 px-10 rounded-[38px] font-medium text-slate-900 hover:text-green-500"
         >
           Login
         </Link>
         <Link
           href="/signup"
-          className="py-3 px-10 text-white bg-green-500 rounded-[38px] font-medium"
+          className="py-3 px-10 text-white bg-green-500 hover:bg-green-700 rounded-[38px] font-medium"
         >
           Sign up
         </Link>

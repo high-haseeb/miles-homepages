@@ -9,6 +9,7 @@ import ShortRightArrow from "@/components/vectors/ShortRightArrow";
 import ListStyle from "@/components/vectors/ListStyle";
 import Footer from "@/components/Footer";
 import HomepageAnimation from "@/components/HomepageAnimation";
+import TickIcon from "@/components/vectors/TickIcon";
 
 export default function Home() {
   return (
@@ -29,7 +30,7 @@ export default function Home() {
           </p>
           <Link
             href="/listings"
-            className="flex items-center gap-x-3 px-[30px] py-3 rounded-[38px] bg-green-500 text-sm md:text-base text-white"
+            className="flex items-center gap-x-3 px-[30px] py-3 rounded-[38px] bg-green-500 hover:bg-green-700 text-sm md:text-base text-white"
           >
             Get started <PlayIcon />
           </Link>
@@ -58,33 +59,154 @@ export default function Home() {
             className="object-contain -rotate-45"
           />
         </div>
-        <HomepageAnimation />
       </header>
       <main className="flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
-        <section className="bg-white flex flex-col py-10 max-sm:px-[25px] md:pt-14 mb:pb-[88px]">
+        <section className="bg-white flex flex-col py-10 md:pt-14 mb:pb-[88px]">
           <div className="flex mb-[34px] md:mb-[60.5px] lg:mb-16 justify-center">
             <div className="desc-chip">WHY LIST ON MILES?</div>
           </div>
-          <div></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 rounded-[20px] md:rounded-[44px] xl:rounded-[60px] overflow-hidden">
+            <div className="h-[304.63px] md:h-[387px] xl:h-[530px]">
+              <Image
+                src="/images/earn-extra-cash.png"
+                height={246}
+                width={564}
+                alt="earn-extra-cash"
+                className="object-cover h-[304.63px] md:h-[387px] xl:h-[530px]"
+              />
+            </div>
+            <div className="h-[304.63px] md:h-[387px] xl:h-[530px] flex flex-col justify-center px-8 bg-teal-50">
+              <h2 className="mb-2 md:mb-2.5 lg:mb-4 body-medium-20 text-teal-600">
+                Why List your stuff on Miles?
+              </h2>
+              <h3 className="heading-bold-20 text-black mb-[5px] md:mb-[7.5px] lg:mb-2.5">
+                Earn extra cash effortlessly
+              </h3>
+              <p className="body-regular-16 text-slate-900 mb-4 md:mb-8 lg:mb-11">
+                Turn your idle possessions into a steady stream of revenue by
+                renting them out on Miles.
+              </p>
+              <div className="flex flex-col space-y-5">
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5">
+                  <TickIcon />
+                  <p className="body-regular-16 text-black">Passive Income</p>
+                </div>
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5">
+                  <TickIcon />
+                  <p className="body-regular-16 text-black">
+                    Maximized unused Assets
+                  </p>
+                </div>
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5 space-x-[11px]">
+                  <TickIcon />
+                  <p className="body-regular-16 text-black">
+                    Flexible earnings
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="h-[304.63px] md:h-[387px] xl:h-[530px] flex flex-col justify-center px-8 bg-orange-50">
+              <h2 className="mb-2 md:mb-2.5 lg:mb-4 body-medium-20 text-orange-600">
+                Why List your stuff on Miles?
+              </h2>
+              <h3 className="heading-bold-20 text-black mb-[5px] md:mb-[7.5px] lg:mb-2.5">
+                Hassle-Free Listing
+              </h3>
+              <p className="body-regular-16 text-slate-900 mb-4 md:mb-8 lg:mb-11">
+                Get your items up for rent in just a few clicks. We take care of
+                the details so you can focus on earning.
+              </p>
+              <div className="flex flex-col space-y-5">
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5 space-x-[11px]">
+                  <TickIcon color="#E87F2B" />
+                  <p className="body-regular-16 text-black">
+                    Quick and easy to setup
+                  </p>
+                </div>
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5 space-x-[11px]">
+                  <TickIcon color="#E87F2B" />
+                  <p className="body-regular-16 text-black">
+                    In-built client communication gateway
+                  </p>
+                </div>
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5 space-x-[11px]">
+                  <TickIcon color="#E87F2B" />
+                  <p className="body-regular-16 text-black">
+                    Quick responsive customer support
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="h-[304.63px] md:h-[387px] xl:h-[530px]">
+              <Image
+                src="/images/new-rental-request.png"
+                height={246}
+                width={564}
+                alt="earn-extra-cash"
+                className="object-cover h-[304.63px] md:h-[387px] xl:h-[530px]"
+              />
+            </div>
+            <div className="h-[304.63px] md:h-[387px] xl:h-[530px]">
+              <Image
+                src="/images/active-community.png"
+                height={246}
+                width={564}
+                alt="earn-extra-cash"
+                className="object-cover h-[304.63px] md:h-[387px] xl:h-[530px]"
+              />
+            </div>
+            <div className="h-[304.63px] md:h-[387px] xl:h-[530px] flex flex-col justify-center px-8 bg-green-50">
+              <h2 className="mb-2 md:mb-2.5 lg:mb-4 body-medium-20 text-green-600">
+                Why List your stuff on Miles?
+              </h2>
+              <h3 className="heading-bold-20 text-black mb-[5px] md:mb-[7.5px] lg:mb-2.5">
+                Trusted Community
+              </h3>
+              <p className="body-regular-16 text-slate-900 mb-4 md:mb-8 lg:mb-11">
+                Join a vibrant community of listers and renters, built on
+                transparency and trust.
+              </p>
+              <div className="flex flex-col space-y-5">
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5 space-x-[11px]">
+                  <TickIcon color="#019D45" />
+                  <p className="body-regular-16 text-black">Peace of mind</p>
+                </div>
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5 space-x-[11px]">
+                  <TickIcon color="#019D45" />
+                  <p className="body-regular-16 text-black">
+                    Secure transactions
+                  </p>
+                </div>
+                <div className="flex items-center md:space-x-3.5 lg:space-x-5 space-x-[11px]">
+                  <TickIcon color="#019D45" />
+                  <p className="body-regular-16 text-black">
+                    Quality connections
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
         <section
           id="how-it-works"
-          className="bg-white flex flex-col py-10 px-[25px] md:pt-[71px] md:pb-[123px]"
+          className="bg-white flex flex-col py-10 md:pt-[71px] md:pb-[123px]"
         >
-          <div className="desc-chip sm:hidden mb-[34px]">
+          <div className="desc-chip sm:hidden mb-[34px] self-center">
             HOW TO LIST ON MILES
           </div>
-          <div className="flex flex-col sm:flex-row flex-start md:gap-x-[96.95px] xl:gap-x-[178.9px]">
+          <div className="flex flex-col max-sm:gap-y-5 sm:flex-row flex-start md:space-x-[96.95px] xl:space-x-[178.9px]">
             <Image
               src="/images/iphone-15-pro.png"
               alt="iphone15 pro mockup"
               height={609.29}
               width={298.1}
-              className="object-contain md:h-[420px] md:w-[204.9px] xl:w-[298.1px] xl:h-[609.29px]"
+              className="object-contain md:h-[420px] md:w-[204.9px] xl:w-[298.1px] xl:h-[609.29px] max-sm:self-center"
             />
-            <div className="flex flex-col gap-y-5 md:gap-y-[38px] xl:gap-y-[54px]">
-              <div className="desc-chip">HOW TO LIST ON MILES</div>
-              <div className="flex flex-col gap-y-[25px] xl:gap-y-[46px] xl:max-w-[569.65px]">
+            <div className="flex flex-col gap-y-5 md:space-y-[38px] xl:space-y-[54px]">
+              <div className="desc-chip hidden sm:block">
+                HOW TO LIST ON MILES
+              </div>
+              <div className="flex flex-col space-y-[25px] xl:space-y-[46px] xl:max-w-[569.65px]">
                 <div className="flex gap-x-[30px] md:gap-x-10">
                   <Image
                     src="/icons/icon-one.svg"
@@ -136,7 +258,7 @@ export default function Home() {
               </div>
               <Link
                 href="#"
-                className="flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 p-4 pl-6 w-fit"
+                className="flex items-center max-sm:self-center gap-x-4 text-white rounded-[38px] bg-green-500 hover:bg-green-700 p-4 pl-6 w-fit"
               >
                 Get started
                 <PlayIcon className="md:hidden" />
@@ -145,7 +267,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="bg-white flex flex-col py-10 px-[25px] md:py-14">
+        <section className="bg-white flex flex-col py-10 md:py-14">
           <div className="flex flex-col gap-y-[7px] md:gap-y-5 self-center items-center text-center mb-[50px] md:mb-[70px] max-w-[650px]">
             <h4 className="header-3">We&apos;ve thought of everything</h4>
             <p className="desc">
@@ -157,11 +279,11 @@ export default function Home() {
           <div className="flex flex-col gap-y-[30px] sm:flex-row sm:justify-between">
             <div className="flex flex-col sm:max-w-[220.26px] xl:max-w-[310px]">
               <Image
-                src="/images/verified-community.png"
+                src="/images/verified-community.jpg"
                 alt="verified-community"
                 width={310}
                 height={257}
-                className="object-cover rounded-t-[14.20px] lg:rounded-t-[20px] mb-4.5 lg:mb-[25px]"
+                className="object-cover rounded-t-[14.20px] lg:rounded-t-[20px] mb-4.5 lg:mb-[25px] w-full h-[257px]"
               />
               <h5 className="heading-bold-20 mb-2 lg:mb-2.5">
                 Verified Community
@@ -173,11 +295,11 @@ export default function Home() {
             </div>
             <div className="flex flex-col sm:max-w-[220.26px] xl:max-w-[310px]">
               <Image
-                src="/images/instant-payment.png"
+                src="/images/money-display.jpg"
                 alt="instant-payment"
                 width={310}
                 height={257}
-                className="object-cover rounded-t-[20px] mb-[25px]"
+                className="object-cover rounded-t-[20px] mb-[25px] w-full h-[257px]"
               />
               <h5 className="heading-bold-20 mb-2 lg:mb-2.5">
                 Instant Payments
@@ -189,11 +311,11 @@ export default function Home() {
             </div>
             <div className="flex flex-col sm:max-w-[220.26px] xl:max-w-[310px]">
               <Image
-                src="/images/peace-of-mind.png"
+                src="/images/peace-of-mind.jpg"
                 alt="peace-of-mind"
                 width={310}
                 height={257}
-                className="object-cover rounded-t-[20px] mb-[25px]"
+                className="object-cover rounded-t-[20px] mb-[25px] w-full h-[257px]"
               />
               <h5 className="heading-bold-20 mb-2 lg:mb-2.5">Peace of mind</h5>
               <p className="body-regular-16">
@@ -203,7 +325,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="bg-white flex flex-col md:pt-[140px] md:pb-[232px] px-[25px] py-10 relative">
+        <section className="bg-white flex flex-col md:pt-[140px] md:pb-[232px] py-10 relative">
           <div className="flex flex-col gap-y-[7px] max-w-[650px] md:gap-y-5 self-center items-center text-center mb-[50px] md:mb-[70px]">
             <h4 className="header-3">Explore our categories</h4>
             <p className="desc md:-mt-[5px] mb-5 md:mb-[33px]">
@@ -213,7 +335,7 @@ export default function Home() {
             </p>
             <Link
               href="#"
-              className="flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 p-4 pl-6 w-fit"
+              className="flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 hover:bg-green-700 p-4 pl-6 w-fit"
             >
               Explore now
               <PlayIcon className="md:hidden" />
@@ -243,38 +365,46 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="relative md:-mb-[467px] rounded-[14.03px] md:rounded-[37.82px] max-w-[876px] w-full self-center py-[25px] md:pt-[54px] md:pb-[48.64px] flex flex-col items-center text-center md:bg-[url('/images/our-mission-bg.png')] bg-[url('/images/our-mission-mobile.png')] bg-center bg-cover bg-no-repeat">
-            <h4 className="font-semibold text-slate-900 md:text-[42px] md:leading-[52.5px] text-lg mb-[9px] md:mb-[21px]">
-              Our Mission
-            </h4>
-            <p className="text-dark_2 max-w-[558px] mb-[19px] md:mb-[21px] text-xs md:text-base">
-              We’re focused on first, but we’re expanding our catalog to a more
-              diverse range of items soon. Please check back often to see what
-              we offer
-            </p>
-            <div className="flex md:flex-col flex-wrap max-md:justify-center gap-2 mb-[23px] md:mb-[30px]">
-              <div className="flex items-center gap-x-4 md:order-none order-3 ">
-                <ListStyle />
-                <p className="text-sm text-slate-900">
+          <div className="relative md:-mb-[467px] rounded-[14.03px] md:rounded-[37.82px] md:max-w-[641px] xl:max-w-[801px] w-full self-center py-6 md:pt-10 md:pb-7 xl:pt-[54px] xl:pb-9 flex flex-col items-center text-center md:bg-[url('/images/our-mission-bg.png')] bg-[url('/images/our-mission-mobile.png')] bg-center bg-cover bg-no-repeat">
+            <h4 className="heading-bold-30 mb-9">Our Mission</h4>
+
+            <div className="flex flex-col items-center">
+              <div className="flex items-center space-x-4.5 rounded-md md:rounded-2xl xl:rounded-[20px] py-[5px] px-2.5 md:py-3 md:px-6 xl:py-[15px] xl:px-[30px] bg-white mb-[15px] w-fit">
+                <Image
+                  src="/icons/mission-1.svg"
+                  width={39}
+                  height={41}
+                  alt="mission"
+                  className="xl:h-[41px] xl:w-[38.98px] md:w-[31.2px] md:h-[32.81px] w-3.5 h-[14.79px]"
+                />
+
+                <p className="body-regular-16">
                   Build a highly engaged audience
                 </p>
               </div>
-              <div className="flex items-center gap-x-4 md:order-none order-1 ">
-                <ListStyle color="#003F32" />
-                <p className="text-sm text-slate-900">Get more leads</p>
+              <div className="flex items-center space-x-4.5 rounded-md md:rounded-2xl xl:rounded-[20px] py-[5px] px-2.5 md:py-3 md:px-6 xl:py-[15px] xl:px-[30px] bg-white mb-2.5 w-fit">
+                <Image
+                  src="/icons/mission-2.svg"
+                  width={39}
+                  height={41}
+                  alt="mission"
+                  className="xl:h-[41px] xl:w-[38.98px] md:w-[31.2px] md:h-[32.81px] w-3.5 h-[14.79px]"
+                />
+
+                <p className="body-regular-16">Close more clients</p>
               </div>
-              <div className="flex items-center gap-x-4 md:order-none order-2 ">
-                <ListStyle color="#E87F2B" />
-                <p className="text-sm text-slate-900">Close more clients</p>
+              <div className="flex items-center space-x-4.5 rounded-md md:rounded-2xl xl:rounded-[20px] py-[5px] px-2.5 md:py-3 md:px-6 xl:py-[15px] xl:px-[30px] bg-white w-fit">
+                <Image
+                  src="/icons/mission-3.svg"
+                  width={39}
+                  height={41}
+                  alt="mission"
+                  className="xl:h-[41px] xl:w-[38.98px] md:w-[31.2px] md:h-[32.81px] w-3.5 h-[14.79px]"
+                />
+
+                <p className="body-regular-16">Get more leads</p>
               </div>
             </div>
-            <Link
-              href="#"
-              className="flex items-center gap-x-[12.1px] text-xs text-white rounded-[28.75px] bg-green-500 p-[12.1px] w-fit"
-            >
-              Explore now
-              <ShortRightArrow size="18.6" />
-            </Link>
           </div>
         </section>
       </main>

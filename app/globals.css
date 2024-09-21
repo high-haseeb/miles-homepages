@@ -136,7 +136,7 @@ input {
 }
 
 .desc-chip {
-  @apply md:bg-slate-50 md:py-[5px] font-medium w-fit md:px-2.5 rounded-[30px] uppercase text-sm text-dark_2;
+  @apply bg-slate-50 py-[5px] font-medium w-fit px-2.5 rounded-[30px] uppercase text-sm text-dark_2;
 }
 
 .header-3 {
@@ -149,6 +149,14 @@ input {
 
 .heading-bold-20 {
   @apply font-bold text-gray-900 text-sm lg:text-xl;
+}
+
+.heading-bold-30 {
+  @apply font-bold text-slate-900 md:text-2xl xl:text-[30px] xl:leading-[37.5px] text-xs;
+}
+
+.body-medium-20 {
+  @apply md:text-sm lg:text-xl font-medium;
 }
 
 .body-regular-16 {
