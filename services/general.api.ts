@@ -84,7 +84,7 @@ export const myListings = async (page?: number) => {
 };
 
 // get single user listing
-export const myListing = async (id: number) => {
+export const myListing = async (id: string) => {
   try {
     const response = await apiService.get(`/listings/${id}`);
     return response?.data;
@@ -94,7 +94,7 @@ export const myListing = async (id: number) => {
 };
 
 // delete single user listing
-export const delMyListing = async (id: number) => {
+export const delMyListing = async (id: string) => {
   const token = getToken();
   try {
     const response = await apiService.delete(`/me/listings/${id}`, {
@@ -112,7 +112,7 @@ export const updateListingAvailability = async ({
   params,
   payload,
 }: {
-  params: { id: number };
+  params: { id: string };
   payload: { status: string };
 }) => {
   const token = getToken();

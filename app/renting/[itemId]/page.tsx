@@ -7,7 +7,7 @@ export async function generateStaticParams() {
     const listings = await getRenterBookings({});
     return (
       listings?.data?.map((item: DetailListType) => ({
-        itemId: item?.listing_id.toString(),
+        itemId: item?.booking_id.toString(),
       })) || []
     );
   } catch (error) {

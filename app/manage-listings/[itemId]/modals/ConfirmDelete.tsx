@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import DangerCautionIcon from "@/components/vectors/DangerCautionIcon";
 
 interface ConfirmDeleteModalProps extends ModalProps {
-  itemId: number;
+  itemId: string;
 }
 
 export default function ConfirmDelete({
