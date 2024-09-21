@@ -256,7 +256,7 @@ export default function Listings() {
               gestureHandling="greedy"
               disableDefaultUI
             >
-              {listings?.data.map((item: ItemProps) => (
+              {currentListings?.map((item: ItemProps) => (
                 <CustomMarker
                   key={item.listing_id}
                   lat={Number(item.latitude)}
