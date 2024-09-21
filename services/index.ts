@@ -1,22 +1,25 @@
+import { getCookie } from "cookies-next";
 import axios from "axios";
-import { parse } from "cookie";
 
 import { API_URL } from "@/constants";
 
-const getToken = (req?: Request) => {
+export const getToken = (context?: { req?: any; res?: any }) => {
   if (typeof window !== "undefined") {
     return localStorage.getItem("token");
-  } else if (req) {
-    const cookies = parse(req.headers.get("cookie") || "");
-    return cookies.token || null;
+  } else {
+    return getCookie("token", context) as string | null;
   }
-  return null;
 };
 
-export const apiService = axios.create({
-  baseURL: API_URL,
-  responseType: "json",
-});
+export const createApiService = (token?: string) => {
+  return axios.create({
+    baseURL: API_URL,
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    responseType: "json",
+  });
+};
+
+export const apiService = createApiService();
 
 apiService.interceptors.request.use(
   (config) => {

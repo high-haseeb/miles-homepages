@@ -15,17 +15,22 @@ import Chip from "@/components/Chip";
 import { getListerBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
+import { getToken } from "@/services";
 
 export default function Upcoming() {
   const router = useRouter();
+  const token = getToken();
   const { data: upcomingBookings, isPending } = useQuery({
     queryKey: ["bookings", "lister", "upcoming"],
     queryFn: () =>
-      getListerBookings({
-        lister_status: "AWAITING PAYMENT",
-        page: 1,
-        limit: 10,
-      }),
+      getListerBookings(
+        {
+          lister_status: "AWAITING PAYMENT",
+          page: 1,
+          limit: 10,
+        },
+        token!
+      ),
   });
 
   const detailsList = upcomingBookings?.data?.rows;

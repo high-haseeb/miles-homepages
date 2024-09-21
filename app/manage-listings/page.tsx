@@ -7,13 +7,16 @@ import ListItemIcon from "@/components/vectors/ListItemIcon";
 import ListedItemCard from "@/components/ListedItemCard";
 import { myListings } from "@/services/general.api";
 import { ItemProps } from "@/types";
+import { getToken } from "@/services";
 
-export default function Lisitngs() {
+export default function Listings() {
+  const token = getToken();
   const { data: listings, isPending } = useQuery({
     queryKey: ["my-listings"],
-    queryFn: () => myListings(),
+    queryFn: () => myListings(token!),
   });
   const userListings = listings?.data?.userListings;
+
   return (
     <DashboardLayout>
       <>

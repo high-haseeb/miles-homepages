@@ -15,13 +15,18 @@ import Chip from "@/components/Chip";
 import { getListerBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
+import { getToken } from "@/services";
 
 export default function Completed() {
   const router = useRouter();
+  const token = getToken();
   const { data: completedBookings, isPending } = useQuery({
     queryKey: ["bookings", "lister", "completed"],
     queryFn: () =>
-      getListerBookings({ lister_status: "COMPLETED", page: 1, limit: 10 }),
+      getListerBookings(
+        { lister_status: "COMPLETED", page: 1, limit: 10 },
+        token!
+      ),
   });
 
   const detailsList = completedBookings?.data?.rows;

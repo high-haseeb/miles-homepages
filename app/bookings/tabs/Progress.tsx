@@ -15,17 +15,22 @@ import Chip from "@/components/Chip";
 import { getListerBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
+import { getToken } from "@/services";
 
 export default function Progress() {
   const router = useRouter();
+  const token = getToken();
   const { data: progessBookings, isPending } = useQuery({
     queryKey: ["bookings", "lister", "progress"],
     queryFn: () =>
-      getListerBookings({
-        lister_status: "CURRENTLY IN USE",
-        page: 1,
-        limit: 10,
-      }),
+      getListerBookings(
+        {
+          lister_status: "CURRENTLY IN USE",
+          page: 1,
+          limit: 10,
+        },
+        token!
+      ),
   });
 
   const detailsList = progessBookings?.data?.rows;

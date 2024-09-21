@@ -15,17 +15,22 @@ import Chip from "@/components/Chip";
 import { getListerBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
+import { getToken } from "@/services";
 
 export default function Pending() {
   const router = useRouter();
+  const token = getToken();
   const { data: pendingBookings, isPending } = useQuery({
     queryKey: ["bookings", "lister", "pending"],
     queryFn: () =>
-      getListerBookings({
-        lister_status: "PENDING REQUEST",
-        page: 1,
-        limit: 10,
-      }),
+      getListerBookings(
+        {
+          lister_status: "PENDING REQUEST",
+          page: 1,
+          limit: 10,
+        },
+        token!
+      ),
   });
 
   const detailsList = pendingBookings?.data?.rows;

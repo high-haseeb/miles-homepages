@@ -15,13 +15,18 @@ import Chip from "@/components/Chip";
 import { getListerBookings } from "@/services/general.api";
 import { DetailListType, DetailsType } from "@/types";
 import { formattedDate } from "@/utils";
+import { getToken } from "@/services";
 
 export default function Cancelled() {
   const router = useRouter();
+  const token = getToken();
   const { data: rejectedBookings, isPending } = useQuery({
     queryKey: ["bookings", "lister", "cancelled"],
     queryFn: () =>
-      getListerBookings({ lister_status: "CANCELED", page: 1, limit: 10 }),
+      getListerBookings(
+        { lister_status: "CANCELED", page: 1, limit: 10 },
+        token!
+      ),
   });
 
   const detailsList = rejectedBookings?.data?.rows;

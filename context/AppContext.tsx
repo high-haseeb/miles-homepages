@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
+import { setCookie } from "cookies-next";
 
 //remember to add isUserVerified context
 
@@ -65,9 +66,11 @@ export default function AppContextProvider({
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
+      setCookie("token", token, { maxAge: 30 * 24 * 60 * 60 });
       setIsLoggedIn(true);
     } else {
       localStorage.removeItem("token");
+      setCookie("token", "");
       setIsLoggedIn(false);
     }
   }, [token]);
