@@ -6,12 +6,18 @@ import LeftArrow from "./vectors/LeftArrow";
 export default function Backbtn({
   link,
   text,
+  handleClick,
 }: {
   link?: string;
   text?: string;
+  handleClick?: () => void;
 }) {
   const router = useRouter();
   const handleReturnBack = () => {
+    if (handleClick) {
+      handleClick();
+      return;
+    }
     if (link) router.push(link);
     else router.back();
   };

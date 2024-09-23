@@ -223,11 +223,16 @@ export default function ListItem({
     return () => subscription.unsubscribe();
   }, [form]);
 
+  const handleBackClick = () => {
+    if (currentStep === 1) router.back();
+    else setCurrentStep((prev) => prev - 1);
+  };
+
   return (
     <DashboardLayout>
       <>
         <div className="flex items-center justify-between sm:mb-[50px]">
-          <Backbtn />
+          <Backbtn handleClick={handleBackClick} />
           <div className="max-w-[495px] w-full hidden sm:block">
             <Stepper
               steps={steps}
