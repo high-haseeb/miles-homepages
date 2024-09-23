@@ -10,6 +10,7 @@ import Completed from "./tabs/Completed";
 import All from "./tabs/All";
 import Rejected from "./tabs/Rejected";
 import Cancelled from "./tabs/Cancelled";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function Bookings() {
   return (
@@ -31,52 +32,57 @@ export default function Bookings() {
             </button>
           </div>
         </div>
-        <Tabs defaultValue="pending" className="sm:px-[25px]">
-          <TabsList className="sm:gap-x-10 gap-x-6 max-sm:w-screen max-sm:overflow-x-auto w-full text-slate-400 bg-transparent h-auto pb-0 border-b border-gray-2 rounded-none justify-start">
-            <TabsTrigger value="pending" className="tab-item">
-              Pending request
-            </TabsTrigger>
-            <TabsTrigger value="upcoming" className="tab-item">
-              Upcoming
-            </TabsTrigger>
-            <TabsTrigger value="progress" className="tab-item">
-              In progress
-            </TabsTrigger>
-            <TabsTrigger value="completed" className="tab-item">
-              Completed
-            </TabsTrigger>
-            <TabsTrigger value="cancelled" className="tab-item">
-              Cancelled
-            </TabsTrigger>
-            <TabsTrigger value="rejected" className="tab-item">
-              Rejected
-            </TabsTrigger>
-            <TabsTrigger value="all" className="tab-item">
-              All
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="pending">
-            <Pending />
-          </TabsContent>
-          <TabsContent value="upcoming">
-            <Upcoming />
-          </TabsContent>
-          <TabsContent value="progress">
-            <Progress />
-          </TabsContent>
-          <TabsContent value="completed">
-            <Completed />
-          </TabsContent>
-          <TabsContent value="cancelled">
-            <Cancelled />
-          </TabsContent>
-          <TabsContent value="rejected">
-            <Rejected />
-          </TabsContent>
-          <TabsContent value="all">
-            <All />
-          </TabsContent>
-        </Tabs>
+        <div className="overflow-hidden">
+          <Tabs defaultValue="pending" className="w-full">
+            <ScrollArea className="xl:w-[1038px] lg:w-[680px] md:w-[484px]">
+              <TabsList className="space-x-6 xl:space-x-10 text-slate-400 bg-transparent h-auto pb-0 border-b border-gray-2 rounded-none justify-start">
+                <TabsTrigger value="pending" className="tab-item">
+                  Pending request
+                </TabsTrigger>
+                <TabsTrigger value="upcoming" className="tab-item">
+                  Upcoming
+                </TabsTrigger>
+                <TabsTrigger value="progress" className="tab-item">
+                  In progress
+                </TabsTrigger>
+                <TabsTrigger value="completed" className="tab-item">
+                  Completed
+                </TabsTrigger>
+                <TabsTrigger value="cancelled" className="tab-item">
+                  Cancelled
+                </TabsTrigger>
+                <TabsTrigger value="rejected" className="tab-item">
+                  Rejected
+                </TabsTrigger>
+                <TabsTrigger value="all" className="tab-item">
+                  All
+                </TabsTrigger>
+              </TabsList>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+            <TabsContent value="pending">
+              <Pending />
+            </TabsContent>
+            <TabsContent value="upcoming">
+              <Upcoming />
+            </TabsContent>
+            <TabsContent value="progress">
+              <Progress />
+            </TabsContent>
+            <TabsContent value="completed">
+              <Completed />
+            </TabsContent>
+            <TabsContent value="cancelled">
+              <Cancelled />
+            </TabsContent>
+            <TabsContent value="rejected">
+              <Rejected />
+            </TabsContent>
+            <TabsContent value="all">
+              <All />
+            </TabsContent>
+          </Tabs>
+        </div>
       </>
     </DashboardLayout>
   );

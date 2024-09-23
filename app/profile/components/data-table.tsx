@@ -39,7 +39,7 @@ export function DataTable<TData, TValue>({
     <div className={className}>
       <div>
         <Table className="w-full">
-          <TableHeader className="hidden sm:block">
+          <TableHeader className="max-sm:hidden">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
