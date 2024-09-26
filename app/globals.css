@@ -175,6 +175,10 @@ input {
   @apply font-semibold xl:text-[1.625rem] md:text-xl text-lg leading-[32.5px];
 }
 
+.body-sm-20 {
+  @apply font-semibold xl:text-xl md:text-base text-sm;
+}
+
 .noScrollBar {
   -ms-overflow-style: none;
   scrollbar-width: none;

@@ -14,8 +14,8 @@ import PlayIcon from "@/components/vectors/PlayIcon";
 import Footer from "@/components/Footer";
 import YellowStar from "@/components/vectors/YellowStar";
 import CheckboxIcon from "@/components/vectors/CheckboxIcon";
-import LongRightArrow from "@/components/vectors/LongRightArrow";
 import ShortRightArrow from "@/components/vectors/ShortRightArrow";
+import ConnectLine from "@/components/vectors/ConnectLine";
 
 export default function RenterPage() {
   return (
@@ -243,13 +243,13 @@ export default function RenterPage() {
             A diverse and growing
             <br /> range of items
           </h3>
-          <div className="flex md::items-stretch xl:space-x-[30px] md:space-x-5">
-            <div className="relative bg-cover bg-center bg-no-repeat bg-[url('/images/drone.jpg')] bg-blend-multiply md:basis-1/2 xl:rounded-[15px] md:rounded-[10.55px] rounded-md w-[157px] flex flex-col justify-between xl:py-[35px] xl:px-[45px]">
-              <div className="absolute bottom-0 left-0 h-1/4 w-full bg-gradient-to-t from-white backdrop-blur-[20px] md:basis-1/2 xl:rounded-b-[15px] md:rounded-b-[10.55px] rounded-b-md"></div>
-              <div className="bg-[#305FD8] rounded-[44px] py-[10.65px] px-[14.2px] text-white text-[10px] font-medium w-fit">
+          <div className="flex flex-col gap-y-4 md:flex-row md:items-stretch xl:gap-x-[30px] md:gap-x-5">
+            <div className="relative shrink-0 bg-cover bg-center bg-no-repeat bg-[url('/images/drone.jpg')] bg-blend-multiply md:basis-1/2 xl:rounded-[15px] md:rounded-[10.55px] rounded-md max-sm:h-[214.31px] py-4.5 px-6 flex flex-col justify-between xl:py-[35px] xl:px-[45px] md:py-6 md:px-8">
+              <div className="absolute bottom-0 left-0 h-1/4 w-full bg-gradient-to-t from-white backdrop-blur-[20px] xl:rounded-b-[15px] md:rounded-b-[10.55px] rounded-b-md"></div>
+              <div className="bg-[#305FD8] px-[7.44px] py-[5.58px] text-[4.65px] md:text-[7.03px] md:py-[7.49px] md:px-[9.98px] rounded-[44px] xl:py-[10.65px] xl:px-[14.2px] text-white xl:text-[10px] font-medium w-fit">
                 1K+ Active Listers
               </div>
-              <div className="flex items-stretch justify-between z-10">
+              <div className="flex items-center justify-between z-10">
                 <div>
                   <p className="body-medium-16 text-black">
                     Film & Photography
@@ -258,43 +258,98 @@ export default function RenterPage() {
                     DSLR Cameras, Audio Recorders & More..
                   </p>
                 </div>
-                <button className="rounded-full p-2.5 size-11 bg-white">
-                  <ArrowUpRight className="text-green-500 hover:rotate-45 transition-all" />
+                <button className="rounded-full p-[5.24px] md:p-[7.03px] xl:p-2.5 size-6 md:size-8 xl:size-11 bg-white">
+                  <ArrowUpRight className="text-green-500 hover:rotate-45 transition-all size-[12.58px] md:size-[16.88px]" />
                 </button>
               </div>
             </div>
-            <div className="flex xl:space-x-[30px] md:space-x-5 space-x-2.5 md:basis-1/2">
+            <div className="flex xl:space-x-[30px] md:space-x-5 space-x-2.5 md:basis-1/2 shrink-0">
               <Image
                 src="/images/scooter.jpg"
                 width={280}
                 height={409}
                 alt="scooter"
-                className="xl:rounded-[15px] md:rounded-[10.55px] rounded-md w-[157px] h-[113px] md:w-[196.9px] md:h-[287.62px] xl:w-[280px] xl:h-[409px] object-cover"
+                className="xl:rounded-[15px] basis-1/2 md:rounded-[10.55px] rounded-md w-[157px] h-[113px] md:h-[287.62px] xl:w-[280px] xl:h-[409px] object-cover"
               />
               <Image
                 src="/images/drumset.jpg"
                 width={280}
                 height={409}
                 alt="scooter"
-                className="xl:rounded-[15px] md:rounded-[10.55px] rounded-md w-[157px] h-[113px] md:w-[196.9px] md:h-[287.62px] xl:w-[280px] xl:h-[409px] object-cover"
+                className="xl:rounded-[15px] basis-1/2 md:rounded-[10.55px] rounded-md w-[157px] h-[113px] md:h-[287.62px] xl:w-[280px] xl:h-[409px] object-cover"
               />
             </div>
           </div>
         </section>
         <section className="pt-[88px] pb-[100px] flex flex-col">
           <div className="flex flex-col self-center text-center xl:mb-[55px] md:mb-10 mb-6">
-            <div className="desc-chip self-center xl:mb-[37.5px]">
+            <div className="desc-chip self-center xl:mb-[37.5px] md:mb-5 mb-1.5">
               KEEPING YOU FRONT & CENTER
             </div>
             <h3 className="heading-sm-26 mb-4">Trust & Safety</h3>
-            <p className="text-lg text-slate-900 max-w-[558px]">
+            <p className="xl:text-lg text-[13.17px] text-slate-900 md:max-w-[408px] xl:max-w-[558px]">
               Ensuring peace of mind with every rental through secure and
               reliable practices
             </p>
           </div>
+          <div className="flex flex-col sm:flex-row sm:justify-between gap-y-10 relative">
+            <div className="flex flex-col items-center text-center">
+              <Image
+                src="/icons/identity-verif.svg"
+                width={154}
+                height={150}
+                alt="identity-verification"
+                className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
+              />
+              <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
+                Identity Verification
+              </h4>
+              <p className="body-regular-16">
+                Ensuring data accuracy is crucial for making informed decisions
+                and ensuring the reliability.
+              </p>
+            </div>
+            <ConnectLine className="relative xl:top-16 md:top-12 max-sm:left-1/2 max-sm:-translate-x-1/2" />
+            <div className="flex flex-col items-center text-center">
+              <Image
+                src="/icons/insurance-cover.svg"
+                width={154}
+                height={150}
+                alt="insurance-coverage"
+                className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
+              />
+              <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
+                Insurance Coverage
+              </h4>
+              <p className="body-regular-16">
+                Ensuring data accuracy is crucial for making informed decisions
+                and ensuring the reliability.
+              </p>
+            </div>
+            <ConnectLine
+              color="#FF8C2F"
+              className="relative xl:top-16 md:top-12 max-sm:left-1/2 max-sm:-translate-x-1/2"
+            />
+            <div className="flex flex-col items-center text-center">
+              <Image
+                src="/icons/secure-trans.svg"
+                width={154}
+                height={150}
+                alt="Secure Transactions"
+                className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
+              />
+              <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
+                Secure Transactions
+              </h4>
+              <p className="body-regular-16">
+                Ensuring data accuracy is crucial for making informed decisions
+                and ensuring the reliability.
+              </p>
+            </div>
+          </div>
         </section>
         <section className="pt-[88px] pb-[100px] flex flex-col">
-          <div className="desc-chip self-center sm:self-start xl:mb-[30px]">
+          <div className="desc-chip self-center sm:self-start md:mb-[30px] mb-1.5">
             ADDRESSING YOUR CONCERNS
           </div>
           <div className="flex flex-com sm:flex-row xl:space-x-[130px] md:space-x-12">
