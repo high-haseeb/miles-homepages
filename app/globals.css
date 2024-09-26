@@ -164,7 +164,15 @@ input {
 }
 
 .body-medium-14 {
+  @apply text-slate-900 text-xs lg:text-sm font-medium;
+}
+
+.body-regular-14 {
   @apply text-slate-900 text-xs lg:text-sm;
+}
+
+.heading-sm-26 {
+  @apply font-semibold xl:text-[1.625rem] md:text-xl text-lg leading-[32.5px];
 }
 
 .noScrollBar {

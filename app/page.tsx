@@ -59,6 +59,7 @@ export default function Home() {
             className="object-contain -rotate-45"
           />
         </div>
+        {/* <HomepageAnimation /> */}
       </header>
       <main className="flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
         <section className="bg-white flex flex-col py-10 md:pt-14 mb:pb-[88px]">

@@ -19,13 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://cdn.smileidentity.com/inline/v1/js/script.min.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className={`${inter.className} noScrollBar`}>
         <ClientProviders>{children}</ClientProviders>
       </body>
-      <Script
-        src="https://cdn.smileidentity.com/inline/v1/js/script.min.js"
-        strategy="beforeInteractive"
-      ></Script>
     </html>
   );
 }

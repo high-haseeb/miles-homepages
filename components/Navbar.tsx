@@ -1,4 +1,6 @@
+"use client";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, CircleX } from "lucide-react";
 import {
@@ -9,8 +11,19 @@ import {
 } from "@/components/ui/sheet";
 
 import MenuIcon from "@/components/vectors/MenuIcon";
+import { useAuth } from "@/hooks";
 
 export default function Navbar() {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+  const authenticated = isAuthenticated();
+
+  function handleClick() {
+    if (!authenticated) router.push("/login");
+    else if (pathname === "/") router.push("/renter");
+    else router.push("/manage-listings/list-item");
+  }
   return (
     <nav className="md:fixed md:left-1/2 md:top-5 md:-translate-x-1/2 max-w-[802px] mx-auto w-full bg-transparent md:bg-white max-md:mb-[29px] border-none md:border-[0.5px] md:border-gray-2 flex items-center justify-between md:rounded-[50px] md:py-2.5 md:px-[15px] z-20">
       <Image
@@ -47,13 +60,13 @@ export default function Navbar() {
             </SheetClose>
           </div>
           <div className="flex flex-col divide-y mb-9">
-            <Link
-              href="/manage-listings/list-item"
+            <button
+              onClick={handleClick}
               className="pb-5 font-medium text-slate-900 text-sm flex items-center justify-between py-5"
             >
               List an item
               <ChevronRight width={20} height={20} />
-            </Link>
+            </button>
             <Link
               href="#how-it-works"
               className="pb-5 font-medium text-slate-900 text-sm flex items-center justify-between py-5"
@@ -79,12 +92,12 @@ export default function Navbar() {
         </SheetContent>
       </Sheet>
       <div className="hidden md:flex items-center gap-10 gap-x-6">
-        <Link
-          href="/manage-listings/list-item"
+        <button
+          onClick={handleClick}
           className="font-medium text-slate-900 hover:text-green-500 py-3 px-2"
         >
           List an item
-        </Link>
+        </button>
         <Link
           href="#how-it-works"
           className="font-medium text-slate-900 hover:text-green-500 py-3 px-2"

@@ -51,6 +51,8 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [priceDays, setPriceDays] = useState(0);
 
+  const { userData } = useAppContext();
+
   const { data: listing, isPending } = useQuery({
     queryKey: ["listing", itemId],
     queryFn: () => getListing(itemId),
@@ -63,9 +65,10 @@ export default function ListedItem({ params }: { params: { itemId: string } }) {
     },
   });
 
-  // console.log(listing);
   const item = listing?.data?.listing;
-  const peopleAlsoViewed = listing?.data?.peopleAlsoViewed;
+  const peopleAlsoViewed = listing?.data?.peopleAlsoViewed?.filter(
+    (item: ItemProps) => item?.lister_id !== userData?.id
+  );
   const mdateRange = item?.multiple_date_ranges
     ? item?.multiple_date_ranges.split(",")
     : null;

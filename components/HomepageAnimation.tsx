@@ -1,64 +1,55 @@
 "use client";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import anime from "animejs/lib/anime.es.js";
 
 export default function HomepageAnimation() {
-  const radius = 450; // Radius of the circular motion
-  const angle = (2 * Math.PI) / images.length; // Angle between each item
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const rotateCarousel = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const interval = setInterval(rotateCarousel, 2000); // Rotate every 2 seconds
-    return () => clearInterval(interval);
+    if (containerRef.current) {
+      const cards = containerRef.current.querySelectorAll(".card");
+
+      // Set the initial positions of the cards
+      (cards as NodeListOf<HTMLDivElement>).forEach((card, index) => {
+        const angle = (index * 360) / images.length;
+        const radius = 540;
+        const x = 50 + Math.cos((angle * Math.PI) / 180) * radius;
+        const y = 50 + Math.sin((angle * Math.PI) / 180) * radius;
+        card.style.transform = `translate(${x}px, ${y}px)`;
+      });
+
+      // Animate the rotation of the cards
+      anime({
+        targets: ".card-container",
+        duration: 10000,
+        loop: true,
+        rotate: "360deg",
+        easing: "linear",
+        direction: "normal",
+        autoplay: true,
+      });
+    }
   }, []);
 
   return (
     <div
-      style={{ width: 1000, height: 700 }}
-      className="absolute -translate-x-1/2 top-0 left-1/2 inset-0 md:flex justify-center items-center hidden"
+      ref={containerRef}
+      className="absolute w-[1140.51px] h-[1100.99px] border rounded-full flex justify-center items-center card-container"
     >
-      {images.map((Icon, index) => {
-        const x = radius * Math.cos(angle * (index + currentIndex));
-        const y = radius * Math.sin(angle * (index + currentIndex));
-        return (
-          <motion.div
-            key={index}
-            className="absolute"
-            style={{
-              top: "50%",
-              left: "40%",
-              width: "auto",
-              height: "auto",
-              x,
-              y,
-              transform: "translate(-40%, -50%)",
-            }}
-            animate={{
-              x,
-              y,
-            }}
-            transition={{
-              duration: 1,
-              ease: "linear",
-            }}
-          >
-            <motion.div>{Icon.icon}</motion.div>
-          </motion.div>
-        );
-      })}
+      {images.map((Image, index) => (
+        <div
+          key={index}
+          className="absolute card flex justify-center items-center"
+        >
+          {Image.icon}
+        </div>
+      ))}
     </div>
   );
 }
 
-const images: {
-  key: string;
-  icon: React.ReactNode;
-}[] = [
+const images: { key: string; icon: React.ReactNode }[] = [
   {
     key: "1",
     icon: (
@@ -67,8 +58,7 @@ const images: {
         width={173.03}
         height={180.77}
         alt="Camera"
-        key="1"
-        className="object-contain hidden md:block"
+        className="object-contain"
       />
     ),
   },
@@ -80,8 +70,7 @@ const images: {
         width={175.93}
         height={144.85}
         alt="laptop"
-        key="2"
-        className="object-contain hidden md:block"
+        className="object-contain"
       />
     ),
   },
@@ -93,8 +82,7 @@ const images: {
         width={236.73}
         height={156.67}
         alt="printer"
-        key="3"
-        className="object-contain hidden md:block"
+        className="object-contain"
       />
     ),
   },
@@ -106,8 +94,7 @@ const images: {
         width={160.11}
         height={142.04}
         alt="projector"
-        key="4"
-        className="object-contain hidden md:block"
+        className="object-contain"
       />
     ),
   },
@@ -119,8 +106,7 @@ const images: {
         width={92.88}
         height={146.35}
         alt="Camera"
-        key="1"
-        className="object-contain hidden md:block"
+        className="object-contain"
       />
     ),
   },
@@ -132,8 +118,7 @@ const images: {
         width={92.88}
         height={146.35}
         alt="Camera"
-        key="1"
-        className="object-contain hidden md:block"
+        className="object-contain"
       />
     ),
   },
