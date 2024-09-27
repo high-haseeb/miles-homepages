@@ -154,9 +154,11 @@ export default function RenterPage() {
           </div>
         </section>
         <section className="pt-[88px] pb-[100px] flex flex-col space-y-[34px] md:space-y-[50px] xl:space-y-[60px] container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
-          <div className="desc-chip">How it works / So how do we do it?</div>
+          <div className="desc-chip max-sm:self-center">
+            How it works / So how do we do it?
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-[38.68px] xl:gap-[55px]">
-            <div className="xl:rounded-3xl md:rounded-2xl xl:p-12 md:p-[33.75px] p-[29.56px] bg-cover bg-center bg-no-repeat bg-[url('/images/green-iphone-mockup.png')]">
+            <div className="xl:rounded-3xl md:rounded-2xl max-sm:mb-[33.87px] max-sm:h-[377px] rounded-[14.78px] xl:p-12 md:p-[33.75px] p-[29.56px] bg-cover bg-center bg-no-repeat bg-[url('/images/green-iphone-mockup.png')]">
               <div className="flex flex-col xl:space-y-3 md:space-y-[8.44px] space-y-[7.39px]">
                 <h4 className="heading-sm-26 text-[#111111]">
                   Find something great your looking for
@@ -166,7 +168,7 @@ export default function RenterPage() {
                 </p>
               </div>
             </div>
-            <div className="xl:py-[60px] xl:px-[75px] md:py-[42.2px] md:px-[52.74px] py-[36.95px] px-[46.19px] flex flex-col xl:rounded-3xl md:rounded-2xl bg-orange-50">
+            <div className="xl:py-[60px] xl:px-[75px] md:py-[42.2px] md:px-[52.74px] rounded-[14.78px] py-[36.95px] px-[46.19px] flex flex-col xl:rounded-3xl md:rounded-2xl bg-orange-50">
               <div className="flex flex-col xl:space-y-[55px] md:space-y-[38.68px] space-y-5 mb-auto">
                 <div className="flex items-start space-x-[4.98px] md:space-x-[5.63px] xl:space-x-2">
                   <CheckboxIcon />
@@ -198,23 +200,23 @@ export default function RenterPage() {
               </div>
               <Link
                 href="/listing"
-                className="mt-11 md:mt-14 xl:mt-[60px] flex items-center max-sm:self-center gap-x-4 text-white rounded-[38px] bg-green-500 hover:bg-green-700 p-4 pl-6 w-fit"
+                className="mt-11 md:mt-14 xl:mt-[60px] flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 hover:bg-green-700 p-4 pl-6 w-fit"
               >
                 Start Renting
                 <ShortRightArrow />
               </Link>
             </div>
-            <div className="xl:rounded-3xl md:rounded-2xl xl:p-12 md:p-[33.75px] p-[29.56px] bg-cover bg-center bg-no-repeat bg-[url('/images/orange-iphone-mockup.png')]">
+            <div className="xl:rounded-3xl max-sm:mb-[33.87px] md:rounded-2xl max-sm:h-[377px] rounded-[14.78px] xl:p-12 md:p-[33.75px] p-[29.56px] bg-cover bg-center bg-no-repeat bg-[url('/images/orange-iphone-mockup.png')]">
               <div className="flex flex-col xl:space-y-3 md:space-y-[8.44px] space-y-[7.39px]">
                 <h4 className="heading-sm-26 text-[#111111]">
-                  Find something great your looking for
+                  List your stuff
                 </h4>
                 <p className="body-regular-16 text-dark_2">
                   24/7 Customer Support to assist you.
                 </p>
               </div>
             </div>
-            <div className="xl:py-[60px] xl:px-[75px] md:py-[42.2px] md:px-[52.74px] py-[36.95px] px-[46.19px] flex flex-col xl:rounded-3xl md:rounded-2xl bg-green-50">
+            <div className="xl:py-[60px] xl:px-[75px] md:py-[42.2px] rounded-[14.78px] md:px-[52.74px] py-[36.95px] px-[46.19px] flex flex-col xl:rounded-3xl md:rounded-2xl bg-green-50">
               <div className="flex flex-col xl:space-y-[55px] md:space-y-[38.68px] space-y-5 mb-auto">
                 <div className="flex items-start space-x-[4.98px] md:space-x-[5.63px] xl:space-x-2">
                   <CheckboxIcon color="#019D45" />
@@ -245,7 +247,7 @@ export default function RenterPage() {
               </div>
               <Link
                 href="/manage-listings/list-item"
-                className="mt-11 md:mt-14 xl:mt-[60px] flex items-center max-sm:self-center gap-x-4 text-white rounded-[38px] bg-green-500 hover:bg-green-700 p-4 pl-6 w-fit"
+                className="mt-11 md:mt-14 xl:mt-[60px] flex items-center gap-x-4 text-white rounded-[38px] bg-green-500 hover:bg-green-700 p-4 pl-6 w-fit"
               >
                 List an item
                 <ShortRightArrow />
@@ -306,7 +308,7 @@ export default function RenterPage() {
                 KEEPING YOU FRONT & CENTER
               </div>
               <h3 className="heading-sm-26 mb-4">Trust & Safety</h3>
-              <p className="xl:text-lg text-[13.17px] text-slate-900 md:max-w-[408px] xl:max-w-[558px]">
+              <p className="xl:text-lg text-[13.17px] text-slate-900 md:max-w-[408px] xl:max-w-[558px] max-w-[275px]">
                 Ensuring peace of mind with every rental through secure and
                 reliable practices
               </p>
@@ -323,7 +325,7 @@ export default function RenterPage() {
                 <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
                   Identity Verification
                 </h4>
-                <p className="body-regular-16">
+                <p className="body-regular-16 max-sm:max-w-[202px]">
                   Ensuring data accuracy is crucial for making informed
                   decisions and ensuring the reliability.
                 </p>
@@ -340,7 +342,7 @@ export default function RenterPage() {
                 <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
                   Insurance Coverage
                 </h4>
-                <p className="body-regular-16">
+                <p className="body-regular-16 max-sm:max-w-[202px]">
                   Ensuring data accuracy is crucial for making informed
                   decisions and ensuring the reliability.
                 </p>
@@ -360,7 +362,7 @@ export default function RenterPage() {
                 <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
                   Secure Transactions
                 </h4>
-                <p className="body-regular-16">
+                <p className="body-regular-16 max-sm:max-w-[202px]">
                   Ensuring data accuracy is crucial for making informed
                   decisions and ensuring the reliability.
                 </p>
@@ -372,8 +374,8 @@ export default function RenterPage() {
           <div className="desc-chip self-center sm:self-start md:mb-[30px] mb-1.5">
             ADDRESSING YOUR CONCERNS
           </div>
-          <div className="flex flex-com sm:flex-row xl:space-x-[130px] md:space-x-12">
-            <h3 className="heading-sm-26 md:max-w-[288px] w-full shrink-0">
+          <div className="flex flex-col gap-y-[30px] sm:flex-row xl:space-x-[130px] md:space-x-12">
+            <h3 className="heading-sm-26 md:max-w-[288px] w-full shrink-0 max-sm:text-center">
               Frequently Asked Questions
             </h3>
             <div className="flex flex-col space-y-5 flex-1">
