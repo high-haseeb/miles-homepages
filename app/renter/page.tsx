@@ -66,8 +66,8 @@ export default function RenterPage() {
           />
         </div>
       </header>
-      <main className="flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
-        <section className="pt-[88px] pb-[100px] flex flex-col xl:space-y-[60px] md:space-y-[50px] space-y-[34px]">
+      <main className="flex flex-col">
+        <section className="pt-[88px] pb-[100px] flex flex-col xl:space-y-[60px] md:space-y-[50px] space-y-[34px] container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
           <div className="desc-chip">KEY BENEFITS</div>
           <div className="flex flex-col md:flex-row xl:gap-6 md:gap-[16.88px] gap-[12.73px]">
             <div className="flex xl:space-x-6 md:space-x-[16.88px] space-x-[12.73px] md:basis-1/2">
@@ -153,10 +153,19 @@ export default function RenterPage() {
             </div>
           </div>
         </section>
-        <section className="pt-[88px] pb-[100px] flex flex-col space-y-[34px] md:space-y-[50px] xl:space-y-[60px]">
+        <section className="pt-[88px] pb-[100px] flex flex-col space-y-[34px] md:space-y-[50px] xl:space-y-[60px] container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
           <div className="desc-chip">How it works / So how do we do it?</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-[38.68px] xl:gap-[55px]">
-            <div className="xl:rounded-3xl md:rounded-2xl border"></div>
+            <div className="xl:rounded-3xl md:rounded-2xl xl:p-12 md:p-[33.75px] p-[29.56px] bg-cover bg-center bg-no-repeat bg-[url('/images/green-iphone-mockup.png')]">
+              <div className="flex flex-col xl:space-y-3 md:space-y-[8.44px] space-y-[7.39px]">
+                <h4 className="heading-sm-26 text-[#111111]">
+                  Find something great your looking for
+                </h4>
+                <p className="body-regular-16 text-dark_2">
+                  24/7 Customer Support to assist you.
+                </p>
+              </div>
+            </div>
             <div className="xl:py-[60px] xl:px-[75px] md:py-[42.2px] md:px-[52.74px] py-[36.95px] px-[46.19px] flex flex-col xl:rounded-3xl md:rounded-2xl bg-orange-50">
               <div className="flex flex-col xl:space-y-[55px] md:space-y-[38.68px] space-y-5 mb-auto">
                 <div className="flex items-start space-x-[4.98px] md:space-x-[5.63px] xl:space-x-2">
@@ -195,7 +204,16 @@ export default function RenterPage() {
                 <ShortRightArrow />
               </Link>
             </div>
-            <div className="xl:rounded-3xl md:rounded-2xl border"></div>
+            <div className="xl:rounded-3xl md:rounded-2xl xl:p-12 md:p-[33.75px] p-[29.56px] bg-cover bg-center bg-no-repeat bg-[url('/images/orange-iphone-mockup.png')]">
+              <div className="flex flex-col xl:space-y-3 md:space-y-[8.44px] space-y-[7.39px]">
+                <h4 className="heading-sm-26 text-[#111111]">
+                  Find something great your looking for
+                </h4>
+                <p className="body-regular-16 text-dark_2">
+                  24/7 Customer Support to assist you.
+                </p>
+              </div>
+            </div>
             <div className="xl:py-[60px] xl:px-[75px] md:py-[42.2px] md:px-[52.74px] py-[36.95px] px-[46.19px] flex flex-col xl:rounded-3xl md:rounded-2xl bg-green-50">
               <div className="flex flex-col xl:space-y-[55px] md:space-y-[38.68px] space-y-5 mb-auto">
                 <div className="flex items-start space-x-[4.98px] md:space-x-[5.63px] xl:space-x-2">
@@ -235,7 +253,7 @@ export default function RenterPage() {
             </div>
           </div>
         </section>
-        <section className="pt-[88px] pb-[100px] flex flex-col">
+        <section className="pt-[88px] pb-[100px] flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
           <div className="desc-chip mb-1.5 md:mb-5 xl:mb-[30px]">
             YOU’VE GOT OPTIONS
           </div>
@@ -281,74 +299,76 @@ export default function RenterPage() {
             </div>
           </div>
         </section>
-        <section className="pt-[88px] pb-[100px] flex flex-col">
-          <div className="flex flex-col self-center text-center xl:mb-[55px] md:mb-10 mb-6">
-            <div className="desc-chip self-center xl:mb-[37.5px] md:mb-5 mb-1.5">
-              KEEPING YOU FRONT & CENTER
-            </div>
-            <h3 className="heading-sm-26 mb-4">Trust & Safety</h3>
-            <p className="xl:text-lg text-[13.17px] text-slate-900 md:max-w-[408px] xl:max-w-[558px]">
-              Ensuring peace of mind with every rental through secure and
-              reliable practices
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:justify-between gap-y-10 relative">
-            <div className="flex flex-col items-center text-center">
-              <Image
-                src="/icons/identity-verif.svg"
-                width={154}
-                height={150}
-                alt="identity-verification"
-                className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
-              />
-              <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
-                Identity Verification
-              </h4>
-              <p className="body-regular-16">
-                Ensuring data accuracy is crucial for making informed decisions
-                and ensuring the reliability.
+        <div className="bg-grad bg-cover bg-center bg-no-repeat">
+          <section className="pt-[88px] pb-[100px] flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
+            <div className="flex flex-col self-center text-center xl:mb-[55px] md:mb-10 mb-6">
+              <div className="desc-chip self-center xl:mb-[37.5px] md:mb-5 mb-1.5">
+                KEEPING YOU FRONT & CENTER
+              </div>
+              <h3 className="heading-sm-26 mb-4">Trust & Safety</h3>
+              <p className="xl:text-lg text-[13.17px] text-slate-900 md:max-w-[408px] xl:max-w-[558px]">
+                Ensuring peace of mind with every rental through secure and
+                reliable practices
               </p>
             </div>
-            <ConnectLine className="relative xl:top-16 md:top-12 max-sm:left-1/2 max-sm:-translate-x-1/2" />
-            <div className="flex flex-col items-center text-center">
-              <Image
-                src="/icons/insurance-cover.svg"
-                width={154}
-                height={150}
-                alt="insurance-coverage"
-                className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
+            <div className="flex flex-col sm:flex-row sm:justify-between gap-y-10 relative">
+              <div className="flex flex-col items-center text-center">
+                <Image
+                  src="/icons/identity-verif.svg"
+                  width={154}
+                  height={150}
+                  alt="identity-verification"
+                  className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
+                />
+                <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
+                  Identity Verification
+                </h4>
+                <p className="body-regular-16">
+                  Ensuring data accuracy is crucial for making informed
+                  decisions and ensuring the reliability.
+                </p>
+              </div>
+              <ConnectLine className="relative xl:top-16 md:top-12 max-sm:left-1/2 max-sm:-translate-x-1/2" />
+              <div className="flex flex-col items-center text-center">
+                <Image
+                  src="/icons/insurance-cover.svg"
+                  width={154}
+                  height={150}
+                  alt="insurance-coverage"
+                  className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
+                />
+                <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
+                  Insurance Coverage
+                </h4>
+                <p className="body-regular-16">
+                  Ensuring data accuracy is crucial for making informed
+                  decisions and ensuring the reliability.
+                </p>
+              </div>
+              <ConnectLine
+                color="#FF8C2F"
+                className="relative xl:top-16 md:top-12 max-sm:left-1/2 max-sm:-translate-x-1/2"
               />
-              <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
-                Insurance Coverage
-              </h4>
-              <p className="body-regular-16">
-                Ensuring data accuracy is crucial for making informed decisions
-                and ensuring the reliability.
-              </p>
+              <div className="flex flex-col items-center text-center">
+                <Image
+                  src="/icons/secure-trans.svg"
+                  width={154}
+                  height={150}
+                  alt="Secure Transactions"
+                  className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
+                />
+                <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
+                  Secure Transactions
+                </h4>
+                <p className="body-regular-16">
+                  Ensuring data accuracy is crucial for making informed
+                  decisions and ensuring the reliability.
+                </p>
+              </div>
             </div>
-            <ConnectLine
-              color="#FF8C2F"
-              className="relative xl:top-16 md:top-12 max-sm:left-1/2 max-sm:-translate-x-1/2"
-            />
-            <div className="flex flex-col items-center text-center">
-              <Image
-                src="/icons/secure-trans.svg"
-                width={154}
-                height={150}
-                alt="Secure Transactions"
-                className="size-[90.31px] md:size-[109.72px] xl:size-[150px] mb-5 md:mb-6"
-              />
-              <h4 className="body-sm-20 mb-2.5 md:mb-3 xl:mb-4">
-                Secure Transactions
-              </h4>
-              <p className="body-regular-16">
-                Ensuring data accuracy is crucial for making informed decisions
-                and ensuring the reliability.
-              </p>
-            </div>
-          </div>
-        </section>
-        <section className="pt-[88px] pb-[100px] flex flex-col">
+          </section>
+        </div>
+        <section className="pt-[88px] pb-[100px] flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
           <div className="desc-chip self-center sm:self-start md:mb-[30px] mb-1.5">
             ADDRESSING YOUR CONCERNS
           </div>
