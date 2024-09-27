@@ -4,11 +4,8 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Dot from "@/components/vectors/Dot";
 import PlayIcon from "@/components/vectors/PlayIcon";
-import LongRightArrow from "@/components/vectors/LongRightArrow";
 import ShortRightArrow from "@/components/vectors/ShortRightArrow";
-import ListStyle from "@/components/vectors/ListStyle";
 import Footer from "@/components/Footer";
-import HomepageAnimation from "@/components/HomepageAnimation";
 import TickIcon from "@/components/vectors/TickIcon";
 
 export default function Home() {

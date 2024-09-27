@@ -2,19 +2,18 @@
 import { useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/hooks";
+import { useAppContext } from "@/context/AppContext";
 
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
-  const { isAuthenticated } = useAuth();
+  const { isLoggedIn } = useAppContext();
   const router = useRouter();
-  const authenticated = isAuthenticated();
   useEffect(() => {
-    if (!authenticated) {
+    if (!isLoggedIn) {
       router.push("/login");
     }
-  }, [authenticated, router]);
+  }, [isLoggedIn, router]);
 
-  if (!authenticated) {
+  if (!isLoggedIn) {
     return null;
   }
 

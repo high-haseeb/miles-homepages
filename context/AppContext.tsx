@@ -53,7 +53,7 @@ export default function AppContextProvider({
     }
     return "";
   });
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!token);
+
   const [userData, setUserData] = useState(() => {
     // Initial value from localStorage
     if (typeof window !== "undefined") {
@@ -67,11 +67,9 @@ export default function AppContextProvider({
     if (token) {
       localStorage.setItem("token", token);
       setCookie("token", token, { maxAge: 30 * 24 * 60 * 60 });
-      setIsLoggedIn(true);
     } else {
       localStorage.removeItem("token");
       setCookie("token", "");
-      setIsLoggedIn(false);
     }
   }, [token]);
 
@@ -93,8 +91,9 @@ export default function AppContextProvider({
     setUserData({});
     localStorage.clear();
     sessionStorage.clear();
-    setIsLoggedIn(false);
   };
+
+  const isLoggedIn = Boolean(token);
 
   return (
     <AppContext.Provider
