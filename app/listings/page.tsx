@@ -143,9 +143,9 @@ export default function Listings() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    className={`xl:py-2 py-1.5 px-2.5 xl:px-[15px] text-xs sm:text-sm xl:text-base hover:bg-green-500 hover:border-green-500 hover:text-white ${
+                    className={`filter-btn ${
                       category && "!bg-green-500 !border-green-500 !text-white"
-                    } bg-white text-slate-900 border border-gray-4 rounded-[22px]`}
+                    }`}
                   >
                     {category?.category_name || "Category"}
                   </Button>
@@ -164,9 +164,9 @@ export default function Listings() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    className={`xl:py-2 py-1.5 px-2.5 xl:px-[15px] text-xs sm:text-sm xl:text-base ${
+                    className={`filter-btn ${
                       location && "!bg-green-500 !border-green-500 !text-white"
-                    } hover:bg-green-500 hover:border-green-500 hover:text-white bg-white text-slate-900 border border-gray-4 rounded-[22px]`}
+                    }`}
                   >
                     {location || "Location"}
                   </Button>
@@ -185,9 +185,9 @@ export default function Listings() {
               <Popover onOpenChange={setOpenCalendar} open={openCalendar}>
                 <PopoverTrigger asChild>
                   <Button
-                    className={`xl:py-2 py-1.5 px-2.5 xl:px-[15px] text-xs sm:text-sm xl:text-base ${
+                    className={`filter-btn ${
                       date && "!bg-green-500 !border-green-500 !text-white"
-                    } hover:bg-green-500 hover:border-green-500 hover:text-white bg-white text-slate-900 border border-gray-4 rounded-[22px]`}
+                    }`}
                   >
                     Dates
                   </Button>
@@ -222,17 +222,14 @@ export default function Listings() {
                   </div>
                 </PopoverContent>
               </Popover>
-            </div>
-            <div className="flex items-center space-x-1.5 xl:space-x-3">
               <p className="text-[10px] sm:text-xs xl:text-sm text-slate-900">
                 {currentListings?.length} result(s)
               </p>
+            </div>
+            <div className="flex items-center space-x-1.5 xl:space-x-3">
               {(location || category || date) && (
-                <Button
-                  onClick={clearFilter}
-                  className="p-1 bg-white text-xs sm:text-sm xl:text-base text-slate-900 hover:text-green-500 rounded-[22px]"
-                >
-                  Clear filter
+                <Button onClick={clearFilter} className={`filter-btn`}>
+                  Clear all
                 </Button>
               )}
             </div>

@@ -179,6 +179,10 @@ input {
   @apply font-semibold xl:text-xl md:text-base text-sm;
 }
 
+.filter-btn {
+  @apply xl:py-2 py-1.5 px-2.5 xl:px-[15px] text-xs sm:text-sm xl:text-base hover:bg-green-500 hover:border-green-500 hover:text-white bg-white text-slate-900 border border-gray-4 rounded-[22px];
+}
+
 .noScrollBar {
   -ms-overflow-style: none;
   scrollbar-width: none;
