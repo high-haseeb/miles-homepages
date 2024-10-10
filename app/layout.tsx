@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
@@ -19,12 +18,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <Script
-          src="https://cdn.smileidentity.com/inline/v1/js/script.min.js"
-          strategy="beforeInteractive"
-        />
-      </head>
       <body className={`${inter.className} noScrollBar`}>
         <ClientProviders>{children}</ClientProviders>
       </body>
