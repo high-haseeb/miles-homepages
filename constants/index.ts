@@ -42,22 +42,22 @@ export const products = [
     name: "Contract negotiation",
     link: "#contract-negotiation",
   },
-  {
-    name: "E-signature",
-    link: "#e-signature",
-  },
-  {
-    name: "Contract archiving",
-    link: "#contract-archiving",
-  },
-  {
-    name: "Contract monitoring",
-    link: "#contract-monitoring",
-  },
-  {
-    name: "Contract analysis",
-    link: "#contract-analysis",
-  },
+  // {
+  //   name: "E-signature",
+  //   link: "#e-signature",
+  // },
+  // {
+  //   name: "Contract archiving",
+  //   link: "#contract-archiving",
+  // },
+  // {
+  //   name: "Contract monitoring",
+  //   link: "#contract-monitoring",
+  // },
+  // {
+  //   name: "Contract analysis",
+  //   link: "#contract-analysis",
+  // },
 ];
 
 export const resources = [
@@ -81,18 +81,18 @@ export const resources = [
     name: "Partners",
     link: "#partners",
   },
-  {
-    name: "News",
-    link: "#news",
-  },
-  {
-    name: "Documentation",
-    link: "#documentation",
-  },
-  {
-    name: "Status",
-    link: "#status",
-  },
+  // {
+  //   name: "News",
+  //   link: "#news",
+  // },
+  // {
+  //   name: "Documentation",
+  //   link: "#documentation",
+  // },
+  // {
+  //   name: "Status",
+  //   link: "#status",
+  // },
 ];
 
 export const contact = [
@@ -116,18 +116,18 @@ export const contact = [
     name: "Facebook",
     link: "#facebook",
   },
-  {
-    name: "Twitter",
-    link: "#twitter",
-  },
-  {
-    name: "Linkedin",
-    link: "#linkedin",
-  },
-  {
-    name: "Youtube",
-    link: "#youtube",
-  },
+  // {
+  //   name: "Twitter",
+  //   link: "#twitter",
+  // },
+  // {
+  //   name: "Linkedin",
+  //   link: "#linkedin",
+  // },
+  // {
+  //   name: "Youtube",
+  //   link: "#youtube",
+  // },
 ];
 
 export const useCases = [
@@ -172,23 +172,3 @@ export const statusColor: {
     bg: "#E6F7ED",
   },
 };
-
-export const minLengthRegex = /^.{8,}$/;
-export const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-
-export const GOOGLE_PLACES_API_KEY =
-  process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY;
-
-export const IS_DEV_MODE = process.env.NODE_ENV === "development";
-
-export const API_URL = IS_DEV_MODE
-  ? `${process.env.NEXT_PUBLIC_API_URL}/v1`
-  : `${process.env.NEXT_PUBLIC_API_URL}/v1`;
-
-export const LOCATIONS_API_URL = IS_DEV_MODE
-  ? `${process.env.NEXT_PUBLIC_LOCATIONS_API_URL}/v1`
-  : `${process.env.NEXT_PUBLIC_LOCATIONS_API_URL}/v1`;
-
-export const LOCATIONS_API_KEY = process.env.NEXT_PUBLIC_LOCATIONS_API_KEY;
-
-export const PURE_API_URL = process.env.NEXT_PUBLIC_API_URL;
