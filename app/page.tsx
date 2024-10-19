@@ -7,13 +7,14 @@ import PlayIcon from "@/components/vectors/PlayIcon";
 import ShortRightArrow from "@/components/vectors/ShortRightArrow";
 import Footer from "@/components/Footer";
 import TickIcon from "@/components/vectors/TickIcon";
+import HomepageAnimation from "@/components/HomepageAnimation";
 
 export default function Home() {
   return (
     <section className="min-h-screen flex flex-col overflow-x-hidden max-w-[100vw] w-full">
-      <header className="min-h-screen bg-pearl-400 pt-[15px] px-[25px] md:p-5 flex flex-col md:items-center md:justify-center relative">
+      <header className="min-h-screen bg-pearl-400 pt-[15px] px-[25px] md:p-5 flex flex-col md:items-center md:justify-center relative overflow-hidden">
         <Navbar />
-        <div className="flex flex-col items-center text-center max-w-[578px] z-10">
+        <div className="flex flex-col items-center text-center max-w-[578px] z-10 pt-40">
           <div className="bg-white rounded-[100px] mb-[30px] md:mb-3.5 border border-gray-2 px-2 py-1 flex items-center gap-x-1 text-xs md:text-sm text-dark">
             <Dot />
             Free, fast, secure and easy to navigate
@@ -32,31 +33,7 @@ export default function Home() {
             Get started <PlayIcon />
           </Link>
         </div>
-        <div className="md:hidden absolute bottom-14 left-0 flex justify-between w-full px-[25px]">
-          <Image
-            src="/images/laptop.png"
-            width={79.08}
-            height={96.05}
-            alt="laptop"
-            className="object-contain rotate-[225deg]"
-          />
-          <Image
-            src="/images/Camera.png"
-            width={99.59}
-            height={104.05}
-            alt="Camera"
-            className="object-contain rotate-[130deg]"
-          />
-
-          <Image
-            src="/images/projector.png"
-            width={101.4}
-            height={67.11}
-            alt="projector"
-            className="object-contain -rotate-45"
-          />
-        </div>
-        {/* <HomepageAnimation /> */}
+        <HomepageAnimation />
       </header>
       <main className="flex flex-col container mx-auto md:max-w-[823px] xl:max-w-[1128px]">
         <section className="bg-white flex flex-col py-10 md:pt-14 mb:pb-[88px]">

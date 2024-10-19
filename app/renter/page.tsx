@@ -17,24 +17,26 @@ import CheckboxIcon from "@/components/vectors/CheckboxIcon";
 import ShortRightArrow from "@/components/vectors/ShortRightArrow";
 import ConnectLine from "@/components/vectors/ConnectLine";
 import { Input } from "@/components/ui/input";
+import RachetRenterCard from "@/components/RenterCard";
 
 export default function RenterPage() {
   return (
     <section className="min-h-screen flex flex-col overflow-x-hidden max-w-[100vw] w-full">
-      <header className="min-h-screen bg-pearl-400 pt-[15px] px-[25px] md:p-5 flex flex-col md:items-center md:justify-center relative">
+      <header className="min-h-screen bg-pearl-400 pt-[15px] lg:px-[25px] md:p-5 flex flex-col md:items-center md:justify-center relative">
         <Navbar />
-        <div className="flex flex-col items-center text-center max-w-[501px] z-10">
-          <h3 className="font-bold text-xl md:text-[2rem] text-slate-900 md:leading-[40px] text-center mb-10">
-            Rent everything you need, conveniently and lose to home
+        <RachetRenterCard />
+        <div className="flex flex-col items-center text-center w-auto lg:max-w-[501px] z-10 absolute top-40">
+          <h3 className="font-bold text-xl md:text-[2rem] text-slate-900 md:leading-[40px] text-center mb-6 md:mb-10">
+            Rent everything you need, conveniently and close to home
           </h3>
-          <div className="flex items-center rounded-[60px] bg-green-50 gap-x-2 p-2">
+          <div className="flex flex-col lg:flex-row items-center rounded-[60px] _bg-green-50 gap-y-2 sm:gap-x-2 p-2 w-full px-10">
             <Input
-              className="rounded-[38px] p-3.5 bg-white h-14 w-[356px] outline-none border-none"
+              className="rounded-[38px] p-3.5 bg-white h-12 md:h-14 w-full sm:w-auto max-w-screen lg:w-[356px] outline-none border-none"
               placeholder="Search for what you want to rent"
             />
             <Link
               href="/listings"
-              className="flex shrink-0 items-center gap-x-3 px-[30px] py-3 rounded-[38px] bg-green-500 hover:bg-green-700 text-sm md:text-base text-white"
+              className="flex shrink-0 items-center gap-x-3 px-6 py-3 rounded-[38px] bg-green-500 hover:bg-green-700 text-sm md:text-base text-white w-full sm:w-auto justify-center"
             >
               Find Items
             </Link>

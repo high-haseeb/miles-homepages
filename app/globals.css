@@ -195,3 +195,14 @@ input {
 .noScrollBar::-webkit-scrollbar-thumb {
   display: none;
 }
+@keyframes rachetMove {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 45deg;
+  }
+}
+.animate-rachetMove {
+  animation: rachetMove 2s infinite ease-in-out;
+}
